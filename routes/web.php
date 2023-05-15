@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PresenceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,5 +19,8 @@ Route::get('/', function () {
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::resource('presences', PresenceController::class);
+
 
 Auth::routes();
