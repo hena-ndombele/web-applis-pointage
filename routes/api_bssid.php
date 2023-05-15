@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Bssid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -12,11 +13,19 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "api" middleware group. Make something great!
 |
-*/
+*/ 
 
-require('api_bssid.php'); 
+Route::post('/scan', function (Request $request) {
+    $validatedData = $request->validate([
+        'bssid' => 'required|string',
+        'user_id' => 'required|integer',
+    ]);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    if (Bssid::where('bssid', $validatedData['bssid'])->exists()) {
+        return response()->json(['message' => 'Succes'], 200);
+    }
+    else{
+        return response()->json(['message' => 'fail'], 403);
+    }
 });
 
