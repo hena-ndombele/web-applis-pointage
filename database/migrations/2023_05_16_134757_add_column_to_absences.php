@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::table('absences', function (Blueprint $table) {
             $table->enum('status', ['active', 'offline'])->default('active');
         });
+        
     }
 
     /**
