@@ -19,4 +19,4 @@ require('api_bssid.php');
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+require('api_absence.php'); 
