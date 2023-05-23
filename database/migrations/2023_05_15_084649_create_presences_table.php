@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('presences', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->string('status');
+            $table->time('heureArrive')->default('08:00:00');
+            $table->time('heureDepart')->default('16:00:00');
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Presence;
+use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Bssid;
+use App\Models\Presence;
 use Illuminate\Http\Request;
 
 class PresenceController extends Controller
@@ -13,7 +15,7 @@ class PresenceController extends Controller
      */
     public function index()
     {
-        $presences = Presence::latest()->get();
+        $presences = Presence::orderBy('id', 'desc')->paginate(10);
         return view('presences.index', compact('presences'));
     }
 
@@ -30,19 +32,29 @@ class PresenceController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::where(['id' => $request->user_id])->first();
+        $validatedData = $request->validate([
+            'bssid' => 'required|string',
+            'user_id' => 'required|integer',
+        ]);
 
-        #Code temporaire en attente des informations réelles
-        // $url = Url::where(['id' => ['url' => $request->url]])->first();
-        $url = '';
-
-        if (($user) && ($url)) {
-            Presence::create([
-                'user_id'    => $request->user_id,
-                'status'     => 1,
-            ]);
+        if ((Bssid::where('bssid', $validatedData['bssid'])->exists()) && (User::where(['id' => $validatedData['user_id']])->exists())) {
+            $presenceDay = Presence::whereDate('created_at', Carbon::today())->exists();
+            $presenceTime1 = '08:00:00'; //En attendants les infos de l'horaire stockées dans la bd
+            $presenceTime2 = '16:00:00'; //En attendants les infos de l'horaire stockées dans la bd
+            if (($presenceDay) && ($presenceTime2 <= $presenceTime1)) {
+                return response()->json(['message' => 'Présence deja enregistré'], 202);
+            } else {
+                Presence::create([
+                    'user_id'       => $validatedData['user_id'],
+                    'status'        => 1,
+                    'heureArrive'   => date('H:i:s'),
+                    'heureDepart'   => date('H:i:s'),
+                    'created_at'    => date('Y-m-d H:i:s'),
+                ]);
+                return response()->json(['message' => 'Présence enregistré'], 200);
+            };
         } else {
-            return redirect()->back()->with('status', 'Informations non valides');
+            return response()->json(['message' => 'Réseau non autorisé'], 403);
         }
 
         return redirect()->back()->with('status', 'Présence confirmée avec succès');
