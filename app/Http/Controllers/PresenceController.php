@@ -7,6 +7,9 @@ use App\Models\User;
 use App\Models\Bssid;
 use App\Models\Presence;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
+
+use function PHPUnit\Framework\isEmpty;
 
 class PresenceController extends Controller
 {
@@ -30,6 +33,8 @@ class PresenceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+    // Presence arrivée
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -37,29 +42,27 @@ class PresenceController extends Controller
             'user_id' => 'required|integer',
         ]);
 
+        
         if ((Bssid::where('bssid', $validatedData['bssid'])->exists()) && (User::where(['id' => $validatedData['user_id']])->exists())) {
-            $presenceDay = Presence::whereDate('created_at', Carbon::today())->exists();
-            $presenceTime1 = '08:00:00'; //En attendants les infos de l'horaire stockées dans la bd
-            $presenceTime2 = '16:00:00'; //En attendants les infos de l'horaire stockées dans la bd
-            if (($presenceDay) && ($presenceTime2 <= $presenceTime1)) {
-                return response()->json(['message' => 'Présence deja enregistré'], 202);
+            $presenceDay = Presence::where('user_id', $validatedData['user_id'])->whereDate('created_at', Carbon::today())->first();
+           
+            if (($presenceDay)) { 
+                return response()->json(['message' => 'Presence deja enregistre'], 202);
             } else {
                 Presence::create([
                     'user_id'       => $validatedData['user_id'],
                     'status'        => 1,
-                    'heureArrive'   => date('H:i:s'),
-                    'heureDepart'   => date('H:i:s'),
+                    'heureArrive'   => date('Y-m-d H:i:s'),
                     'created_at'    => date('Y-m-d H:i:s'),
                 ]);
-                return response()->json(['message' => 'Présence enregistré'], 200);
+                return response()->json(['message' => 'Presence enregistre'], 200);
             };
         } else {
-            return response()->json(['message' => 'Réseau non autorisé'], 403);
+            return response()->json(['message' => 'Reseau non autorise'], 403);
         }
 
-        return redirect()->back()->with('status', 'Présence confirmée avec succès');
+        return redirect()->back()->with('status', 'Presence confirmee avec succes');
     }
-
     /**
      * Display the specified resource.
      */
@@ -79,9 +82,32 @@ class PresenceController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    //Presence depart  
     public function update(Request $request, Presence $presence)
     {
-        //
+        $validatedData = $request->validate([
+            'bssid'     => 'required|string',
+            'user_id'   => 'required|integer', 
+            'id'        => 'required|integer', 
+            
+        ]);
+
+        if ((Bssid::where('bssid', $validatedData['bssid'])->exists()) && (User::where(['id' => $validatedData['user_id']])->exists())) {
+            $presenceDay = Presence::where('id', $validatedData['id'])->whereDate('heureDepart', Carbon::today())->first();
+            if (($presenceDay)) {
+                return response()->json(['message' => 'Depart deja enregistre'], 202);
+            } else {
+                Presence::where(['id' => $validatedData['id']])->update([
+                    'heureDepart'   => date('Y-m-d H:i:s'),
+                    'updated_at'    => date('Y-m-d H:i:s'),
+                ]);
+                return response()->json(['message' => 'Depart enregistre'], 200);
+            };
+        } else {
+            return response()->json(['message' => 'Reseau non autorise'], 403);
+        }
+
+        return redirect()->back()->with('status', 'Presence confirmee  avec succes');
     }
 
     /**
