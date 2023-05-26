@@ -3,6 +3,7 @@
 use App\Models\Bssid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PresenceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,17 +16,6 @@ use Illuminate\Support\Facades\Route;
 |
 */ 
 
-Route::post('/scan', function (Request $request) {
-    $validatedData = $request->validate([
-        'bssid' => 'required|string',
-        'user_id' => 'required|integer',
-    ]);
-
-    if (Bssid::where('bssid', $validatedData['bssid'])->exists()) {
-        return response()->json(['message' => 'Succes'], 200);
-    }
-    else{
-        return response()->json(['message' => 'fail'], 403);
-    }
-});
+Route::post('scanArrive',[PresenceController::class,'store']);
+Route::patch('scanDepart',[PresenceController::class,'update']);  
 
