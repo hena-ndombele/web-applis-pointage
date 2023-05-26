@@ -27,4 +27,10 @@ Route::resource('presences', PresenceController::class);
 
 
 require('web_bssid.php'); 
+Route::resource('presences', PresenceController::class);
+
+
+
+Route::resource('bssid', BssidController::class);
+
 Auth::routes();
