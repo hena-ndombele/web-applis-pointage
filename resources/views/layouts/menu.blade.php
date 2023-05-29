@@ -5,7 +5,6 @@
         <p>Home</p>
     </a>
 </li>
-<<<<<<< HEAD
 
 <li class="nav-item">
     <a href="{{ route('presences.index') }}" class="nav-link {{ Request::is('presences') ? 'active' : '' }}">
@@ -14,11 +13,15 @@
     </a>
 </li>
 
-=======
 <li class="nav-item">
     <a href="{{ route('bssid.index') }}"  class="nav-link {{ Request::is('bssid') ? 'active' : '' }}">
         <i class="nav-icon fas fa-wifi"></i>
         <p>Bssid</p>
     </a>
 </li>
->>>>>>> 9caa6ed5495b544ed3e6bc63b417f68eecdc2fb6
+<li class="nav-item">
+    <a href="{{ route('absences.index') }}"  class="nav-link {{ Request::is('absences') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-minus"></i>
+        <p>Absences</p>
+    </a>
+</li>
