@@ -11,11 +11,20 @@
         <p>Roles</p>
     </a>
 </li>
+ resources/views/layouts/menu.blade.php
 @can('manage-users')
+
+
+
+ resources/views/layouts/menu.blade.php
 <li class="nav-item">
     <a href="{{ route('users.index') }}" class="nav-link {{ Request::is('users.index') ? 'active' : '' }}">
         <i class="nav-icon fas fa-users"></i>
         <p>Liste des utlisateurs</p>
     </a>
+resources/views/layouts/menu.blade.php
 </li>  
 @endcan
+
+</li>
+ resources/views/layouts/menu.blade.php
