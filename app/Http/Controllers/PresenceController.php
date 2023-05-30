@@ -19,7 +19,23 @@ class PresenceController extends Controller
     public function index()
     {
         $presences = Presence::orderBy('id', 'desc')->paginate(10);
-        return view('presences.index', compact('presences'));
+
+        $presenceJournaliere = Presence::orderBy('id', 'desc')->whereDate('created_at', Carbon::today())->paginate(10);
+        $presenceHebdo = Presence::orderBy('id', 'desc')->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->paginate(10);
+        $presenceMensuel = Presence::orderBy('id', 'desc')->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->paginate(10);
+        $presenceAnnuel = Presence::orderBy('id', 'desc')->whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->paginate(10);
+    
+        $jour = Carbon::now()->day;
+        $mois = Carbon::now()->month;
+        $annee = Carbon::now()->year;
+        $debutSemaine = Carbon::now()->startOfWeek();
+        $finSemaine = Carbon::now()->endOfWeek();
+        $semaineDeAnnee =  Carbon::now()->week();
+
+            // ->whereBetween('created_at', ['2022-01-01', '2022-01-07'])
+            // ->groupBy(DB::raw('WEEK(created_at)'))
+            // ->get();        
+        return view('presences.index', compact('presences', 'semaineDeAnnee', 'presenceJournaliere', 'presenceHebdo', 'presenceMensuel', 'presenceAnnuel' ,'jour', 'mois', 'annee', 'debutSemaine', 'finSemaine'));
     }
 
     /**
@@ -66,9 +82,28 @@ class PresenceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Presence $presence)
+    public function show($id)
     {
-        //
+    
+        $user = User::where(["id" => $id])->first();
+        $presences = Presence::orderBy('id', 'desc')->where(["user_id" => $id])->paginate(10);
+
+        #Variables des dates
+        $presenceJournaliere = Presence::orderBy('id', 'desc')->where(["user_id" => $id])->whereDate('created_at', Carbon::today())->paginate(10);
+        $presenceHebdo = Presence::orderBy('id', 'desc')->where(["user_id" => $id])->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->paginate(10);
+        $presenceMensuel = Presence::orderBy('id', 'desc')->where(["user_id" => $id])->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->paginate(10);
+        $presenceAnnuel = Presence::orderBy('id', 'desc')->where(["user_id" => $id])->whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->paginate(10);
+    
+        $jour = Carbon::now()->day;
+        $mois = Carbon::now()->month;
+        $annee = Carbon::now()->year;
+        $debutSemaine = Carbon::now()->startOfWeek();
+        $finSemaine = Carbon::now()->endOfWeek();
+        $semaineDeAnnee =  Carbon::now()->week();
+
+   
+        return view('presences.show', compact('user','presences', 'semaineDeAnnee', 'presenceJournaliere', 'presenceHebdo', 'presenceMensuel', 'presenceAnnuel' ,'jour', 'mois', 'annee', 'debutSemaine', 'finSemaine'));
+   
     }
 
     /**
