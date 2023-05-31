@@ -1,9 +1,9 @@
 <?php
 
+use App\Models\Bssid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\AuthController;
-
+use App\Http\Controllers\PresenceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,17 +14,8 @@ use App\Http\Controllers\Api\AuthController;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "api" middleware group. Make something great!
 |
-*/
+*/ 
 
-require('api_bssid.php'); 
+Route::post('scanArrive',[PresenceController::class,'store']);
+Route::patch('scanDepart',[PresenceController::class,'update']);  
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-require 'api_login.php';
-require 'api_recuperer.php';
-require 'api_change-password.php';
-require 'api_register.php';
-require 'api_profil.php';
-require('api_absence.php'); 
