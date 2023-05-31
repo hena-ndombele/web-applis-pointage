@@ -3,6 +3,17 @@
 @section('content')
     <div class="container-fluid">
 
+         
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>  
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
         
        @include('bssid.modalDelete')
        @include('bssid.modalAdd')
@@ -25,19 +36,24 @@
               </tr>
             </thead>
             <tbody>
+                @php
+                    $number = 1;
+                @endphp
                 
                 @forelse ($bssid as $item) 
                     <tr>
-                        <th scope="row">{{ $item->id }}</th>
+                        <th scope="row">{{ $number }}</th>
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->bssid }}</td>
                         <td>
                             <div class="row">
                                 <a class="btn btn-danger mr-2" onclick="supprimer(event)" href="{{ route('bssid.destroy', $item->id)}}" data-toggle="modal" data-target="#modalDeleteForm" ><i class="fas fa-trash"></i></a>
                             </div>
-                            
                         </td>
                     </tr>
+                @php
+                    $number++;
+                @endphp
                 @empty
                     <tr>
                         <td colspan="5"> 

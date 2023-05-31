@@ -36,6 +36,8 @@
                                 <th>N°</th>
                                 <th>Noms</th>
                                 <th>Rôle</th>
+                                <th>HE</th>
+                                <th>HS</th>
                                 <th>Statut</th>
                                 <th>Action</th>
                             </tr>
@@ -46,6 +48,8 @@
                                     <td>{{$presence->id}}</td>
                                     <td>{{$presence->user->name}}</td>
                                     <td>Rôle</td>
+                                    <td>{{$presence->heureArrive}}</td>
+                                    <td>{{$presence->heureDepart}}</td>
                                     <td>
                                         <button class="btn btn-sm btn-<?php echo ($presence->status == 1) ? 'primary' : 'danger' ?>"><?php echo ($presence->status == 1) ? 'présent' : 'absent' ?></button> 
                                     </td>
@@ -64,6 +68,9 @@
                            
                         </thead>
                     </table>
+                    <div class="m-2 text-center mt-4">
+                        {{$presences->links()}}
+                    </div>
                 </div>
             </div>
     </section>

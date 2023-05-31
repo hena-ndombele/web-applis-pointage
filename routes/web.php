@@ -24,10 +24,21 @@ Route::get('/', function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
+routes/web.php
+
+Route::resource('presences', PresenceController::class);
+
+
+require('web_bssid.php'); 
+
 Route::resource('presences', PresenceController::class);
 
 
 
+ routes/web.php
 Route::resource('bssid', BssidController::class); 
+
+Route::resource('bssid', BssidController::class);
+ routes/web.php
 
 Auth::routes();
