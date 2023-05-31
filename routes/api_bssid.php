@@ -16,6 +16,9 @@ use App\Http\Controllers\PresenceController;
 |
 */ 
 
-Route::post('scanArrive',[PresenceController::class,'store']);
-Route::patch('scanDepart',[PresenceController::class,'update']);  
+Route::group(['middleware' => ['auth:sanctum']], function (){
+    Route::post('/scanArrive',[PresenceController::class, 'store'])->name('scanArrive');
+    Route::patch('/scanDepart',[PresenceController::class, 'update'])->name('scanDepart');
+});
+
 
