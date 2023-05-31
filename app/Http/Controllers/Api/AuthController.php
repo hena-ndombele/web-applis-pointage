@@ -43,9 +43,8 @@ class AuthController extends Controller
             $user=User::where('email',$request->email)->first();
             return response()->json(
                 [
-                    "status"=>true,
-                    "message"=> "Utilisateur connecté avec succes",
-                    "data"=>[
+                    "status"=>200,
+                     "data"=>[
                         "token"=>$user->createToken('auth_user')->plainTextToken,
                         "token_type"=>"Bearer",
                     ]
@@ -116,9 +115,9 @@ class AuthController extends Controller
     public function profile(Request $request){
         return response()->json(
             [
-                "status"=>true,
+                "status"=>1,
                 "message"=> "profile utilisateur",
-                "data"=>User::all(),
+                "data"=>Auth::user(),
                 ]
             );
 
@@ -175,14 +174,14 @@ $input['password']=Hash::make($input['new_password']);
 
 
 
-    public function recu(){
+    public function recu(Request $request){
 
         //recuperer les donnees
         try{
 
             return response()->json([
                 'status_code' =>200,
-                'status_message'=>'Les donnees ont ete recuperer   avec success',
+                'status_message'=>'utilisateur recuperer avec success',
                 'data' => User::all()
             ]); 
             
