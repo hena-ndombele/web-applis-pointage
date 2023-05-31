@@ -3,8 +3,8 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
-
 class UserController extends Controller
 {
     public function __construct()
@@ -17,7 +17,12 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('users.index')->with('users', $users);
+        $modelFiles = File::files(app_path('Models'));
+        foreach ($modelFiles as $file) {
+            $models[] = pathinfo($file)['filename'];
+        }
+        $models = [];
+        return view('users.index', compact(['models']))->with('users', $users);
     }
     /**
      * Show the form for creating a new resource.
@@ -34,18 +39,19 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show($id)
     {
+        $user = User::findOrFail($id);
+        return view('users.show', compact('user'));
     }
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(User $user, Role $role)
     {
-       /*  if(Gate::denies('edit-users')){
-            return redirect()->route('users.index');
-        } */
-
+        /*  if(Gate::denies('edit-users')){
+             return redirect()->route('users.index');
+         } */
         $roles = role::all();
         return view('users.edit', compact(['user', 'roles']));
     }
@@ -54,10 +60,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-
         $user->roles()->sync($request->roles);
-        $user->name= $request->name;
-        $user->email= $request->email;
         $user->save();
         return redirect()->route('users.index');
     }
@@ -66,17 +69,11 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if(Gate::denies('delete-users')){
-            return redirect()->route('users.index');
-        }
         $user->roles()->detach();
         $user->delete();
         return redirect()->route('users.index');
     }
 }
-
-
-
 
 
 
