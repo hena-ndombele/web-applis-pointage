@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->time('heureArrive')->default('00:00:00');
-            $table->date('heureDepart')->default('0001-01-01 00:00:00 ');
+            $table->dateTime('heureDepart')->default('0001-01-01 00:00:00 ');
             $table->integer('status')->default(0);
             $table->timestamps();
         });

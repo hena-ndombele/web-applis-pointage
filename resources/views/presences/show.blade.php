@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="content">
+   
     <section class="content-header">
         <div class="container-fluid">
           <div class="row mb-2">
@@ -11,15 +12,19 @@
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Présences</li>
+                <li class="breadcrumb-item ">Présences</li>
+                <li class="breadcrumb-item active">{{$user->name}}</li>
               </ol>
             </div>
           </div>
         </div><!-- /.container-fluid -->
     </section>
+
     <section class="content">
         <div class="card-body">
-            <h4>Liste de présence </h4>
+            <h4>
+                Liste de présence de : {{$user->name}}
+             </h4>
             <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
               <li class="nav-item">
                 <a class="nav-link active" id="custom-content-below-home-tab" data-toggle="pill" href="#custom-content-below-home" role="tab" aria-controls="custom-content-below-home" aria-selected="true">Jour</a>
@@ -51,37 +56,25 @@
                               <thead>
                                   <tr>
                                       <th>N°</th>
-                                      <th>Noms</th>
-                                      <th>Rôle</th>
+                                      <th>Date</th>
                                       <th>HE</th>
                                       <th>HS</th>
                                       <th>Statut</th>
-                                      <th>Action</th>
                                   </tr>
                               </thead>
                               <tbody>
                                   @forelse ($presenceJournaliere as $presence)
                                       <tr>
                                           <td>{{$presence->id}}</td>
-                                          <td>{{$presence->user->name}}</td>
-                                          <td>Rôle</td>
+                                          <td>{{date("d-m-Y", strtotime($presence->created_at) )}}</td>
                                           <td>{{$presence->heureArrive}}</td>
                                           <td>{{ date("H:i:s", strtotime($presence->heureDepart) )}}</td>
                                           <td>
                                               <button class="btn btn-sm btn-<?php echo ($presence->status == 1) ? 'primary' : 'danger' ?>"><?php echo ($presence->status == 1) ? 'présent' : 'absent' ?></button> 
                                           </td>
-                                          <td>
-                                              <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalPresence-{{$presence->id}}">
-                                                  <i class="fas fa-eye"></i>
-                                              </button>
-                                              <a type="button" class="btn btn-primary btn-sm" href="{{route("presences.show", $presence->user->id)}}">
-                                                <i class="fas fa-sort-alpha-down"></i>
-                                              </a>
-                                              @include('partials.modalPresence')
-                                          </td>
                                       </tr>
                                   @empty
-                                  <h5>Aucune présence signalée</h5>
+                                  <h5 class="text-center">Aucune présence signalée</h5>
                                 @endforelse
                               </tbody>
                                 
@@ -110,37 +103,25 @@
                             <thead>
                                 <tr>
                                     <th>N°</th>
-                                    <th>Noms</th>
-                                    <th>Rôle</th>
+                                    <th>Date</th>
                                     <th>HE</th>
                                     <th>HS</th>
                                     <th>Statut</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse ($presenceHebdo as $presence)
-                                    <tr>
-                                        <td>{{$presence->id}}</td>
-                                        <td>{{$presence->user->name}}</td>
-                                        <td>Rôle</td>
-                                        <td>{{$presence->heureArrive}}</td>
-                                        <td>{{ date("H:i:s", strtotime($presence->heureDepart) )}}</td>
-                                        <td>
-                                            <button class="btn btn-sm btn-<?php echo ($presence->status == 1) ? 'primary' : 'danger' ?>"><?php echo ($presence->status == 1) ? 'présent' : 'absent' ?></button> 
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalPresence-{{$presence->id}}">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <a type="button" class="btn btn-primary btn-sm" href="{{route("presences.show", $presence->user->id)}}">
-                                                <i class="fas fa-sort-alpha-down"></i>
-                                              </a>
-                                            @include('partials.modalPresence')
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td>{{$presence->id}}</td>
+                                    <td>{{date("d-m-Y", strtotime($presence->created_at) )}}</td>
+                                    <td>{{$presence->heureArrive}}</td>
+                                    <td>{{ date("H:i:s", strtotime($presence->heureDepart) )}}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-<?php echo ($presence->status == 1) ? 'primary' : 'danger' ?>"><?php echo ($presence->status == 1) ? 'présent' : 'absent' ?></button> 
+                                    </td>
+                                </tr>
                                 @empty
-                                <h5>Aucune présence signalée</h5>
+                                <h5 class="text-center">Aucune présence signalée</h5>
                               @endforelse
                             </tbody>
                               
@@ -169,37 +150,25 @@
                           <thead>
                               <tr>
                                   <th>N°</th>
-                                  <th>Noms</th>
-                                  <th>Rôle</th>
+                                  <th>Date</th>
                                   <th>HE</th>
                                   <th>HS</th>
                                   <th>Statut</th>
-                                  <th>Action</th>
                               </tr>
                           </thead>
                           <tbody>
                               @forelse ($presenceMensuel as $presence)
-                                  <tr>
-                                      <td>{{$presence->id}}</td>
-                                      <td>{{$presence->user->name}}</td>
-                                      <td>Rôle</td>
-                                      <td>{{$presence->heureArrive}}</td>
-                                      <td>{{ date("H:i:s", strtotime($presence->heureDepart) )}}</td>
-                                      <td>
-                                          <button class="btn btn-sm btn-<?php echo ($presence->status == 1) ? 'primary' : 'danger' ?>"><?php echo ($presence->status == 1) ? 'présent' : 'absent' ?></button> 
-                                      </td>
-                                      <td>
-                                          <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalPresence-{{$presence->id}}">
-                                              <i class="fas fa-eye"></i>
-                                          </button>
-                                          <a type="button" class="btn btn-primary btn-sm" href="{{route("presences.show", $presence->user->id)}}">
-                                            <i class="fas fa-sort-alpha-down"></i>
-                                          </a>
-                                          @include('partials.modalPresence')
-                                      </td>
-                                  </tr>
+                              <tr>
+                                <td>{{$presence->id}}</td>
+                                <td>{{date("d-m-Y", strtotime($presence->created_at) )}}</td>
+                                <td>{{$presence->heureArrive}}</td>
+                                <td>{{ date("H:i:s", strtotime($presence->heureDepart) )}}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-<?php echo ($presence->status == 1) ? 'primary' : 'danger' ?>"><?php echo ($presence->status == 1) ? 'présent' : 'absent' ?></button> 
+                                </td>
+                            </tr>
                               @empty
-                              <h5>Aucune présence signalée</h5>
+                              <h5 class="text-center">Aucune présence signalée</h5>
                             @endforelse
                           </tbody>
                             
@@ -228,37 +197,25 @@
                           <thead>
                               <tr>
                                   <th>N°</th>
-                                  <th>Noms</th>
-                                  <th>Rôle</th>
+                                  <th>Date</th>
                                   <th>HE</th>
                                   <th>HS</th>
                                   <th>Statut</th>
-                                  <th>Action</th>
                               </tr>
                           </thead>
                           <tbody>
                               @forelse ($presenceAnnuel as $presence)
-                                  <tr>
-                                      <td>{{$presence->id}}</td>
-                                      <td>{{$presence->user->name}}</td>
-                                      <td>Rôle</td>
-                                      <td>{{$presence->heureArrive}}</td>
-                                      <td>{{ date("H:i:s", strtotime($presence->heureDepart) )}}</td>
-                                      <td>
-                                          <button class="btn btn-sm btn-<?php echo ($presence->status == 1) ? 'primary' : 'danger' ?>"><?php echo ($presence->status == 1) ? 'présent' : 'absent' ?></button> 
-                                      </td>
-                                      <td>
-                                          <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalPresence-{{$presence->id}}">
-                                              <i class="fas fa-eye"></i>
-                                          </button>
-                                          <a type="button" class="btn btn-primary btn-sm" href="{{route("presences.show", $presence->user->id)}}">
-                                            <i class="fas fa-sort-alpha-down"></i>
-                                          </a>
-                                          @include('partials.modalPresence')
-                                      </td>
-                                  </tr>
+                              <tr>
+                                <td>{{$presence->id}}</td>
+                                <td>{{date("d-m-Y", strtotime($presence->created_at) )}}</td>
+                                <td>{{$presence->heureArrive}}</td>
+                                <td>{{ date("H:i:s", strtotime($presence->heureDepart) )}}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-<?php echo ($presence->status == 1) ? 'primary' : 'danger' ?>"><?php echo ($presence->status == 1) ? 'présent' : 'absent' ?></button> 
+                                </td>
+                            </tr>
                               @empty
-                              <h5>Aucune présence signalée</h5>
+                              <h5 class="text-center">Aucune présence signalée</h5>
                             @endforelse
                           </tbody>
                             
@@ -278,5 +235,5 @@
            
     </section>
 </div>
-    
+
 @endsection
