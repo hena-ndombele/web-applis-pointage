@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('presences', function (Blueprint $table) {
+        Schema::create('role_police', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->time('heureArrive')->default('00:00:00');
-            $table->dateTime('heureDepart')->default('0001-01-01 00:00:00 ');
-            $table->integer('status')->default(0);
+            $table->bigInteger('role_id');
+            $table->string('model');
+            $table->string('action');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('presences');
+        Schema::dropIfExists('role_police');
     }
 };

@@ -13,6 +13,12 @@ class BssidController extends Controller
     }
 
     public function store(Request $request){
+
+        $request->validate([
+            'name' => 'required|string|unique:bssids',
+            'bssid' => 'required|string|unique:bssids',
+        ]);
+
         $bssid = Bssid::create([
             'name'=>$request->name,
             'bssid'=>$request->bssid,
