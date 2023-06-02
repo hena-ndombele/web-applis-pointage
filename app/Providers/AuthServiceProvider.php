@@ -55,6 +55,9 @@ class AuthServiceProvider extends ServiceProvider
             if (isset($actionMap[$action])) {
                 $action = $actionMap[$action];
             }
+            if ($role->name == 'admin') {
+                return true;
+            }
             // ici on vérifier si l'utilisateur possède plusieurs rôles
             $roles = User::find($user_id)->roles()->pluck('id')->toArray(); // Récupération des IDs de deux rôles sous forme de tableau
             $check = DB::table('role_police')->where('model', $model)

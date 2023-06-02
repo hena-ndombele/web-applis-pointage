@@ -5,10 +5,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\DB;
-
-
-use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,8 +19,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+
+
         // création de notre variable access qui sera utilisé dans toutes nos vues
-        Blade::if('sda', function ($action, $model) {
+        Blade::if('permission', function ($action, $model) {
             // ici on récupere l'utilisateur connection (particulièrement son id)
             $user_id = Auth::user()->id;
             // ici on chercher l'utilisateur grace à son id qui est stocker dans la variable $user_id
@@ -43,6 +42,11 @@ class AppServiceProvider extends ServiceProvider
             } else {
                 $role = $user->roles->first();
             }
+
+            if ($role->name == 'admin') {
+                return true;
+            }
+            
             // Récuperation des plusieurs rôles
             $roles = User::find($user_id)->roles()->pluck('id')->toArray(); // Récupération des IDs de deux rôles sous forme de tableau
             $check = DB::table('role_police')->where('model', $model)
@@ -56,7 +60,5 @@ class AppServiceProvider extends ServiceProvider
                 return false; // l'utilisateur n'a pas les autorisations nécessaires
             }
         });
-        Schema::defaultStringLength(191);
-        Paginator::useBootstrap();
     }
 }
