@@ -16,7 +16,6 @@
 
 
 
- resources/views/layouts/menu.blade.php
 <li class="nav-item">
     <a href="{{ route('users.index') }}" class="nav-link {{ Request::is('users.index') ? 'active' : '' }}">
         <i class="nav-icon fas fa-users"></i>
@@ -27,4 +26,9 @@ resources/views/layouts/menu.blade.php
 @endcan
 
 </li>
- resources/views/layouts/menu.blade.php
+<li class="nav-item">
+    <a href="{{ route('absences.index') }}"  class="nav-link {{ Request::is('absences') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-minus"></i>
+        <p>Absences</p>
+    </a>
+</li>
