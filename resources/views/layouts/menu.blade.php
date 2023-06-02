@@ -12,11 +12,12 @@
     </a>
 </li>
 
-
-
+p
 
 
 @permission('read','User')
+
+
 <li class="nav-item">
     <a href="{{ route('users.index') }}" class="nav-link {{ Request::is('users.index') ? 'active' : '' }}">
         <i class="nav-icon fas fa-users"></i>
@@ -24,9 +25,18 @@
     </a>
 
 </li>
+
 @endpermission
 
 
 
+</li>
+
+
+<li class="nav-item">
+    <a href="{{ route('absences.index') }}"  class="nav-link {{ Request::is('absences') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-minus"></i>
+        <p>Absences</p>
+    </a>
 </li>
 
