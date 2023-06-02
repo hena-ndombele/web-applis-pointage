@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::post('/absences', [AbsenceController::class, 'store']);
-Route::put('/absences/cancel', [AbsenceController::class, 'cancel']);
+Route::get('/absences', [AbsenceController::class, 'show']);
+Route::post('/absences/cancel', [AbsenceController::class, 'cancel']);
 Route::get('/absences/{user_id}', [AbsenceController::class, 'findForUser']);
 
