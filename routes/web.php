@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BssidController;
 use App\Http\Controllers\PresenceController;
-use Illuminate\Support\Facades\Auth;
 @include('webAcl.php');
 /*
 |--------------------------------------------------------------------------
