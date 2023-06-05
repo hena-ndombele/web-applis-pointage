@@ -1,69 +1,57 @@
 @extends('layouts.app')
+@section('title')
+    <span>Liste des Utilisateurs</span>
+@endsection
 @section('content')
-   <section class="content-header">
-     <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1>Liste des utlisateurs</h1>
-        </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Liste des utlisateurs</li>
-          </ol>
-        </div>
-      </div>
-     </div><!-- /.container-fluid -->
-  </section>
-   <div class="card">
-    
-        <div class="card-header text-center">
-            <h3 class="card-title"></h3>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th style="width: 10px">#</th>
-                        <th>Nom</th>
-                        <th>Email</th>
-                        <th>Rôles</th>
-                        @can('manage-users')
-                        <th>Action</th>   
-                        @endcan
+<div class="container-fluid">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="example1" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Rôles</th>
+                            
+                            <th>Action</th>
 
-                    </tr>
-                </thead>
+                            
+                            
+                           
+                            
+                        </tr>
+                    </thead>
                     <tbody>
                         @foreach ($users as $user)
                         <tr>
-                            <td>  # </td>
-                        <td> {{$user->name }} </td>
-                        <td> {{$user->email }} </td>
-                        <td> {{ implode(',' , $user->roles()->get()->pluck('name')->toArray()) }} </td>
-                        @can('manage-users')
-                        <td>
+                            <td> {{$user->name }} </td>
+                            <td> {{$user->email }} </td>
+                            <td> 
+                                @foreach($user->roles as $role)
+                                <a href="{{ route('roles.show', $role->id) }}">{{ $role->name }}</a>, 
+                                @endforeach
+                            </td>
                             
-                            <a href=" {{route('users.edit', $user->id)}} "><button class=" btn btn-default"><i class="fas fa-pencil-alt"></i></button></a>
-                        
+                            <td>
+                                <a href=" {{route('users.edit', $user->id)}} "><button class=" btn btn-default"><i class="fas fa-pencil-alt"></i></button></a>
+                                @permission('delete', 'User')
+                                <form action="{{ route('users.destroy', $user->id) }}" method="post" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                                </form>
+                                @endpermission
+                            </td>
                             
-                            @can('delete-users')
-                            <form action="{{route('users.destroy', $user->id)}}" method="post" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                            </form>  
-                            @endcan
-                          
- 
-                          
-                            
-                        </td> 
-                        @endcan
-                        
-                    </tr>
-                    @endforeach
+                        </tr>
+                        @endforeach
                     </tbody>
-            </table>
+                </table>
+            </div>
         </div>
-
     </div>
+
+</div>
+
 @endsection

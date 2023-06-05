@@ -24,9 +24,30 @@ Route::get('/', function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+
+
+
+
+Route::resource('presences', PresenceController::class);
+
+
+require('web_bssid.php'); 
+
+Route::resource('presences', PresenceController::class);
+
+
+
+
+Route::resource('bssid', BssidController::class); 
+
+Route::resource('bssid', BssidController::class);
+
+
+
 Route::resource('presences', PresenceController::class);
 
 
 Route::resource('bssid', BssidController::class); 
+
 Auth::routes();
 Route::resource('absences', AbsenceController::class);

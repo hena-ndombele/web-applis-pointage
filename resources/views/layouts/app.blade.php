@@ -1,5 +1,4 @@
 <x-laravel-ui-adminlte::adminlte-layout>
-
     <body class="hold-transition sidebar-mini layout-fixed">
         <div class="wrapper">
             <!-- Main Header -->
@@ -19,5 +18,8 @@
             <!-- Main Footer -->
             @include('layouts.footer')
         </div>
+        
+            @yield('scripts')
+        
     </body>
 </x-laravel-ui-adminlte::adminlte-layout>
