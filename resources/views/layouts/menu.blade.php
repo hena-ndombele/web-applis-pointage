@@ -39,4 +39,10 @@ p
         <p>Absences</p>
     </a>
 </li>
+<li class="nav-item">
+    <a href="{{ route('taux.index') }}"  class="nav-link {{ Request::is('taux') ? 'active' : '' }}">
+        <i class="fa-solid fa-dollar-sign"></i>
+        <p>Taux</p>
+    </a>
+</li>
 

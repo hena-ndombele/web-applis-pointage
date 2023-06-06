@@ -51,3 +51,4 @@ Route::resource('bssid', BssidController::class);
 
 Auth::routes();
 Route::resource('absences', AbsenceController::class);
+require('web_taux.php');
