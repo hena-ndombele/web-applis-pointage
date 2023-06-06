@@ -35,13 +35,13 @@
                             
                             <td>
                                 <a href=" {{route('users.edit', $user->id)}} "><button class=" btn btn-default"><i class="fas fa-pencil-alt"></i></button></a>
-                                @sda('delete', 'User')
+                                @permission('delete', 'User')
                                 <form action="{{ route('users.destroy', $user->id) }}" method="post" class="d-inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
                                 </form>
-                                @endsda
+                                @endpermission
                             </td>
                             
                         </tr>

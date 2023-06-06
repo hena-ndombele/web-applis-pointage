@@ -24,36 +24,41 @@
             </ul>
             <div class="tab-content" id="custom-content-above-tabContent">
                <div class="tab-pane active show  fade" id="custom-content-below-home" role="tabpanel" aria-labelledby="custom-content-below-home-tab">
-                  <table class="table table-striped">
+                  <table class="table table-bordered">
                      <thead>
-                        <tr class="text-center">
-                           <th class="col-1 text-left">id</th>
-                           <th class="text-left col-4">Entité</th>
-                           <th>Créer</th>
-                           <th>Lire</th>
-                           <th>Modifier</th>
-                           <th>Supprimer</th>
+                        <tr>
+                           <th style="width: 10px">#</th>
+                           <th>Entité</th>
+                           <th>Create</th>
+                           <th>Read</th>
+                           <th>Update</th>
+                           <th>Delete</th>
+                          
                         </tr>
                      </thead>
                      <tbody>
                         @foreach ($models as $model)
                         <tr>
                            <td> {{++$i}} </td>
-                           <td class="text-left col-4">
+                           <td>
                               {{ $model }}
                            </td>
                            @foreach ($actions as $action)
-                           <td class="text-center">
-                              @php
-                              $verify =  DB::select('select * from role_police where role_id = ? and model = ? and action = ? ', [$role->id, $model, $action] );
-                              @endphp
-                              @if ($verify)
-                              <i class="fas fa-check"></i>
-                              @else
-                              <i class="fas fa-circle gray"></i>
-                              @endif
+                           <td class="">
+                               @php
+                                   $verify = DB::select('select * from role_police where role_id = ? and model = ? and action = ? ', [$role->id, $model, $action]);
+                               @endphp
+                           
+                               @if ($verify || $role=="admin")
+                                   <i class="fas fa-check"></i>
+                               @else
+                                   <i class="fas fa-circle gray"></i>
+                               @endif
                            </td>
+                           
                            @endforeach
+                         
+           
                         </tr>
                         @endforeach
                      </tbody>
