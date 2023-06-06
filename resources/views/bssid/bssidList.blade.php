@@ -36,6 +36,7 @@
                                 <button type="button" class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#modal-lg-{{$item->id}}">
                                     <i class="fas fa-eye"></i>
                                   </button>
+                                <a class="btn btn-success btn-sm mr-2"  href="{{ route('print', $item->id) }} }}" target="_blank"   ><i class="fas fa-print"></i></a>
                                 <a class="btn btn-danger btn-sm mr-2" onclick="supprimer(event)" href="{{ route('bssid.destroy', $item->id)}}" data-toggle="modal" data-target="#modalDeleteForm" ><i class="fas fa-trash"></i></a>
                             </div>
                             

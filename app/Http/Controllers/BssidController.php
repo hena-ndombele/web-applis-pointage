@@ -41,4 +41,9 @@ class BssidController extends Controller
     }
 
 
+    public function print(Bssid $bssid)
+    {
+
+        return view('bssid.print', compact('bssid'));
+    }
 }
