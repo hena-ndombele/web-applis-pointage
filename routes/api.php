@@ -23,8 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 require 'api_login.php';
-require 'api_recuperer.php';
-require 'api_change-password.php';
-require 'api_register.php';
-require 'api_profil.php';
 require('api_absence.php'); 
