@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Bssid extends Model
 {
     use HasFactory;
-        protected $fillable = ['name', 'bssid'];
+    protected $fillable = ['name', 'bssid', 'qr_code'];
 }
