@@ -11,9 +11,11 @@
         <p>Roles</p>
     </a>
 </li>
- resources/views/layouts/menu.blade.php
-@can('manage-users')
 
+p
+
+
+@permission('read','User')
 
 
 <li class="nav-item">
@@ -21,14 +23,20 @@
         <i class="nav-icon fas fa-users"></i>
         <p>Liste des utlisateurs</p>
     </a>
-resources/views/layouts/menu.blade.php
-</li>  
-@endcan
 
 </li>
+
+@endpermission
+
+
+
+</li>
+
+
 <li class="nav-item">
     <a href="{{ route('absences.index') }}"  class="nav-link {{ Request::is('absences') ? 'active' : '' }}">
         <i class="nav-icon fas fa-minus"></i>
         <p>Absences</p>
     </a>
 </li>
+
