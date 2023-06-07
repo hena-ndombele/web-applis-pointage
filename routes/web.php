@@ -53,3 +53,4 @@ Auth::routes();
 Route::resource('absences', AbsenceController::class);
 
 Route::get('print/{bssid}', [BssidController::class, 'print'])->name('print');
+require('web_taux.php');

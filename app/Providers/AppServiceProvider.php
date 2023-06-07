@@ -2,6 +2,7 @@
 namespace App\Providers;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\DB;
@@ -60,5 +61,6 @@ class AppServiceProvider extends ServiceProvider
                 return false; // l'utilisateur n'a pas les autorisations nécessaires
             }
         });
+        Paginator::useBootstrap();
     }
 }
