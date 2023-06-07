@@ -13,7 +13,7 @@ class TauxConfigurationController extends Controller
      */
     public function index()
     {
-        return view('taux.index', ['taux'=>TauxConfiguration::paginate(3), 'roles'=>Role::all(), 'exist'=>new TauxConfiguration()]);
+        return view('taux.index', ['taux'=>TauxConfiguration::paginate(2), 'roles'=>Role::all(), 'exist'=>new TauxConfiguration()]);
     }
 
     /**
@@ -51,26 +51,52 @@ class TauxConfigurationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(TauxConfiguration $tauxConfiguration)
+    public function edit($tauxConfiguration)
     {
+    
         $taux = TauxConfiguration::findOrFail($tauxConfiguration);
-        return view('taux.index', ['exist'=>$taux]);
+        return view('taux.edit', ['exist'=>$taux, 'roles'=>Role::all()]);
+        
+        
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TauxConfiguration $tauxConfiguration)
+    public function update(Request $request, $tauxConfiguration)
     {
-        //
+        
+        $validateData = $request->validate(
+            [
+                "role_id"=>'required|integer',
+                'montant'=>'required|integer',
+                'devise'=>'required|string',
+            ]
+            );
+        TauxConfiguration::where('id', $tauxConfiguration)->update(
+            [
+                'role_id'=>$validateData['role_id'],
+                'montant'=>$validateData['montant'],
+                'devise'=>$validateData['devise']
+
+            ]
+        );
+        return redirect()->route('taux.index')->with('success', "Modification avec succès");
+    
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TauxConfiguration $tauxConfiguration)
+    public function destroy($tauxConfiguration)
     {
-        $tauxConfiguration->delete();
-        return redirect()->route('taux.index')->with('success', "Suppression effectuée avec succès");
+        $taux = TauxConfiguration::findOrFail($tauxConfiguration);
+        if($taux){
+            $taux->delete();
+            return redirect()->route('taux.index')->with('success', "Suppression effectuée avec succès");
+        }
+        return redirect()->route('taux.index')->with('error', 'Erreur de suppression');
+        
+        
     }
 }

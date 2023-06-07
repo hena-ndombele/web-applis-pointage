@@ -61,7 +61,6 @@ class AppServiceProvider extends ServiceProvider
                 return false; // l'utilisateur n'a pas les autorisations nécessaires
             }
         });
-        Paginator::useBootstrapFour();
-        Paginator::useBootstrapFive();
+        Paginator::useBootstrap();
     }
 }

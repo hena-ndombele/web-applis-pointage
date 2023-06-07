@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('taux.store') }}" method="post">
+            <form action="{{ route('taux.store') }}" method="post" autocomplete="off">
                 @csrf
                 <div class="modal-body mx-3">
                     <div class="form-group">
@@ -22,19 +22,19 @@
                     </div>
                     <div class="form-group">
                         <label for="">Montant</label>
-                        <input type="number" class="form-control" name="montant" placeholder="Salaire de base" value="{{old('montant', $exist->montant)}}">
+                        <input type="number" class="form-control" name="montant" placeholder="Salaire de base">
                     </div>
                     <div class="form-group">
                         <label for="">Devise</label>
                         <select class="custom-select form-control-border" id="" name="devise">
-                            <option value="USD" @selected(old('devise', $exist->devise)=="USD")>DOLLAR (USD)</option>
-                            <option value="CDF" @selected(old('devise', $exist->devise)=="CDF")>FRANC CONGOLAIS (CDF)</option>
+                            <option value="USD">DOLLAR (USD)</option>
+                            <option value="CDF">FRANC CONGOLAIS (CDF)</option>
                         </select>
                     </div>
                     
                 </div>
-                <div class="modal-footer d-flex justify-content-center mt-2">
-                    <input type="submit" class="btn btn-primary" value="Enregistrer">
+                <div class="modal-footer d-flex justify-content-end mt-2">
+                    <button type="submit" class="btn btn-outline-success border" title="Enregistrer"><i class="fas fa-save"></i></button>
                 </div>
             </form>
         </div>

@@ -13,17 +13,15 @@
                     <div class="card">
                         @include('taux.create')
                         @if(session('success'))
-                            <div class="alert alert-success alert-dismissible">
+                            <div class="alert alert-success alert-dismissible m-4">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                 <h6><i class="icon fas fa-check"></i> Success! {{session('success')}}</h6>
-                                
                             </div>
                         @endif
-                        <div class="card-header">
-                            <h3 class="card-title">Taux de paie configurés</h3>
                         
+                        <div class="card-header">
                             <div class="d-flex flex-row-reverse bd-highlight">
-                                <input type="submit" class="btn btn-primary btn-rounded mb-4" data-toggle="modal" data-target="#modalAddForm" value="+Configurer">
+                                <button type="submit" class="btn btn-outline-default border" title="Configurer" data-toggle="modal" data-target="#modalAddForm"><i class="fas fa-plus-circle"></i></button>
                             </div>
                         </div>
                             <!-- /.card-header -->
@@ -41,16 +39,17 @@
                                 <tbody class="text">
                                     @forelse ($taux as $tx) 
                                     <tr>
+                                        <td hidden>{{$tx->id}}</td>
                                         <td scope="row">{{ $cpt++ }}</td>
                                         <td>{{ $tx->role->name }}</td>
                                         <td>{{ $tx->montant }}</td>
                                         <td>{{ strtoupper($tx->devise) }}</td>
-                                        <td class="col-lg-2">
-                                            <form action="{{ route('taux.destroy',$tx->id) }}" method="POST">
-                                                <a class="btn btn-outline-primary fas fa-folder" href="{{ route('taux.show',$tx) }}"></a>
+                                        <td class="d-flex">
+                                            <a href=" {{ route('taux.edit',$tx->id) }}" title="Modifier"><button class=" btn btn-default mx-1"><i class="fas fa-pencil-alt"></i></button></a>
+                                            <form action="{{ route('taux.destroy',$tx) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                                <button type="submit" class="btn btn-outline-danger" title="Supprimer"><i class="fas fa-trash"></i></button>
                                             </form>
                                         </td>
                                     </tr>
@@ -64,8 +63,12 @@
                                 </tbody>
                                 
                             </table>
-                            <div class="d-flex justify-content-end pagination-xs mt-2">
-                                {!! $taux->links() !!}
+                            
+                            <div class="card-footer mt-2">
+                                <ul class="pagination pagination-xs m-0 float-right">
+                                    <li class="page-item m-1"><a class="page-link" href="{{ $taux->previousPageUrl() }}">Précédent</a></li>
+                                    <li class="page-item m-1"><a class="page-link" href="{{ $taux->nextPageUrl() }}">Suivant</a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -73,4 +76,11 @@
             </div>
         </div>
     </section>
+    <script>
+        function destroy(event) {
+            var route = event.target.getAttribute('href')
+            deleteForm.setAttribute('action', route)
+            //alert(route)
+        }
+    </script>
 @endsection
