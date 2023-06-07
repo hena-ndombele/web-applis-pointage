@@ -44,7 +44,7 @@ Route::resource('bssid', BssidController::class);
 
 
 
-Route::resource('presences', PresenceController::class);
+Route::resource('presences', PresenceController::class)->middleware('checkaccess:Presence');
 
 
 Route::resource('bssid', BssidController::class); 

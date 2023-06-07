@@ -61,6 +61,11 @@ class User extends Authenticatable
         return $this->hasMany(Article::class);
 
     }
+    public function presences()
+    {
+        return $this->hasMany(Presence::class);
+
+    }
 
     protected static function boot()
     {
