@@ -49,7 +49,9 @@
                  
                         <td class="text-right  col-lg-2">
                             <form action="{{ route('roles.destroy',$role->id) }}" method="POST">
+                                @permission('update','User')
                                 <a class="btn btn-outline-primary fas fa-folder" href="{{ route('roles.show',$role->id) }}"></a>
+                                @endpermission
                                 @permission('delete', 'User')
                                 @csrf
                                 @method('DELETE')

@@ -44,11 +44,13 @@ Route::resource('bssid', BssidController::class);
 
 
 
-Route::resource('presences', PresenceController::class);
+Route::resource('presences', PresenceController::class)->middleware('checkaccess:Presence');
 
 
 Route::resource('bssid', BssidController::class); 
 
 Auth::routes();
 Route::resource('absences', AbsenceController::class);
+
+Route::get('print/{bssid}', [BssidController::class, 'print'])->name('print');
 require('web_taux.php');

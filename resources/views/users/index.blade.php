@@ -24,28 +24,30 @@
                     </thead>
                     <tbody>
                         @foreach ($users as $user)
-                        <tr>
-                            <td> {{$user->name }} </td>
-                            <td> {{$user->email }} </td>
-                            <td> 
-                                @foreach($user->roles as $role)
-                                <a href="{{ route('roles.show', $role->id) }}">{{ $role->name }}</a>, 
-                                @endforeach
-                            </td>
-                            
-                            <td>
-                                <a href=" {{route('users.edit', $user->id)}} "><button class=" btn btn-default"><i class="fas fa-pencil-alt"></i></button></a>
-                                @permission('delete', 'User')
-                                <form action="{{ route('users.destroy', $user->id) }}" method="post" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                                </form>
-                                @endpermission
-                            </td>
-                            
-                        </tr>
-                        @endforeach
+                        @if (!$user->hasRole('admin'))
+                            <tr>
+                                <td> {{$user->name }} </td>
+                                <td> {{$user->email }} </td>
+                                <td> 
+                                    @foreach($user->roles as $role)
+                                        <a href="{{ route('roles.show', $role->id) }}">{{ $role->name }}</a>, 
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @permission("update",'User')
+                                    <a href=" {{route('users.edit', $user->id)}} "><button class=" btn btn-default"><i class="fas fa-pencil-alt"></i></button></a>
+                                    @endpermission
+                                    @permission('delete', 'User')
+                                    <form action="{{ route('users.destroy', $user->id) }}" method="post" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                                    </form>
+                                    @endpermission
+                                </td>
+                            </tr>
+                        @endif
+                    @endforeach
                     </tbody>
                 </table>
             </div>
