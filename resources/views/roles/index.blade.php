@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="text-right">
-                    @permission('create', 'User')
+                    @permission('create', 'Role')
                     <a class="btn btn-outline-default border" href="{{ route('roles.create') }}"><i class="fas fa-plus-circle"></i></a><br>
                     @endpermission
                 </div>
@@ -49,10 +49,10 @@
                  
                         <td class="text-right  col-lg-2">
                             <form action="{{ route('roles.destroy',$role->id) }}" method="POST">
-                                @permission('update','User')
+                                @permission('update','Role')
                                 <a class="btn btn-outline-primary fas fa-folder" href="{{ route('roles.show',$role->id) }}"></a>
                                 @endpermission
-                                @permission('delete', 'User')
+                                @permission('delete', 'Role')
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>

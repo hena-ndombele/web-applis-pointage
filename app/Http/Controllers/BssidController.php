@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Bssid;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Storage;
+
 
 class BssidController extends Controller
 {
@@ -18,11 +20,13 @@ class BssidController extends Controller
         
         $qrcode = QrCode::size(200)->generate(
             "api/scan",
-            "../public/storage/codes_qr/$request->name.svg"
+            // "../public/storage/codes_qr/$request->name.svg"
         );
 
         $qr_codePath = "codes_qr/$request->name.svg";
 
+ 
+    Storage::disk('local')->put("public/codes_qr/$request->name.svg",  $qrcode);
 
         Bssid::create([
             'name'      => $request->name,
