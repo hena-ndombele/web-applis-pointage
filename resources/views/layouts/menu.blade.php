@@ -18,15 +18,18 @@
         <i class="nav-icon fas fa-users"></i>
         <p>Liste des utlisateurs</p>
     </a>
+</li> 
 
-</li>
-@endpermission
-@permission('read','Agent')
 <li class="nav-item">
-    <a href="{{ route('agents.index') }}" class="nav-link {{ Request::is('agents.index') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-users"></i>
-        <p>Agents</p>
+    <a href="{{ route('presences.index') }}" class="nav-link {{ Request::is('presences') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-th"></i>
+        <p>Présences</p>
     </a>
+</li>
+
+
+@include('layouts.bssidMenu');
+
 
 </li>
 @endpermission
@@ -51,6 +54,26 @@
     <a href="{{ route('presences.index') }}" class="nav-link {{ Request::is('presences') ? 'active' : '' }}">
         <i class="nav-icon fas fa-th"></i>
         <p>Présences</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ route('conge.index') }}" class="nav-link {{ Request::is('conge') ? 'active' : '' }}">
+        <i class="nav-icon fa fa-calendar"></i>
+        <p>congés légaux</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('demandes.index') }}" class="nav-link {{ Request::is('demande') ? 'active' : '' }}">
+        <i class="nav-icon fa fa-bell-o"></i>
+        <p>Démandes de congé</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('bssid.index') }}"  class="nav-link {{ Request::is('bssid') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-wifi"></i>
+        <p>Bssid</p>
     </a>
 </li>
 @endpermission
