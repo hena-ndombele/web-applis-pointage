@@ -43,8 +43,8 @@
                                     <tr>
                                         <th>N°</th>
                                         <th>Agent</th>
-                                        <th>Fonction</th>
-                                        <th>Montant de base</th>
+                                        <th>Nombre des jours</th>
+                                        <th>Salaire</th>
                                         <th>Dévise</th>
                                         <th>Action</th>
                                     </tr>
@@ -53,14 +53,14 @@
                                     @forelse ($paies as $paie) 
                                     <tr>
                                         <td scope="row">{{ $cpt++ }}</td>
-                                        <td>{{ strtoupper($paie->name) }}</td>
-                                        <td>{{ strtoupper($paie->role_name)}}</td>
-                                        <td>{{ $paie->montant }}</td>
-                                        <td>{{ ($paie->devise) }}</td>
+                                        <td>{{ strtoupper($paie->user->name) }}</td>
+                                        <td>{{ $paie->jours_presents }}</td>
+                                        <td>{{ $paie->taux_configuration->montant*$paie->jours_presents }}</td>
+                                        <td>{{ ($paie->taux_configuration->devise) }}</td>
                                         <td class="d-flex">
                                             <form action="{{ route('paie.store') }}" method="POST">
                                                 @csrf
-                                                <input type="hidden" name="user_id" value="{{$paie->user_id}}">
+                                                <input type="hidden" name="user_id" value="{{$paie->id}}">
                                                 <input type="hidden" name="taux_id" value="{{$paie->id}}">
                                                 <button type="submit" class=" btn btn-outline-success mx-1" title="Ajouter à la liste de paie"><i class="fas fa-plus-circle"></i></button>
                                             </form>
