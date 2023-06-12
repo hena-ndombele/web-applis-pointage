@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AbsenceController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -32,3 +33,7 @@ Route::resource('conge',CongeController::class);
 Route::resource('demandes', DemandeCongeController::class);
 
 Auth::routes();
+Route::resource('absences', AbsenceController::class);
+
+Route::get('print/{bssid}', [BssidController::class, 'print'])->name('print');
+require('web_taux.php');
