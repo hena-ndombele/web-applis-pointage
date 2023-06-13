@@ -5,7 +5,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BssidController;
+use App\Http\Controllers\CongeController;
 use App\Http\Controllers\PresenceController;
+use App\Http\Controllers\DemandeCongeController;
 @include('webAcl.php');
 /*
 |--------------------------------------------------------------------------
@@ -24,30 +26,11 @@ Route::get('/', function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
-
-
-
-Route::resource('presences', PresenceController::class);
-
-
 require('web_bssid.php'); 
 
 Route::resource('presences', PresenceController::class);
-
-
-
-
-Route::resource('bssid', BssidController::class); 
-
-Route::resource('bssid', BssidController::class);
-
-
-
-Route::resource('presences', PresenceController::class)->middleware('checkaccess:Presence');
-
-
-Route::resource('bssid', BssidController::class); 
+Route::resource('conge',CongeController::class);
+Route::resource('demandes', DemandeCongeController::class);
 
 Auth::routes();
 Route::resource('absences', AbsenceController::class);
