@@ -7,6 +7,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\BssidController;
 use App\Http\Controllers\PresenceController;
 @include('webAcl.php');
+use App\Http\Controllers\TauxConfigurationController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,5 +31,6 @@ Route::resource('bssid', BssidController::class);
 Route::resource('bssid', BssidController::class);
 Auth::routes();
 Route::resource('absences', AbsenceController::class);
+Route::resource('taux', TauxConfigurationController::class);
 
 
