@@ -3,10 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Role;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\File;
 
 class User extends Authenticatable
 {
@@ -20,6 +23,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'image',
+        'telephone',
         'password',
     ];
 
@@ -41,15 +46,42 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
     public function roles(){
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany('App\Models\Role');
     }
 
-    public function isAdmin(){
-        return $this->roles()->where('name','admin')->first();
+    public function hasRole($role)
+    {
+    return $this->roles()->where('name', $role)->exists();
+    }
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+
+    }
+    public function presences()
+    {
+        return $this->hasMany(Presence::class);
+
     }
 
-    public function hasAnyRole(array $roles){
-        return $this->roles()->whereIn('name', $roles)->first();
+    protected static function boot()
+    {
+        parent::boot();
+    
+        static::created(function ($user) {
+            $adminRole = Role::where('name', 'admin')->first();
+            if (!$adminRole) {
+                $adminRole = Role::create(['name' => 'admin']);
+            }
+            if (User::count() == 1) {
+                $user->roles()->attach($adminRole);
+            } else {
+                $user->roles()->attach(Role::where('name', 'user')->first());
+            }
+            
+        });
     }
 }
