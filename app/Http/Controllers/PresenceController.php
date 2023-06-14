@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Bssid;
 use App\Models\Presence;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Date;
 
+use Illuminate\Support\Facades\Date;
 use function PHPUnit\Framework\isEmpty;
 
 class PresenceController extends Controller
@@ -17,23 +18,42 @@ class PresenceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $presences = Presence::orderBy('id', 'desc')->paginate(10);
+        $month = $request->input('month');
+        $date = strtotime($month); // Convertir la chaîne de caractères en objet de date PHP
+        $monthNum = date('m', $date); // Extraire le numéro du mois (ex: "06")
+        $year = date('Y', $date); // Extraire l'année (ex: "2023")
 
-        $presenceJournaliere = Presence::orderBy('id', 'desc')->whereDate('created_at', Carbon::today())->paginate(10);
-        $presenceHebdo = Presence::orderBy('id', 'desc')->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->paginate(10);
-        $presenceMensuel = Presence::orderBy('id', 'desc')->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->paginate(10);
-        $presenceAnnuel = Presence::orderBy('id', 'desc')->whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->paginate(10);
-    
-        $jour = Carbon::now()->day;
-        $mois = Carbon::now()->month;
-        $annee = Carbon::now()->year;
-        $debutSemaine = Carbon::now()->startOfWeek();
-        $finSemaine = Carbon::now()->endOfWeek();
-        $semaineDeAnnee =  Carbon::now()->week();
-            
-        return view('presences.index', compact('presences', 'semaineDeAnnee', 'presenceJournaliere', 'presenceHebdo', 'presenceMensuel', 'presenceAnnuel' ,'jour', 'mois', 'annee', 'debutSemaine', 'finSemaine'));
+
+
+        // Déterminer le nombre de jours dans le mois
+        $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $monthNum, $year);
+
+        // Générer une grille de dates pour chaque jour du mois
+        $dates = [];
+        for ($day = 1; $day <= $daysInMonth; $day++) {
+            // Créer un objet de date correspondant à la date actuelle
+            $dateObj = DateTime::createFromFormat('Y-m-d', "$year-$monthNum-$day");
+
+            // Ajouter la date à la grille de dates
+            $dates[] = [
+                'day' => $day,
+                'date' => $dateObj->format('Y-m-d'),
+                'weekday' => $dateObj->format('D')
+            ];
+        }
+
+
+        // Passer les données du calendrier à la vue Blade correspondante
+
+        return view('presences.index', compact(
+            'month',
+            'year',
+            'monthNum',
+            'dates',
+            'date'
+        ));
     }
 
     /**
@@ -82,27 +102,36 @@ class PresenceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($date, Request $request, Presence $presence)
     {
     
-        $user = User::where(["id" => $id])->first();
-        $presences = Presence::orderBy('id', 'desc')->where(["user_id" => $id])->paginate(10);
+         // L'heure renvoyé par l'url
+         $dateUrl = $request->input('date');
 
-        #Variables des dates
-        $presenceJournaliere = Presence::orderBy('id', 'desc')->where(["user_id" => $id])->whereDate('created_at', Carbon::today())->paginate(10);
-        $presenceHebdo = Presence::orderBy('id', 'desc')->where(["user_id" => $id])->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->paginate(10);
-        $presenceMensuel = Presence::orderBy('id', 'desc')->where(["user_id" => $id])->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->paginate(10);
-        $presenceAnnuel = Presence::orderBy('id', 'desc')->where(["user_id" => $id])->whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->paginate(10);
-    
-        $jour = Carbon::now()->day;
-        $mois = Carbon::now()->month;
-        $annee = Carbon::now()->year;
-        $debutSemaine = Carbon::now()->startOfWeek();
-        $finSemaine = Carbon::now()->endOfWeek();
-        $semaineDeAnnee =  Carbon::now()->week();
 
-   
-        return view('presences.show', compact('user','presences', 'semaineDeAnnee', 'presenceJournaliere', 'presenceHebdo', 'presenceMensuel', 'presenceAnnuel' ,'jour', 'mois', 'annee', 'debutSemaine', 'finSemaine'));
+         // On convertis la date en format DateTime()
+         $dateConvertis = Carbon::createFromFormat('Y-m-d', $date);
+ 
+         // Récupérer les informations de présence en fonction de la date sélectionnée
+         $presences =  Presence::whereDate('created_at', $date)->paginate(10); //Avec whereDate on reccupere la date uniquement pas l'heure
+ 
+ 
+ 
+         // Définir la plage de dates du mois sélectionné
+         $month_start = Carbon::parse($date)->startOfMonth();
+         $month_end = Carbon::parse($date)->endOfMonth();
+ 
+         // Compter le nombre total des présences pour le mois sélectionné
+         $count = Presence::where('user_id', $presence->user_id)
+             ->whereBetween('created_at', [$month_start, $month_end])
+             ->count();
+ 
+ 
+         // Récupérer le mois à partir de la date
+          $toDay = Carbon::parse($date)->format('d-M-Y');
+ 
+         // Afficher la vue avec les informations de présence
+         return view('presences.show', compact('presences', 'dateUrl', 'count', 'date', 'toDay'));
    
     }
 
@@ -155,5 +184,5 @@ class PresenceController extends Controller
     public function destroy(Presence $presence)
     {
         //
-    }
+    }  
 }
