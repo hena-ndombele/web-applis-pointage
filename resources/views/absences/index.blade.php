@@ -1,24 +1,11 @@
 @extends('layouts.app')
-
+@section('title')
+<span>Absence</span>
+@endsection
 @section('content')
     @php
     $cpt =1;   
     @endphp
-    <section class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1>Absences</h1>
-            </div>
-            <div class="col-sm-6">
-              <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="{{ route('absences.index') }}">Absences</a></li>
-                <li class="breadcrumb-item active">Liste</li>
-              </ol>
-            </div>
-          </div>
-        </div><!-- /.container-fluid -->
-      </section>
     <section class="content mt-2">
         <div class="container-fluid">
             <div class="row">
