@@ -110,4 +110,16 @@
     </a>
 </li>
 @endpermission
+<li class="nav-item">
+    <a href="{{ route('contrats.index') }}"  class="nav-link {{ Request::is('contrats') ? 'active' : '' }}">
+        <i class="nav-icon fa fa-file-contract"></i>
+        <p>Contrats</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ route('horaires.index') }}"  class="nav-link {{ Request::is('horaires') ? 'active' : '' }}">
+        <i class="nav-icon fa fa-clock"></i>
+        <p>Horaires</p>
+    </a>
+</li>
 
