@@ -1,10 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;  
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\AuthController;
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -17,20 +15,9 @@ use App\Http\Controllers\Api\AuthController;
 |
 */
 
-require('api_bssid.php'); 
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['auth:sanctum']], function(){
+    Route::get('/profile',[AuthController::class,'profile']);
 });
 
-require 'api_login.php';
-require('api_absence.php'); 
-require 'api_logout.php';
-require 'api_profil.php';
-
-
-
-
-
-
-
+  
+?>
