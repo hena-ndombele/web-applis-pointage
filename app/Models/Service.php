@@ -19,4 +19,7 @@ class Service extends Model
     {
        return $this->belongsTo(Direction::class,'direction_id','id');
     }
+    public function agents(){
+        return  $this->hasMany(Agent::class);
+      }
 }

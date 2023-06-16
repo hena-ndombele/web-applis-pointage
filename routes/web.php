@@ -1,11 +1,14 @@
 <?php
 use App\Http\Controllers\AbsenceController;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BssidController;
 use App\Http\Controllers\CongeController;
+use App\Http\Controllers\AbsenceController;
 use App\Http\Controllers\PresenceController;
+use App\Http\Controllers\JoursFerieController;
 use App\Http\Controllers\DemandeCongeController;
 @include('webAcl.php');
 /*
@@ -25,6 +28,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 require('web_bssid.php');
 Route::resource('presences', PresenceController::class);
 Route::resource('conge',CongeController::class);
+Route::resource('feries',JoursFerieController::class);
 Route::resource('demandes', DemandeCongeController::class);
 Auth::routes();
 Route::resource('absences', AbsenceController::class);
