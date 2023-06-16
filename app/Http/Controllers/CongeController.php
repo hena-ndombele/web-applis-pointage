@@ -14,12 +14,19 @@ class CongeController extends Controller
       
     }
 
-    public function indexApi(){
-        $conge= Conge::all();
-        
-        return response()->json(['message' => $conge], 500);
-    }
+    // public function indexApi(){
+    //     $conges = Conge::select('id', 'type_conge')->get();
+    //     return response()->json($conges);
+    // }
 
+    public function indexApi(){
+        try {
+            $conges = Conge::select('id', 'type_conge','duree')->get();
+            return response()->json($conges);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
 
     public function store(Request $request){
         $request->validate([
