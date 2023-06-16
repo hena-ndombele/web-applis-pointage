@@ -15,4 +15,7 @@ class Direction extends Model
     public function departements(){
      return   $this->hasMany(Departement::class);
     }
+    public function agents(){
+      return  $this->hasMany(Agent::class);
+    }
 }
