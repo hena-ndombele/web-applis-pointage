@@ -79,6 +79,9 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+
+        var err;
+        
         function validerDemande(id) {
             Swal.fire({
                 title: 'Êtes-vous sûr de vouloir valider cette demande?',
@@ -137,6 +140,35 @@
                     let url = "{{ route('demandes.update', ':id') }}";  
                     url = url.replace(':id', id);
                     let token = "{{ csrf_token() }}";
+                    
+                        
+a
+                    let obj=new Object();
+                    obj.id = id;
+                    obj.token =token;
+                    obj.status = "rejeté";
+
+                    console.log(obj);
+                
+                    
+                    var message =new Object();
+                    message.text=obj;
+                    var targetOrigin = "http://localhost:5000";
+
+                    /*fetch('http://localhost:5000', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(message)
+                    });*/
+ 
+                    
+                    //window.parent.postMessage(message, "http://localhost:5000");
+                    
+                    //if (window.parent !== window && window.parent.postMessage) {
+                        // Envoyer le message à la fenêtre parent
+                     //   window.parent.postMessage(message, targetOrigin);
+                    //}
+                    
         
                     fetch(url, {
                         method: 'PUT',
@@ -169,6 +201,20 @@
                 }
             })
         }
+       /* fetch('./client-side.html', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({text:'salut'})
+                    });*/
+        //console.log(err);
+        fetch('http://localhost:5000/reception', {
+        method: 'POST',
+        body: JSON.stringify({text:'salut'})
+      })
+      .then(response => response.text())
+      .then(data => console.log(data))
+      .catch(error => console.log(error));
+        
     </script>
 
 @endsection
