@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BssidController;
 use App\Http\Controllers\CongeController;
-use App\Http\Controllers\AbsenceController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\JoursFerieController;
 use App\Http\Controllers\DemandeCongeController;
