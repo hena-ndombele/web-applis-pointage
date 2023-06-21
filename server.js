@@ -4,6 +4,7 @@ const socketIO=require('socket.io');
 const http=require('http')
 const port=process.env.PORT||5000
 var app=express();
+var identifiant;
 let server = http.createServer(app);
 var io=socketIO(server);
 
@@ -17,6 +18,7 @@ io.on('connection', (socket)=>{
     socket.on("joinRoom", (id)=>{
         socket.join("room-"+id);
         socket.join("room-all");
+        identifiant=id;
         console.log(`Id ${id} vient de rejoindre le Room`)
     })
 
@@ -40,6 +42,27 @@ io.on('connection', (socket)=>{
     socket.on('disconnect', ()=>{
         console.log('disconnected from user', socket.id);
     });
+    //_____________________________________________________________
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.post('/reception', (req, res) => {
+  const nom = req.body.nom;
+  const email = req.body.email;
+  const message = req.body.message;
+  console.log(nom);
+
+  // Traitez les données ici
+  
+  res.send('Données reçues avec succès !');
+});
+
+app.listen(8000, () => {
+  console.log('Le serveur est en cours d\'exécution sur le port 5000');
+});
+//_________________________________________________________
+
 
 });
 
