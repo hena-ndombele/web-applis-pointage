@@ -14,6 +14,39 @@ class AbsenceController extends Controller
         $absences = Absence::where('status', '=', 'active')->paginate(4);
         return view('absences.index', compact('absences'));
     }
+    /**
+     * @OA\Post(
+     *     path="/absences",
+     *     summary="Create a new absence message",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="motif", type="string"),
+     *             @OA\Property(property="date_absence", type="date"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid input"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Resource not found"
+     *     )
+     * )
+     */
     public function store(Request $request){
         $validateData = $request->validate(
             [
@@ -58,7 +91,38 @@ class AbsenceController extends Controller
         }
         return response()->json([], 400);
     }
-
+    /**
+     * @OA\Post(
+     *     path="/absences/cancel",
+     *     summary="Cancel an existing absence message before the required date",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id", type="integer"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid input"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Resource not found"
+     *     )
+     * )
+     */
     public function cancel(Request $request){
         $validateData = $request->validate(
             [

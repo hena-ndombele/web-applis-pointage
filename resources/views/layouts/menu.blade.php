@@ -117,4 +117,10 @@
     </a>
 </li>
 @endpermission
+<li class="nav-item">
+    <a href="{{ route('paie.index') }}"  class="nav-link {{ Request::is('paie') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-file"></i>
+        <p>Paie</p>
+    </a>
+</li>
 
