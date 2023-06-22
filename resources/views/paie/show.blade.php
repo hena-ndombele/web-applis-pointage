@@ -1,10 +1,11 @@
 @extends('layouts.app')
 @section('title')
-<span>Paie</span>
+<span><a href="{{route('paie.index')}}">Paie</a> / Agent {{strtolower($status)}}</span>
 @endsection
 @section('content')
     @php
-    $cpt =1;   
+        $cpt =1;  
+        $type = ""; 
     @endphp
     <section class="content mt-2">
         <div class="container-fluid">
@@ -23,18 +24,20 @@
                                 <h6><i class="icon fas fa-ban"></i>{{session('error')}}</h6>
                             </div>
                         @endif
+                        <div class="card-header">
+                            <div class="d-flex flex-row-reverse bd-highlight">
+                                <a href="{{ route('paie.pdf', ['status'=>$status])}}" class="btn btn-outline-success border" title="Générer le pdf" d><i class="fas fa-file-pdf"></i></a>
+                            </div>
+                        </div>
                         <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
                             <li class="nav-item">
-                              <a class="nav-link active" id="custom-content-below-home-tab" data-toggle="pill" href="#custom-content-below-home" role="tab" aria-controls="custom-content-below-home" aria-selected="true">Tous</a>
+                              <a class="nav-link" id="custom-content-below-home-tab"  href="{{ route('paie.index') }}" role="tab" aria-controls="custom-content-below-home" aria-selected="true">Tous</a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link" id="custom-content-below-profile-tab" data-toggle="pill" href="#custom-content-below-profile" role="tab" aria-controls="custom-content-below-profile" aria-selected="false">Enregistrés</a>
+                              <a class="nav-link" id="custom-content-below-messages-tab"  href="{{ route('paie.show', "PAYE") }}" role="tab" aria-controls="custom-content-below-messages" aria-selected="false">Payés</a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link" id="custom-content-below-messages-tab" data-toggle="pill" href="{{ route('paie.show', "PAYE") }}" role="tab" aria-controls="custom-content-below-messages" aria-selected="false">Payés</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" id="custom-content-below-settings-tab" data-toggle="pill" href="{{ route('paie.show', "EN ATTENTE") }}" role="tab" aria-controls="custom-content-below-settings" aria-selected="false">En attente</a>
+                              <a class="nav-link" id="custom-content-below-settings-tab"  href="{{ route('paie.show', "EN ATTENTE") }}" role="tab" aria-controls="custom-content-below-settings" aria-selected="false">En attente</a>
                             </li>
                           </ul>  
                         <div class="card-body">
@@ -44,7 +47,8 @@
                                         <th>N°</th>
                                         <th>Agent</th>
                                         <th>Nombre des jours</th>
-                                        <th>Salaire</th>
+                                        <th>Montant de base</th>
+                                        <th>Salaire Mensuel</th>
                                         <th>Dévise</th>
                                         <th>Action</th>
                                     </tr>
@@ -55,21 +59,31 @@
                                         <td scope="row">{{ $cpt++ }}</td>
                                         <td>{{ strtoupper($paie->user->name) }}</td>
                                         <td>{{ $paie->jours_presents }}</td>
+                                        <td>{{ $paie->taux_configuration->montant .' '. $paie->taux_configuration->devise }}</td>
                                         <td>{{ $paie->taux_configuration->montant*$paie->jours_presents }}</td>
                                         <td>{{ ($paie->taux_configuration->devise) }}</td>
                                         <td class="d-flex">
-                                            <form action="{{ route('paie.store') }}" method="POST">
+                                            
+                                            <form action="{{ route('paie.update', $paie->id) }}" method="POST">
                                                 @csrf
+                                                @method("PUT")
                                                 <input type="hidden" name="user_id" value="{{$paie->id}}">
                                                 <input type="hidden" name="taux_id" value="{{$paie->id}}">
-                                                <button type="submit" class=" btn btn-outline-success mx-1" title="Ajouter à la liste de paie"><i class="fas fa-plus-circle"></i></button>
+                                                @if($paie->paie_status != "PAYE")
+                                                    <button type="submit" class=" btn btn-outline-success mx-1" title="Payer l'agent"><i class="fas fa-plus-circle"></i></button>
+                                                @endif
+                                            </form>
+                                            <form action="{{ route('paie.destroy',$paie->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-outline-danger" title="Annuler"><i class="fas fa-trash"></i></button>
                                             </form>
                                         </td>
                                     </tr>
                                     @empty
                                         <tr>
                                             <td colspan="5"> 
-                                                Aucune paie dispo
+                                                Aucune agent disponible pour cette partie
                                             </td>
                                     </tr>
                                     @endforelse
@@ -77,12 +91,12 @@
                                 
                             </table>
                             
-                            <div class="card-footer mt-2">
+                            {{-- <div class="card-footer mt-2">
                                 <ul class="pagination pagination-xs m-0 float-right">
                                     <li class="page-item m-1"><a class="page-link" href="{{ $paies->previousPageUrl() }}">Précédent</a></li>
                                     <li class="page-item m-1"><a class="page-link" href="{{ $paies->nextPageUrl() }}">Suivant</a></li>
                                 </ul>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>

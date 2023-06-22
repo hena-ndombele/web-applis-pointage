@@ -12,7 +12,7 @@ class Paie extends Model
     protected $fillable = ['user_id', 'taux_id', 'jours_presents'];
 
     public function taux_configuration(){
-        return $this->belongsTo(TauxConfiguration::class);
+        return $this->belongsTo(TauxConfiguration::class, 'taux_id');
     }
     public function user(){
         return $this->belongsTo(User::class);

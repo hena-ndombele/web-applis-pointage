@@ -25,16 +25,14 @@
                         @endif
                         <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
                             <li class="nav-item">
-                              <a class="nav-link active" id="custom-content-below-home-tab" data-toggle="pill" href="#custom-content-below-home" role="tab" aria-controls="custom-content-below-home" aria-selected="true">Tous</a>
+                              <a class="nav-link " id="custom-content-below-home-tab" href="#custom-content-below-home" role="tab" aria-controls="custom-content-below-home" aria-selected="true">Tous</a>
+                            </li>
+                            
+                            <li class="nav-item">
+                              <a class="nav-link" id="custom-content-below-messages-tab" href="{{ route('paie.show', "PAYE") }}" role="tab" aria-controls="custom-content-below-messages" aria-selected="false">Payés</a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link" id="custom-content-below-profile-tab" data-toggle="pill" href="#custom-content-below-profile" role="tab" aria-controls="custom-content-below-profile" aria-selected="false">Enregistrés</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" id="custom-content-below-messages-tab" data-toggle="pill" href="{{ route('paie.show', "PAYE") }}" role="tab" aria-controls="custom-content-below-messages" aria-selected="false">Payés</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" id="custom-content-below-settings-tab" data-toggle="pill" href="{{ route('paie.show', "EN ATTENTE") }}" role="tab" aria-controls="custom-content-below-settings" aria-selected="false">En attente</a>
+                              <a class="nav-link" id="custom-content-below-settings-tab" href="{{ route('paie.show', "EN ATTENTE") }}" role="tab" aria-controls="custom-content-below-settings" aria-selected="false">En attente</a>
                             </li>
                           </ul>  
                         <div class="card-body">

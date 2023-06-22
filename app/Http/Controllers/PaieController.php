@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Dompdf\Dompdf;
 use App\Models\Paie;
 use App\Models\Presence;
+use Barryvdh\DomPDF\PDF;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Contracts\Config\Repository as Config;
+use Illuminate\Contracts\View\Factory as ViewFactory;
+    
 class PaieController extends Controller
 {
     /**
@@ -41,7 +47,7 @@ class PaieController extends Controller
         ];
         $currentMonth = now()->month;
         $valid=false;
-        $lastEntry = Paie::latest()->where('user_id', $request->user_id)->first();
+        $lastEntry = Paie::latest()->where('user_id', $request->user_id)->where('status', 'ACTIVE')->first();
         if($lastEntry != null){
             $valid = true;
         }
@@ -51,6 +57,9 @@ class PaieController extends Controller
             }
         }
         $presence = Presence::where('user_id', '=', $request->user_id)->count();
+        if($presence == 0){
+            return redirect()->route('paie.index')->with('error', 'L\'agent ne peut être ajouté dans la liste de paie car il n\'a effectué aucun jour de travail');
+        }
         Paie::create(
             [
                 'user_id'=>$request->user_id,
@@ -64,10 +73,11 @@ class PaieController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($query)
+    public function show($status)
     {
-        $paies = Paie::where('paie_status', $query)->paginate(10);
-        return redirect()->route('paie.show', ['paie'=>$paies]);
+        $paies = Paie::where('paie_status', $status)->where('status', 'ACTIVE')->get();
+        return view('paie.show', compact('paies', 'status'));
+        return redirect()->route('paie.status', ['paies'=>$paies, 'state'=>$paies]);
     }
 
     /**
@@ -81,16 +91,50 @@ class PaieController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Paie $paie)
+    public function update(Request $request, $paie)
     {
-        //
+        $paieExist = Paie::findOrFail($paie);
+        $test = Paie::where('id', $paie)->update([
+            'paie_status'=>'PAYE'
+        ]);
+        return redirect()->route('paie.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Paie $paie)
+    public function destroy($paie)
     {
-        //
+        $paieExist = Paie::findOrfail($paie);
+        if($paieExist->paie_status == 'PAYE'){
+            Paie::where('id', $paieExist->id)->update([
+                'paie_status'=>"EN ATTENTE"
+            ]);
+        }else{
+            Paie::where('id', $paieExist->id)->update([
+                'status'=>"DESACTIVE"
+            ]);
+        }
+    
+        return redirect()->route('paie.index');
+    }
+    public function generate_pdf($status){
+        
+        $data = Paie::where('status', 'ACTIVE')->where('paie_status', $status)->get();
+        $paie = Paie::where('status', 'ACTIVE')->where('paie_status', $status)->get();
+        if($data->count() == 0){
+            return redirect()->route('paie.show', compact('paie', 'status'))->with('error', 'Nous ne pouvons imprimer le PDF car la liste est vide');
+        }
+        $html = view('paie.pdf', ['paies'=>$data, 'status'=>$status])->render();
+        $dompdf= new Dompdf();
+        $dompdf->loadHtml($html);
+        $config = app(Config::class);
+        $filesystem = app(Filesystem::class);
+        $view = app(ViewFactory::class);
+        $pdf = new PDF($dompdf,$config, $filesystem, $view);
+        $paies = $paie;
+        return $pdf->download(time().'.pdf');
+
+        return view('paie.pdf', compact('paies', 'status'));
     }
 }
