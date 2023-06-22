@@ -18,16 +18,14 @@
         <i class="nav-icon fas fa-users"></i>
         <p>Liste des utlisateurs</p>
     </a>
+</li> 
 
-</li>
-@endpermission
-@permission('read','Agent')
 <li class="nav-item">
-    <a href="{{ route('agents.index') }}" class="nav-link {{ Request::is('agents.index') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-users"></i>
-        <p>Agents</p>
+    <a href="{{ route('presences.index') }}" class="nav-link {{ Request::is('presences') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-th"></i>
+        <p>Présences</p>
     </a>
-
+</li>
 </li>
 @endpermission
 </li>
@@ -53,6 +51,38 @@
         <p>Présences</p>
     </a>
 </li>
+<li class="nav-item has-treeview {{ Request::is('conge*') ? 'menu-open active' : '' }}">
+    <a href="#" class="nav-link" data-toggle="false">
+        <i class="nav-icon fa fa-calendar"></i>
+        <p>Congés et feriés<i class="right fa fa-angle-left"></i></p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a href="{{ route('conge.index') }}" class="nav-link {{ Request::is('conge') ? 'active' : '' }}">
+                <i class="nav-icon fa fa-calendar"></i>
+                <p>Congés légaux</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('feries.index') }}" class="nav-link {{ Request::is('feries') ? 'active' : '' }}">
+                <i class="nav-icon far fa-calendar-alt"></i>
+                <p>Feriés légaux</p>
+            </a>
+        </li>
+    </ul>
+</li>
+
+
+<li class="nav-item">
+    <a href="{{ route('demandes.index') }}" class="nav-link {{ Request::is('demandes') ? 'active' : '' }}">
+        <i class="nav-icon far fa-calendar-check"></i>
+        <p>Demandes de congé</p>
+        <span id="demandesEnAttente" class="badge badge-danger navbar-badge">
+            {{ session('enAttenteCount') }} 
+        </span>
+    </a>
+</li>
+
 @endpermission
 @permission('read','Bssid')
 <li class="nav-item">
