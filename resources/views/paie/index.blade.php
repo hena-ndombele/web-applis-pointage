@@ -14,7 +14,7 @@
                         @if(session('success'))
                             <div class="alert alert-success alert-dismissible m-4">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                <h6><i class="icon fas fa-check"></i> Success! {{session('success')}}</h6>
+                                <h6><i class="icon fas fa-check"></i> {{session('success')}}</h6>
                             </div>
                         @endif
                         @if(session('error'))

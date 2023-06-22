@@ -97,7 +97,7 @@ class PaieController extends Controller
         $test = Paie::where('id', $paie)->update([
             'paie_status'=>'PAYE'
         ]);
-        return redirect()->route('paie.index');
+        return redirect()->route('paie.show', 'PAYE')->with('success', 'Confirmation pour la paie avec succès');
     }
 
     /**
@@ -116,14 +116,14 @@ class PaieController extends Controller
             ]);
         }
     
-        return redirect()->route('paie.index');
+        return redirect()->route('paie.index')->with('success', 'Agent rétiré de la liste avec succès');
     }
     public function generate_pdf($status){
         
         $data = Paie::where('status', 'ACTIVE')->where('paie_status', $status)->get();
         $paie = Paie::where('status', 'ACTIVE')->where('paie_status', $status)->get();
         if($data->count() == 0){
-            return redirect()->route('paie.show', compact('paie', 'status'))->with('error', 'Nous ne pouvons imprimer le PDF car la liste est vide');
+            return redirect()->route('paie.show', compact('paie', 'status'))->with('error', 'Nous ne pouvons générer le PDF car la liste est vide');
         }
         $html = view('paie.pdf', ['paies'=>$data, 'status'=>$status])->render();
         $dompdf= new Dompdf();
