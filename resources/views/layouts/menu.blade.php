@@ -118,6 +118,12 @@
 </li>
 @endpermission
 <li class="nav-item">
+    <a href="{{ route('paie.index') }}"  class="nav-link {{ Request::is('paie') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-file"></i>
+        <p>Paie</p>
+    </a>
+</li>
+<li class="nav-item">
     <a href="{{ route('contrats.index') }}"  class="nav-link {{ Request::is('contrats') ? 'active' : '' }}">
         <i class="nav-icon fa fa-file-contract"></i>
         <p>Contrats</p>

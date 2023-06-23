@@ -85,4 +85,10 @@ class User extends Authenticatable
         });
     }
     
+    public function absence(){
+        return $this->hasMany(Absence::class);
+    }
+    public function paie(){
+        $this->hasMany(Paie::class);
+    }
 }

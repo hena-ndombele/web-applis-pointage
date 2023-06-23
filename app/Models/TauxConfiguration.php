@@ -13,4 +13,7 @@ class TauxConfiguration extends Model
     public function role(){
         return $this->BelongsTo(Role::class);
     }
+    public function paies(){
+        return $this->hasMany(Paie::class);
+    }
 }

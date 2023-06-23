@@ -13,7 +13,7 @@ class TauxConfigurationController extends Controller
      */
     public function index()
     {
-        return view('taux.index', ['taux'=>TauxConfiguration::paginate(2), 'roles'=>Role::all(), 'exist'=>new TauxConfiguration()]);
+        return view('taux.index', ['taux'=>TauxConfiguration::where('status', 'active')->paginate(2), 'roles'=>Role::all(), 'exist'=>new TauxConfiguration()]);
     }
 
     /**
@@ -92,7 +92,7 @@ class TauxConfigurationController extends Controller
     {
         $taux = TauxConfiguration::findOrFail($tauxConfiguration);
         if($taux){
-            $taux->delete();
+            $taux->where('id', $tauxConfiguration)->update(['status'=>'desactive']);
             return redirect()->route('taux.index')->with('success', "Suppression effectuée avec succès");
         }
         return redirect()->route('taux.index')->with('error', 'Erreur de suppression');
