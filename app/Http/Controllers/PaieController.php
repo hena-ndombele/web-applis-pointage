@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Contracts\View\Factory as ViewFactory;
-    
+use Illuminate\Support\Facades\Auth;
+
 class PaieController extends Controller
 {
     /**
@@ -20,6 +21,7 @@ class PaieController extends Controller
      */
     public function index()
     {
+        
         $paies = DB::table('role_user')->join('roles', 'roles.id', '=', 'role_user.role_id')
         ->join('users', 'users.id', '=', 'role_user.user_id')
         ->join('taux_configurations', 'taux_configurations.role_id', '=', 'roles.id')

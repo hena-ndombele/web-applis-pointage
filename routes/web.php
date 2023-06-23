@@ -41,3 +41,4 @@ require('web_horaires.php');
 
 
 require('web_paie.php');
+require('web_structure_salariale.php');
