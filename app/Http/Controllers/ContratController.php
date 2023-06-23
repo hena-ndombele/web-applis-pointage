@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contrat;
+use App\Models\Direction;
+use App\Models\Fonction;
 use App\Models\Horaire;
 use Illuminate\Http\Request;
 
@@ -15,7 +17,10 @@ class ContratController extends Controller
     {
         //
         $contrats = Contrat::paginate(5);
-        return view('contrats.index', compact('contrats'));
+        $horaires=Horaire::all();
+        $fonctions=Fonction::all();
+        $directions = Direction::all();
+        return view('contrats.index', compact('contrats', 'horaires','fonctions','directions'));
     }
 
     /**
@@ -32,16 +37,29 @@ class ContratController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request, [
+        
+        $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required',
-            'date' => 'required',
+            'type' => 'required',
+            'duree' => $request->type !== 'CDI' ? 'required' : 'nullable',
+            'unite_duree' => $request->type !== 'CDI' ? 'required' : 'nullable',
+            'fonction_id' => 'required|exists:fonctions,id',
+            'horaire_id' => 'required|exists:horaires,id',
+            'direction_id' => 'required|exists:directions,id',
         ]);
+
         Contrat::create([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
-            'date' => $request->input('date'),
+            'type' => $request->input('type'),
+            'duree' => $request->input('duree'),
+            'unite_duree' => $request->input('unite_duree'),
+            'fonction_id' => $request->input('fonction_id'),
+            'horaire_id' => $request->input('horaire_id'),
+            'direction_id' => $request->input('direction_id'),
         ]);
+
         return redirect()->route('contrats.index');
     }
 
@@ -69,16 +87,29 @@ class ContratController extends Controller
     public function update(Request $request, Contrat $contrat)
     {
         //
-        $this->validate($request, [
+        $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required',
-            'date' => 'required',
+            'type' => 'required',
+            'duree' => $request->type !== 'CDI' ? 'required' : 'nullable',
+            'unite_duree' => $request->type !== 'CDI' ? 'required' : 'nullable',
+            'fonction_id' => 'required|exists:fonctions,id',
+            'horaire_id' => 'required|exists:horaires,id',
+            'direction_id' => 'required|exists:directions,id',
+            
         ]);
+
         $contrat->update([
-            'name' => $request->name,
-            'description' => $request->description,
-            'date' => $request->date,
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'type' => $request->input('type'),
+            'duree' => $request->input('duree'),
+            'unite_duree'=> $request->input('unite_duree'),
+            'fonction_id' => $request->input('fonction_id'),
+            'horaire_id' => $request->input('horaire_id'),
+            'direction_id' => $request->input('direction_id')
         ]);
+
         return redirect()->route('contrats.index');
     }
 
