@@ -55,9 +55,6 @@
                             <th class="text-center col-lg-3">
                                 Jours
                             </th>
-                            <th class="text-center col-lg-1">
-                                Contrat
-                            </th>
                             <th class="text-center col-lg-3">
                                 Actions
                             </th>
@@ -79,7 +76,6 @@
                                     @endif
                                 </td>
                                 <td>{{ $horaire->jours }}</td>
-                                <td>{{ $horaire->contrat->name }}</td>
                                 <td>
                                     <a class="btn btn-outline-primary  " data-toggle="modal" data-target="#modal-edit-{{ $horaire->id }}" href="">
                                         <i class="fas fa-pencil-alt"></i>

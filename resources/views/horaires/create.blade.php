@@ -43,14 +43,6 @@
                         <input type="checkbox" name="jours[]" value="samedi"> Samedi
                         <input type="checkbox" name="jours[]" value="dimanche"> Dimanche
                     </div>
-                    <label for="selectOption">Sélectionnez le contrat attaché :</label>
-                    <select id="selectOption" name="contrat_id">
-                        <option value=""></option>
-                        @foreach ($contrats as $contrat)
-                            <option value="{{ $contrat->id }}">{{ $contrat->name }}</option>
-                        @endforeach
-                    </select>
-
                     <div>
                         <button type="submit" class="btn btn-default border float-right"><i
                                 class="fas fa-save"></i></button>
