@@ -71,6 +71,8 @@
                                                 <input type="hidden" name="taux_id" value="{{$paie->id}}">
                                                 @if($paie->paie_status != "PAYE")
                                                     <button type="submit" class=" btn btn-outline-success mx-1" title="Payer l'agent"><i class="fas fa-plus-circle"></i></button>
+                                                @elseif($paie->paie_status == "PAYE")
+                                                    <a href="{{ route('paie.pdf', ['status'=>$status])}}" class="btn btn-outline-success mx-1" title="Générer la fiche de paie" d><i class="fas fa-file-pdf"></i></a>
                                                 @endif
                                             </form>
                                             <form action="{{ route('paie.destroy',$paie->id) }}" method="POST">

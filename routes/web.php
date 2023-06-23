@@ -40,3 +40,4 @@ require('web_taux.php');
 
 
 require('web_paie.php');
+require('web_structure_salariale.php');
