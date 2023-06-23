@@ -92,11 +92,9 @@ class ServiceController extends Controller
         $service->delete();
         return redirect()->route('services.index')->with('success','Le service a été supprimée avec succès');
     }
-    public function getDepartementByService(StoreServiceRequest $request)
-{
-  $serviceId = $request->input('service_id');
-  $service = Service::find($serviceId);
-  $departement = $service->departement_id;
-    return response()->json(['departement' => $departement]);
-}
+    public function byDepartement($departementId)
+    {
+        $services = Service::where('departement_id', $departementId)->get();
+        return response()->json($services);
+    }
 }
