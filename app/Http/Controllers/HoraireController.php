@@ -15,8 +15,7 @@ class HoraireController extends Controller
     {
         //
         $horaires = Horaire::paginate(5);
-        $contrats = Contrat::all();
-        return view('horaires.index', compact('horaires', 'contrats'));
+        return view('horaires.index', compact('horaires'));
     }
 
     /**
@@ -60,7 +59,6 @@ class HoraireController extends Controller
                 }
             ],
             'jours' => 'required',
-            'contrat_id' => 'required',
         ]);
 
         $horaire['jours'] = implode(', ', $request->jours);
