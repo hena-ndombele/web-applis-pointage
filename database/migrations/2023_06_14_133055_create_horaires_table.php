@@ -19,7 +19,6 @@ return new class extends Migration
             $table->time('heurepausedebut')->nullable();
             $table->time('heurepausefin')->nullable();
             $table->string('jours');
-            $table->foreignId('contrat_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
