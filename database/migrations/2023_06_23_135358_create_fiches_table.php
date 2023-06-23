@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jours_feries', function (Blueprint $table) {
+        Schema::create('fiches', function (Blueprint $table) {
             $table->id();
-            $table->string('titre');
-            $table->date('date');
+            $table->string('rubrique');
+            $table->enum('type', ['FIXE', 'DYNAMIQUE']);
+            $table->enum('mouvement', ['GAIN', 'RETENU']);
+            $table->integer('valeur');
+            $table->enum('unite', ['USD', 'CDF', '%']);
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jours_feries');
+        Schema::dropIfExists('fiches');
     }
 };
