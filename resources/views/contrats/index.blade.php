@@ -19,9 +19,9 @@
             </div>
         </div><br>
         @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
         @endif
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -39,7 +39,11 @@
                         <tr>
                             <th>Nom</th>
                             <th>Description</th>
-                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Durée</th>
+                            <th>Horaire</th>
+                            <th>Fonction</th>
+                            <th>Direction</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -48,19 +52,19 @@
                             <tr class="text-center col-lg-1">
                                 <td>{{ $contrat->name }}</td>
                                 <td>{{ $contrat->description }}</td>
-                                <td>{{ Carbon\Carbon::parse($contrat->date)->format('d-m-Y') }}</td>
+                                <td>{{ $contrat->type }}</td>
+                                <td>{{ $contrat->duree }}/{{ $contrat->unite_duree }}</td>
+                                <td>{{ $contrat->horaire->name }}</td>
+                                <td>{{ $contrat->fonction->name }}</td>
+                                <td>{{ $contrat->direction->name }}</td>
                                 <td>
-                                    <a class="btn btn-outline-primary " data-toggle="modal"
-                                        data-target="#modal-ajout-horaire" onclick="createhoraire(this)"
-                                        href="{{ route('horaires.store') }}" contrat="{{ $contrat->id }}">
-                                        <i class="fa fa-arrow-right"></i>
-                                    </a>
                                     <a class="btn btn-outline-primary  " data-toggle="modal"
                                         data-target="#modal-edit-{{ $contrat->id }}" href="">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
 
-                                    <a class="btn btn-danger btn-sm" href="{{ route('contrats.destroy', $contrat->id) }}" onclick="supprimer(this)" data-toggle="modal" data-target="#modal-Delete">
+                                    <a class="btn btn-danger btn-sm" href="{{ route('contrats.destroy', $contrat->id) }}"
+                                        onclick="supprimer(this)" data-toggle="modal" data-target="#modal-Delete">
                                         <i class="fas fa-trash"></i>
                                     </a>
 
@@ -73,9 +77,6 @@
                                 </td>
                             </tr>
                         @endforelse
-
-
-
                     </tbody>
                 </table>
             </div>
@@ -85,25 +86,72 @@
             {{ $contrats->links('pagination::bootstrap-4') }}
         </div>
     </div>
-
-
 @endsection
 
 @include('contrats.create')
-@include('contrats.createhoraire')
 @include('contrats.edit')
 @include('contrats.delete')
 @push('page_scripts')
     <script>
-        function createhoraire(elt) {
-            var val = elt.getAttribute('contrat')
-            contrat_id.setAttribute('value', val)
+        //modal de création
+
+        var typeContrat = document.getElementById('type');
+        var duree = document.getElementById('duree_div');
+        var unite_duree = document.getElementById('unite_duree_div');
+        var duree_input = document.getElementById('duree');
+        var unite_input = document.getElementById('unite_duree')
+
+        typeContrat.addEventListener('change', function() {
+            if (typeContrat.value !== 'CDI') {
+                duree.style.display = 'block';
+                unite_duree.style.display = 'block';
+            } else {
+                duree.style.display = 'none';
+                unite_duree.style.display = 'none';
+                duree_input.value = null;
+                unite_input.value = null;
+            }
+        });
+
+        //modal de modification
+        @foreach ($contrats as $contrat)
+            var modalEdit = document.getElementById('modal-edit-{{ $contrat->id }}');
+
+            var typeContratEdit = modalEdit.querySelector('#type');
+            var dureeEdit = modalEdit.querySelector('#duree_div');
+            var uniteDureeEdit = modalEdit.querySelector('#unite_duree_div');
+            var dureeInputEdit = modalEdit.querySelector('#duree');
+            var uniteInputEdit = modalEdit.querySelector('#unite_duree');
+
+            // Vérifie le type de contrat au chargement du modal
+            if (typeContratEdit.value !== 'CDI') {
+
+                dureeEdit.style.display = 'block';
+                uniteDureeEdit.style.display = 'block';
+            } else {
+                dureeEdit.style.display = 'none';
+                uniteDureeEdit.style.display = 'none';
+                dureeInputEdit.value = null;
+                uniteInputEdit.value = null;
+            }
+
+            // Change la visibilité des champs en fonction du type de contrat
+            typeContratEdit.addEventListener('change', function() {
+                if (typeContratEdit.value !== 'CDI') {
+                    dureeEdit.style.display = 'block';
+                    uniteDureeEdit.style.display = 'block';
+                } else {
+                    dureeEdit.style.display = 'none';
+                    uniteDureeEdit.style.display = 'none';
+                    dureeInputEdit.value = null;
+                    uniteInputEdit.value = null;
+                }
+            });
+        @endforeach
+
+        function supprimer(elt) {
             var route = elt.getAttribute('href')
-            ajouthoraire.setAttribute('action', route)
+            deleteForm.setAttribute('action', route)
         }
-        function supprimer(elt){
-        var route=elt.getAttribute('href')
-        deleteForm.setAttribute('action', route)
-      }
     </script>
 @endpush
