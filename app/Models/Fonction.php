@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Horaire extends Model
+class Fonction extends Model
 {
     use HasFactory;
-    protected $fillable = ['name','heuredebut', 'heurefin', 'heurepausedebut', 'heurepausefin', 'jours'];
+    protected $fillable = ['name'];
 }
