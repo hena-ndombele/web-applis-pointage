@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,9 +23,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-/*require 'api_login.php';
-require 'api_recuperer.php';
-require 'api_change-password.php';
-require 'api_register.php';
-require 'api_profil.php';*/
+require 'api_login.php';
 require('api_absence.php'); 
+require 'api_logout.php';
+require 'api_profil.php';
+//require 'api_change-password.php';
+
+
+
+
+
+
+
