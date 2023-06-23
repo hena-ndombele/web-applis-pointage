@@ -93,28 +93,40 @@
 </li>
 @endpermission
 
-@permission('read','Direction')
-<li class="nav-item">
-    <a href="{{ route('directions.index') }}"  class="nav-link {{ Request::is('directions') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-align-justify"></i>
-        <p>Direction</p>
-    </a>
-</li>
-@endpermission
-@permission('read','Departement')
-<li class="nav-item">
-    <a href="{{ route('departements.index') }}"  class="nav-link {{ Request::is('departements') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-align-justify"></i>
-        <p>Departement</p>
-    </a>
-</li>
-@endpermission
+
 @permission('read','Service')
-<li class="nav-item">
-    <a href="{{ route('services.index') }}"  class="nav-link {{ Request::is('services') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-align-justify"></i>
-        <p>Services</p>
+<li class="nav-item has-treeview {{ Request::is('conge*') ? 'menu-open active' : '' }}">
+    <a href="#" class="nav-link" data-toggle="false">
+        <i class="nav-icon fa fa-calendar"></i>
+        <p>Extras<i class="right fa fa-angle-left"></i></p>
     </a>
+    <ul class="nav nav-treeview">
+    @permission('read','Direction')
+
+        <li class="nav-item">
+            <a href="{{ route('directions.index') }}"  class="nav-link {{ Request::is('directions') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-align-justify"></i>
+                <p>Direction</p>
+            </a>
+        </li>
+        @endpermission
+        @permission('read','Departement')
+        <li class="nav-item">
+            <a href="{{ route('departements.index') }}"  class="nav-link {{ Request::is('departements') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-align-justify"></i>
+                <p>Departement</p>
+            </a>
+        </li>
+        @endpermission
+        @permission('read','Service')
+        <li class="nav-item">
+            <a href="{{ route('services.index') }}"  class="nav-link {{ Request::is('services') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-align-justify"></i>
+                <p>Services</p>
+            </a>
+        </li>
+        @endpermission
+    </ul>
 </li>
 @endpermission
 <li class="nav-item">
@@ -149,5 +161,14 @@
         </li>
     </ul>
 </li>
+
+
+
+
+
+
+
+
+
 
 

@@ -11,6 +11,7 @@ use App\Models\Service;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class AgentController extends Controller
 {
@@ -72,13 +73,22 @@ class AgentController extends Controller
             $agent = Agent::create($validatedData);
         
             if ($agent) {
-                $email = substr($agent->nom, 0, 2) . substr($agent->postnom, -2) . $agent->prenom . '@timekeeper.com';
-                $password = Hash::make($agent->date_e . $agent->matricule);
-                User::create([
-                    'name' => $agent->prenom,
-                    'email' => $email,
-                    'password' => $password
-                ]);
+                
+                // Créer le mot de passe hashé pour l'utilisateur
+$password = Hash::make($agent->date_e . substr($agent->nom, 0, 2) . substr($agent->postnom, -2) . $agent->prenom);
+$code=($agent->date_e . substr($agent->nom, 0, 2) . substr($agent->postnom, -2) . $agent->prenom);
+// Créer l'utilisateur
+$user = User::create([
+    'name' => $agent->prenom,
+    'email' => $agent->email,
+    'password' => $password
+]);
+
+// Envoyer le mot de passe à l'utilisateur
+Mail::send('emails.create', ['password' => $code], function ($message) use ($user) {
+    $message->to($user->email);
+    $message->subject('Nouveau compte créé');
+});
             }
         
             if ($request->hasFile('image') && $agent) {
@@ -149,6 +159,7 @@ class AgentController extends Controller
             ]);
     
             $agent->update($validatedData);
+            
     
             
     
