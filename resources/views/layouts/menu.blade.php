@@ -123,16 +123,31 @@
         <p>Paie</p>
     </a>
 </li>
-<li class="nav-item">
-    <a href="{{ route('contrats.index') }}"  class="nav-link {{ Request::is('contrats') ? 'active' : '' }}">
-        <i class="nav-icon fa fa-file-contract"></i>
-        <p>Contrats</p>
+<li class="nav-item has-treeview {{ Request::is('contrats*') ? 'menu-open active' : '' }}">
+    <a href="#" class="nav-link" data-toggle="false">
+        <i class="nav-icon fa fa-cog"></i>
+        <p>Configuration<i class="right fa fa-angle-left"></i></p>
     </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a href="{{ route('contrats.index') }}"  class="nav-link {{ Request::is('contrats') ? 'active' : '' }}">
+                <i class="nav-icon fa fa-file-contract"></i>
+                <p>Contrats</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('horaires.index') }}"  class="nav-link {{ Request::is('horaires') ? 'active' : '' }}">
+                <i class="nav-icon fa fa-clock"></i>
+                <p>Horaires</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('fonctions.index') }}"  class="nav-link {{ Request::is('fonctions') ? 'active' : '' }}">
+                <i class="nav-icon fa fa-file-contract"></i>
+                <p>Fonctions</p>
+            </a>
+        </li>
+    </ul>
 </li>
-<li class="nav-item">
-    <a href="{{ route('horaires.index') }}"  class="nav-link {{ Request::is('horaires') ? 'active' : '' }}">
-        <i class="nav-icon fa fa-clock"></i>
-        <p>Horaires</p>
-    </a>
-</li>
+
 
