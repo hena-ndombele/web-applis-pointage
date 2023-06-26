@@ -54,7 +54,7 @@
                                             <th>Agent</th>
                                             <th>Nombre des jours</th>
                                             <th>Montant de base</th>
-                                            <th class="col text-center">
+                                            {{-- <th class="col text-center">
                                                 <div class="row text-center">Allocation</div>
                                                 <div class="row">
                                                     @forelse ($fiches as $fiche)
@@ -64,7 +64,7 @@
                                                     @endforelse
                                                     
                                                 </div>
-                                            </th>
+                                            </th> --}}
                                             <th>Salaire Mensuel</th>
                                             <th>Dévise</th>
                                             <th>Action</th>
@@ -79,38 +79,32 @@
                                             <td scope="row">{{ $cpt++ }}</td>
                                             <td>{{ strtoupper($paie->user->name) }}</td>
                                             <td>{{ $paie->jours_presents }}</td>
-                                            <td>{{ $paie->taux_configuration->montant .' '. $paie->taux_configuration->devise }}</td>
-                                            <td class="col">
-                                                <div class="row text-center">
+                                            <td>{{ $paie->taux_configuration->montant .' '. $paie->taux_configuration->devise }}</td>        
+                                            @forelse($fiches as $fiche)
+                                                @php
+                                                    if($fiche->mouvement == 'GAIN'){
+                                                        if($fiche->unite != "%"){
+                                                            $gain = $gain + $fiche->valeur;
+                                                        }else{
+                                                            $gain = $gain + ($base*$fiche->valeur/100);
+                                                        }
+                                                        $sommeGain = $sommeGain + $gain;
+                                                    }
+                                                    if($fiche->mouvement == 'RETENU'){
+                                                        if($fiche->unite != "%"){
+                                                            $retenu = $retenu + $fiche->valeur;
+                                                        }else{
+                                                            $retenu = $retenu + ($base*$fiche->valeur/100);
+                                                        }
+                                                        $sommeRetenu = $sommeRetenu + $retenu;
+                                                    }
                                                     
-                                                    @forelse($fiches as $fiche)
-                                                        @php
-                                                            if($fiche->mouvement == 'GAIN'){
-                                                                if($fiche->unite != "%"){
-                                                                    $gain = $gain + $fiche->valeur;
-                                                                }else{
-                                                                    $gain = $gain + ($base*$fiche->valeur/100);
-                                                                }
-                                                                $sommeGain = $sommeGain + $gain;
-                                                            }
-                                                            if($fiche->mouvement == 'RETENU'){
-                                                                if($fiche->unite != "%"){
-                                                                    $retenu = $retenu + $fiche->valeur;
-                                                                }else{
-                                                                    $retenu = $retenu + ($base*$fiche->valeur/100);
-                                                                }
-                                                                $sommeRetenu = $sommeRetenu + $retenu;
-                                                            }
-                                                            
-                                                        @endphp
-                                                        <div class="col">{{ $fiche->valeur .' '.$fiche->unite }}</div>
-                                                    @empty
-                                                    @endforelse
-                                                    @php
-                                                        $salaire = $base + $sommeGain - $sommeRetenu;
-                                                    @endphp
-                                                </div>
-                                            </td>
+                                                @endphp
+                                            @empty
+                                            @endforelse
+                                            @php
+                                                $salaire = $base + $sommeGain - $sommeRetenu;
+                                            @endphp   
                                             <td>{{ $salaire }}</td>
                                             <td>{{ ($paie->taux_configuration->devise) }}</td>
                                             <td class="d-flex">
