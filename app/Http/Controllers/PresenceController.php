@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Date;
+use PhpParser\Node\Expr\AssignOp\Mod;
+
 use function PHPUnit\Framework\isEmpty;
 
 class PresenceController extends Controller
@@ -89,7 +91,11 @@ class PresenceController extends Controller
                         'heureArrive'   => date('Y-m-d H:i:s'),
                         'created_at'    => date('Y-m-d H:i:s'),
                     ]);
-                    return response()->json(['message' => 'Presence enregistre'], 200);
+                    $presence = Presence::latest()->first();
+                    return response()->json([
+                        'id' => $presence->id,
+                        'message' => 'Presence enregistre'
+                    ], 200);
                 };
             } else {
                 return response()->json(['message' => 'Reseau non autorise'], 403);

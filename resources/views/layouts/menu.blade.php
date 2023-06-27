@@ -12,6 +12,21 @@
     </a>
 </li>
 @endpermission
+
+<li class="nav-item">
+    <a href="{{ route('presences.index') }}" class="nav-link {{ Request::is('presences') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-th"></i>
+        <p>Présences</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('bssid.index') }}"  class="nav-link {{ Request::is('bssid') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-wifi"></i>
+        <p>Bssid</p>
+    </a>
+</li>
+
 @permission('read','User')
 <li class="nav-item">
     <a href="{{ route('users.index') }}" class="nav-link {{ Request::is('users.index') ? 'active' : '' }}">
@@ -122,6 +137,12 @@
     </ul>
 </li>
 @endpermission
+<li class="nav-item">
+    <a href="{{ route('qrcode') }}"  class="nav-link {{ Request::is('qrcode') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-expand"></i>
+        <p>qrcode</p>
+    </a>
+</li>
 <li class="nav-item">
     <a href="{{ route('paie.index') }}"  class="nav-link {{ Request::is('paie') ? 'active' : '' }}">
         <i class="nav-icon fas fa-file"></i>
