@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Dompdf\Dompdf;
 use App\Models\Paie;
+use App\Models\Fiche;
 use App\Models\Presence;
 use Barryvdh\DomPDF\PDF;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Contracts\View\Factory as ViewFactory;
-use Illuminate\Support\Facades\Auth;
 
 class PaieController extends Controller
 {
@@ -77,9 +78,9 @@ class PaieController extends Controller
      */
     public function show($status)
     {
+        $fiches = Fiche::all();
         $paies = Paie::where('paie_status', $status)->where('status', 'ACTIVE')->get();
-        return view('paie.show', compact('paies', 'status'));
-        return redirect()->route('paie.status', ['paies'=>$paies, 'state'=>$paies]);
+        return view('paie.show', compact('paies', 'status','fiches'));
     }
 
     /**
@@ -128,6 +129,26 @@ class PaieController extends Controller
             return redirect()->route('paie.show', compact('paie', 'status'))->with('error', 'Nous ne pouvons générer le PDF car la liste est vide');
         }
         $html = view('paie.pdf', ['paies'=>$data, 'status'=>$status])->render();
+        $dompdf= new Dompdf();
+        $dompdf->loadHtml($html);
+        $config = app(Config::class);
+        $filesystem = app(Filesystem::class);
+        $view = app(ViewFactory::class);
+        $pdf = new PDF($dompdf,$config, $filesystem, $view);
+        $paies = $paie;
+        return $pdf->download(time().'.pdf');
+
+        return view('paie.pdf', compact('paies', 'status'));
+    }
+
+    public function fiche_paie($paie_id){
+        $fiches = Fiche::all();
+        $data = Paie::findOrFail($paie_id);
+        $paie = Paie::where('status', 'ACTIVE')->where('paie_status', $paie_id)->get();
+        if($data->count() == 0){
+            return redirect()->route('paie.show', compact('paie', 'status'))->with('error', 'Nous ne pouvons générer le PDF car le fichier de cet agent est indisponible');
+        }
+        $html = view('paie.fiche_paie', ['paies'=>$data, 'status'=>$paie_id, 'fiches'=>$fiches])->render();
         $dompdf= new Dompdf();
         $dompdf->loadHtml($html);
         $config = app(Config::class);
