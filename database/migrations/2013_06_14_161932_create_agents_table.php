@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('agents', function (Blueprint $table) {
             $table->id();
+            $table->string('token')->unique();
             $table->string('nom');
             $table->string('postnom');
             $table->string('prenom');

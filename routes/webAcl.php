@@ -20,5 +20,6 @@ Route::resource('services', ServiceController::class)->middleware('checkaccess:S
 Route::resource('directions', DirectionController::class)->middleware('checkaccess:Direction');
 Route::resource('departements', DepartementController::class)->middleware('checkaccess:Departement');
 Route::resource('agents',AgentController::class)->middleware('checkaccess:Direction');
-Route::get('/get-departement-by-service', 'ServiceController@getDepartementByService');
+
+
 

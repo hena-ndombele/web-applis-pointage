@@ -15,7 +15,6 @@ class DemandeConge extends Model
         'user_id',
         'duree',
         'debut',
-        'fin',
         'status'
     ];
 
