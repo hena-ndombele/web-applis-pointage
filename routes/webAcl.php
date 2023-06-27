@@ -6,8 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DirectionController;
 use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\AgentController;
-
-
+use App\Models\Service;
 use Illuminate\Support\Facades\Route;
 
 Route::resource('users', UserController::class)->middleware('checkaccess:User');

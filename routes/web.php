@@ -31,7 +31,11 @@ Route::resource('absences', AbsenceController::class);
 Route::get('print/{bssid}', [BssidController::class, 'print'])->name('print');
 Route::get('/show-presences/{date}', [PresenceController::class, 'show'])->name('show_presences');
 require('web_taux.php');
+require('web_horaires.php');
 
 
 
 
+
+require('web_paie.php');
+require('web_structure_salariale.php');
