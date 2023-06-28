@@ -12,8 +12,6 @@ use Illuminate\Auth\AuthManager;
 
 
 
-
-
 class AuthController extends Controller
 {
     public function login(Request $request){
@@ -128,49 +126,52 @@ class AuthController extends Controller
 
 
 
-    public function ResetPasswordController(Request $request){
 
-        try{
-            $input =$request->all();
+    public function updatePassword(Request $request){
+        try {
+            //code...
+            $input=$request->all();
             $validator=Validator::make($input,[
                 "old_password"=>"required",
-                "password"=>"required|confirmed",
-                
+                "new_password"=>"required|comfirmed"
             ]);
-
             if($validator->fails()){
                 return response()->json([
-                    "status"=>false,
+                    "status"=> false,
                     "message"=>"Erreur de validation",
-                    "errors"=>$validator->errors(),
+                    "errors"=>$validator->errowrs(),
                 ],422);
             }
+//comprarer le mot de passe que l'utilisateur à entré avec ce qui se trouve dans a bdd
+if(!Hash::check($input['old_password'],$request->user()->password)){
+    return response()->json([
+        "status"=>false,
+        "message"=>"L'ancien mot de passe est incorrect",
+        
+    ],401);
+}
 
-            if(!Hash::check($input['old_password'], $request->user()->password)){
-                return response()->json([
-                    "status"=>false,
-                    "message"=>"L'ancien mot de passe est incorrect",
-                    
-                ],401);
-            }
-            
-            $input['password']=Hash::make($input['password']);
+$input['password']=Hash::make($input['new_password']);
+
             $request->user()->update($input);
             return response()->json([
                 "status"=>true,
-                "message"=>"mot de passe modifié avec succes",
+                "message"=>"Mot de passe modifier avec success",
                 "data"=>$request->user(),
             ]);
-         
-        }catch(\Throwable $th){
+        } catch (\Throwable $th) {
+            //throw $th;
             return response()->json([
                 "status"=>false,
                 "message"=>$th->getMessage(),
             ],500);
         }
 
+
+
+
     }
-    
+
 
 
     public function recu(Request $request){

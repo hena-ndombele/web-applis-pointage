@@ -87,9 +87,4 @@ class DepartementController extends Controller
         $departement->delete();
         return redirect()->route('departements.index')->with('success','Le departement a été supprimée avec succès');
     }
-    public function byDirection($directionId)
-    {
-        $departements = Departement::where('direction_id', $directionId)->get();
-        return response()->json($departements);
-    }
 }

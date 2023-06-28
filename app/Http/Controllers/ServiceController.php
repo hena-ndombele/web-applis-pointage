@@ -80,8 +80,6 @@ class ServiceController extends Controller
 
         ]
         );
-        return redirect()->route('services.index')->with('success','Le service a été modifié avec succès');
-
     }
 
     /**
@@ -91,10 +89,5 @@ class ServiceController extends Controller
     {
         $service->delete();
         return redirect()->route('services.index')->with('success','Le service a été supprimée avec succès');
-    }
-    public function byDepartement($departementId)
-    {
-        $services = Service::where('departement_id', $departementId)->get();
-        return response()->json($services);
     }
 }
