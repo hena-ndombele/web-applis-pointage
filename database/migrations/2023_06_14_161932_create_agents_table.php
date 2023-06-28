@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nom');
             $table->string('postnom');
+            $table->string('token');
             $table->string('prenom');
             $table->date('date_n');
             $table->string('numero');
@@ -33,6 +34,7 @@ return new class extends Migration
             $table->string('grade');
             $table->string('fonction');
             $table->string('sexe');
+            $table->string('conge_utilises')->default(0);
             $table->timestamps();
         });
     }
