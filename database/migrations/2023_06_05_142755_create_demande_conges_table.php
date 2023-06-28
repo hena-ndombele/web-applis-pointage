@@ -19,6 +19,7 @@ return new class extends Migration
             $table->dateTime('debut');
             $table->dateTime('Fin');
             $table->string('status')->default('en_attente');
+            $table->string('motif_rejet')->nullable();
             $table->timestamps();
         });
     }
