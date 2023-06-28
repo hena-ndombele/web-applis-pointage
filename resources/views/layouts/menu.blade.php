@@ -51,6 +51,12 @@
         <p>Présences</p>
     </a>
 </li>
+<li class="nav-item">
+    <a href="{{ route('stockConges.index') }}" class="nav-link {{ Request::is('stockConges') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-th"></i>
+        <p>Stock Congés</p>
+    </a>
+</li>
 <li class="nav-item has-treeview {{ Request::is('conge*') ? 'menu-open active' : '' }}">
     <a href="#" class="nav-link" data-toggle="false">
         <i class="nav-icon fa fa-calendar"></i>
