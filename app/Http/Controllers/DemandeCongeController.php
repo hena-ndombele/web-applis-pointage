@@ -117,6 +117,7 @@ class DemandeCongeController extends Controller
                                 'message' => "insuffisant"], 403); 
                         } 
                     } 
+                    
 
                     if ($typeConge === 'Congé annuel') {
                         $dureeADemander = $dureeSaisie; 
