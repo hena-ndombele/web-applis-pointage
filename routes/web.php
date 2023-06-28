@@ -8,6 +8,7 @@ use App\Http\Controllers\CongeController;
 use App\Http\Controllers\AbsenceController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\JoursFerieController;
+use App\Http\Controllers\StockCongeController;
 use App\Http\Controllers\DemandeCongeController;
 @include('webAcl.php');
 /*
@@ -33,6 +34,7 @@ Route::resource('presences', PresenceController::class);
 Route::resource('conge',CongeController::class);
 Route::resource('feries',JoursFerieController::class);
 Route::resource('demandes', DemandeCongeController::class);
+Route::resource('stockConges', StockCongeController::class);
 
 Auth::routes();
 Route::resource('absences', AbsenceController::class);
