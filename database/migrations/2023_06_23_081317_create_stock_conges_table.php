@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('conges', function (Blueprint $table) {
+        Schema::create('stock_conges', function (Blueprint $table) {
             $table->id();
-            $table->string('type_conge');
-            $table->integer('duree')->nullable();
+            $table->string('grade');
+            $table->integer('totalConge');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('conges');
+        Schema::dropIfExists('stock_conges');
     }
 };

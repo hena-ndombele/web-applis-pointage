@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CongeController;
 use App\Http\Controllers\PresenceController;
+use App\Http\Controllers\JoursFerieController;
 use App\Http\Controllers\DemandeCongeController;
 
 /*
@@ -25,5 +26,9 @@ Route::group(['middleware' => ['auth:sanctum']], function (){
     Route::put('/demandes/{demande}', [DemandeCongeController::class, 'update']);
     Route::post('/demandes',[DemandeCongeController::class,'store']);
     Route::post('/absences', [AbsenceController::class, 'store']);
+    Route::get('/conges', [CongeController::class, 'indexApi']);
+    Route::get('/feries', [JoursFerieController::class, 'indexApi']);
+    Route::get('/presences2', [PresenceController::class, 'indexApi']);
+
 });
 Route::get('/conges', [CongeController::class, 'indexApi']);
