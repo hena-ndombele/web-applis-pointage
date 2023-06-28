@@ -9,5 +9,5 @@ class JoursFerie extends Model
 
 {
     use HasFactory;
-    protected $fillable=['titre','date'];
+    protected $fillable=['titre','date','details','type'];
 }

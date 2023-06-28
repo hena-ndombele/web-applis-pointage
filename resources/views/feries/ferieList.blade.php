@@ -36,10 +36,12 @@
         <table class="table table-striped">
             <thead>
               <tr>
-                <th scope="col">N°</th>
-                <th scope="col">Titre</th>
-                <th scope="col">Date</th>
-                <th scope="col">Action</th>
+                <th scope="col" class="col-1">N°</th>
+                <th scope="col" class="col-2">Titre</th>
+                <th scope="col" class="col-1">Date</th>
+                <th scope="col" class="col-5">Détails</th>
+                <th scope="col" class="col-1">Type</th>
+                <th scope="col" class="col-1">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -52,6 +54,8 @@
                         <th scope="row">{{ $number }}</th>
                         <td>{{ $item->titre }}</td>
                         <td>{{ $item->date }}</td>
+                        <td>{{ $item->details }}</td>
+                        <td>{{ $item->type }}</td>
                         <td>
                             <div class="row">
                                 <a class="btn btn-danger mr-2" onclick="supprimer(event)" href="{{ route('feries.destroy', $item->id)}}" data-toggle="modal" data-target="#modalDeleteForm" ><i class="fas fa-trash"></i></a>
@@ -63,7 +67,7 @@
                 @endphp
                 @empty
                     <tr>
-                        <td colspan="5"> 
+                        <td colspan="12"> 
                             Aucun enregistrement
                         </td>
                   </tr>
