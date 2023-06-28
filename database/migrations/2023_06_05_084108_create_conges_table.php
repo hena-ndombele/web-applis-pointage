@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('conges', function (Blueprint $table) {
             $table->id();
             $table->string('type_conge');
-            $table->integer('duree');
+            $table->integer('duree')->nullable();
             $table->timestamps();
         });
     }
