@@ -28,7 +28,6 @@
                 <th scope="col">Type de congé</th>
                 <th scope="col">Debut</th>
                 <th scope="col">Durée</th>
-                <th scope="col">Fin</th>
                 <th scope="col">Status</th>
                 <th scope="col">Action</th>
               </tr>
@@ -58,6 +57,7 @@
                         id="status{{ $item->id }}">
                         {{ $item->status }}
                         </td>
+                        <td style="color: {{ $item->status == 'validée' ? 'green' : 'red' }}" id="status{{ $item->id }}">{{ $item->status }}</td>
                         <td>
                             <div class="row btn-group">
                                 <button class="btn btn-success" onclick="validerDemande({{ $item->id }})">
@@ -82,11 +82,7 @@
                 @endforelse
             </tbody>
           </table> 
-          <div>
-                {{ $demandes->links() }}
-          </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         function validerDemande(id) {

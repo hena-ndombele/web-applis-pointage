@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->integer('duree');
             $table->dateTime('debut');
-            $table->dateTime('Fin');
             $table->string('status')->default('en_attente');
             $table->string('motif_rejet')->nullable();
             $table->timestamps();

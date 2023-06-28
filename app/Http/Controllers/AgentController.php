@@ -71,6 +71,7 @@ class AgentController extends Controller
                 'sexe'=>'required',
                 'conges_utilises'=>'string',
                
+               
 
             ]);
         
@@ -178,6 +179,7 @@ class AgentController extends Controller
             ]);
     
             $agent->update($validatedData);
+            
     
             
     
@@ -222,6 +224,35 @@ class AgentController extends Controller
         // } catch (\Exception $e) {
         //     return response()->json(['error' => $e->getMessage()]);
         // }
+    }
+
+
+
+      
+
+
+
+    
+
+   
+
+
+
+    
+    
+
+
+    
+
+
+
+
+    
+    public function informationAgent(){
+        
+        $agents = Agent::where(['token' =>  auth()->user()->token])->first();
+        return response()->json($agents);
+
     }
 
 

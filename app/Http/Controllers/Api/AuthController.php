@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Auth\AuthManager;
 
 
 
@@ -45,6 +46,7 @@ class AuthController extends Controller
                 [
                     "status"=>200,
                      "data"=>[
+                        "user"=>$user,
                         "token"=>$user->createToken('auth_user')->plainTextToken,
                         "token_type"=>"Bearer",
                     ]
@@ -113,16 +115,14 @@ class AuthController extends Controller
 
 
     public function profile(Request $request){
-        return response()->json(
-            [
-                "status"=>1,
-                "message"=> "profile utilisateur",
-                "data"=>Auth::user(),
-                ]
-            );
+      $user=Auth::user();
+       return response()->json(['utilisateur'=>$user],200);
 
 
     }
+
+
+
 
 
 
@@ -139,7 +139,7 @@ class AuthController extends Controller
                 return response()->json([
                     "status"=> false,
                     "message"=>"Erreur de validation",
-                    "errors"=>$validator->errors(),
+                    "errors"=>$validator->errowrs(),
                 ],422);
             }
 //comprarer le mot de passe que l'utilisateur à entré avec ce qui se trouve dans a bdd
@@ -192,4 +192,14 @@ $input['password']=Hash::make($input['new_password']);
              
         }
     }
+
+
+    public function logout()
+    {
+        auth()->user()->tokens()->delete();
+        return response([
+            'message' => "Deconnexion avec success"
+        ], 200);
+    }
+    
 }

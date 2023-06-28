@@ -18,6 +18,7 @@ class DemandeConge extends Model
         'fin',
         'status',
         'motif_rejet'
+        'status'
     ];
 
         public function conges(){

@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jours_feries', function (Blueprint $table) {
-            $table->id();
-            $table->string('titre');
-            $table->date('date');
-            $table->string('details');
-            $table->string('type');
-            $table->timestamps();
+        Schema::table('taux_configurations', function (Blueprint $table) {
+            $table->enum('status', ['active', 'desactive'])->default('active');
         });
     }
 
@@ -26,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jours_feries');
+        Schema::table('taux_configurations', function (Blueprint $table) {
+            //
+        });
     }
 };
