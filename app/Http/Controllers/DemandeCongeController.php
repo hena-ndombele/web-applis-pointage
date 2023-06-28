@@ -36,13 +36,8 @@ class DemandeCongeController extends Controller
             $enAttenteCount = $this->countEnAttente();
             session(['enAttenteCount' => $enAttenteCount]);
             return view('conge.demandeCongeList', compact('demandes', 'conge','enAttenteCount'));
-        }    
-    public function index(){
-        $demandes = DemandeConge::where('user_id', Auth::id())->get();
-        $conge=new Conge();
-    
-        return view('conge.demandeCongeList', compact('demandes', 'conge'));
-    }
+        } 
+    }   
 
      public function store(Request $request)
     {
@@ -119,6 +114,7 @@ class DemandeCongeController extends Controller
                     } 
                     
 
+
                     if ($typeConge === 'Congé annuel') {
                         $dureeADemander = $dureeSaisie; 
                     } else {
@@ -181,7 +177,8 @@ class DemandeCongeController extends Controller
             } else {
                 return response()->json(['message' => 'Type de congé invalide ou utilisateur non autorisé'], 403);
             }
-        } catch (\Exception $e) {
+        }
+     } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }
         
@@ -234,37 +231,6 @@ public function update(Request $request, DemandeConge $demande, Agent $agent) {
         return response()->json(['message' => "erreur"], 500);
     }
 }
-    public function update(Request $request, DemandeConge $demande) {
-        try {
-            // Vérifier que la demande de congé existe
-            $req = DemandeConge::findOrFail($demande->id);
-    
-            // Valider les données de la requête
-            $validatedData = $request->validate([
-                'status' => 'required',
-            ]);
-    
-           
-            DemandeConge::where(['id' => $req->id])->update([
-                'status'   => $request->status,
-            ]);
-            // $demande->status::update($validatedData
-            // $demande->save();
-    
-            // Déterminer le message à renvoyer en fonction de l'état de la demande de congé mise à jour
-            $message = '';
-            if ( $status == 'validée') {
-                $message = 'Demande de congé validée';
-            } else {
-                $message = 'Demande de congé rejetée';
-            }
-    
-            return response()->json(['message' => $message], 200);
-        } catch (\Exception $e) {
-            return response()->json(['message' => "Erreur"], 500);
-        }
-    }
-
 
     public function destroy(Request $request, $demande) {
         try {
@@ -275,11 +241,7 @@ public function update(Request $request, DemandeConge $demande, Agent $agent) {
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }
-    }
-
-  
-    
-    
+    }   
 }
 
 
