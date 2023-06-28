@@ -13,6 +13,7 @@ class Agent extends Model
         'postnom',
         'prenom',
         'date_n',
+        'token',
         'numero',
         'email',
         'adresse',
@@ -28,7 +29,8 @@ class Agent extends Model
         'image',
         'sexe',
         'grade',
-        'fonction'
+        'fonction',
+        'conge_utilises'
     ];
     public function departement()
     {
