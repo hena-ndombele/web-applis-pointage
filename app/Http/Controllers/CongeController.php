@@ -17,8 +17,8 @@ class CongeController extends Controller
 
     public function indexApi(){
         $conge= Conge::all();
-        
-        return response()->json(['message' => $conge], 500);
+ 
+        return response()->json(['message' => $conge], 200);
     }
 
 
