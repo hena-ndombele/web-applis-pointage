@@ -74,11 +74,12 @@
                     $number++;
                 @endphp
                 @empty
-                    <tr>
-                        <td colspan="12"> 
-                            Aucun enregistrement
-                        </td>
-                  </tr>
+                <tr>
+                    <td colspan="8" class="text-center py-4">
+                        <i class="fas fa-exclamation-circle fa-3x text-gray-400"></i>
+                        <p class="text-lg font-bold mt-4">Aucune demande trouvée</p>
+                    </td>
+                </tr>
                 @endforelse
             </tbody>
           </table> 

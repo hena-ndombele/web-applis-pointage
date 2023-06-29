@@ -226,6 +226,8 @@ class AgentController extends Controller
         // }
     }
 
+    
+
 
 
       
@@ -248,12 +250,7 @@ class AgentController extends Controller
 
 
     
-    public function informationAgent(){
-        
-        $agents = Agent::where(['token' =>  auth()->user()->token])->first();
-        return response()->json($agents);
-
-    }
+    
 
 
 
