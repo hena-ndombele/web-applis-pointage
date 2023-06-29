@@ -58,6 +58,23 @@ class PresenceController extends Controller
         ));
     }
 
+    public function indexApi(){
+        try {
+            $requestIdUser = Auth::user()->id;
+            $present = Presence::select('created_at')
+                                ->where('user_id', $requestIdUser)
+                                ->whereYear('created_at', date('Y'))
+                                ->get();
+            $formattedDates = $present->map(function($item){
+                return ['created_at' => date_format(new DateTime($item->created_at), 'Y-m-d')];
+            });
+            return response()->json($formattedDates);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */
