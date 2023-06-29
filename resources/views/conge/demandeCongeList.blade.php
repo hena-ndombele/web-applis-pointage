@@ -139,37 +139,7 @@
                 if (result.value) {
                     let url = "{{ route('demandes.update', ':id') }}";  
                     url = url.replace(':id', id);
-                    let token = "{{ csrf_token() }}";
-                    
-                        
-a
-                    let obj=new Object();
-                    obj.id = id;
-                    obj.token =token;
-                    obj.status = "rejeté";
-
-                    console.log(obj);
-                
-                    
-                    var message =new Object();
-                    message.text=obj;
-                    var targetOrigin = "http://localhost:5000";
-
-                    /*fetch('http://localhost:5000', {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify(message)
-                    });*/
- 
-                    
-                    //window.parent.postMessage(message, "http://localhost:5000");
-                    
-                    //if (window.parent !== window && window.parent.postMessage) {
-                        // Envoyer le message à la fenêtre parent
-                     //   window.parent.postMessage(message, targetOrigin);
-                    //}
-                    
-        
+                    let token = "{{ csrf_token() }}";       
                     fetch(url, {
                         method: 'PUT',
                         headers: {       
