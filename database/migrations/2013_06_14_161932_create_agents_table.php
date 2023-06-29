@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('token')->unique();
             $table->string('nom');
             $table->string('postnom');
-            $table->string('token');
             $table->string('prenom');
             $table->date('date_n');
             $table->string('numero');

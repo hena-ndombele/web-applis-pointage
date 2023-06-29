@@ -14,9 +14,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-
 
 class AgentController extends Controller
 {
@@ -106,11 +103,9 @@ class AgentController extends Controller
                 $passwordSend  = '2023-06-1012345';
                 $user = User::create([
                     'name' => $agent->prenom,
-                    'email' => $agent->agent->email,
-                    'password' => Hash::make(Hash::make($passwordSend)Send)
+                    'email' => $agent->email,
+                    'password' => Hash::make($passwordSend)
                 ]);
-                $user->token = $agent->token; // Lier le token du nouvel utilisateur à celui de l'agent
-                $user->save(); // Enregistrer les changements dans la base de données
                 $user->token = $agent->token; // Lier le token du nouvel utilisateur à celui de l'agent
                 $user->save(); // Enregistrer les changements dans la base de données
             }
@@ -213,46 +208,6 @@ class AgentController extends Controller
     
     public function informationAgent(){
 
-        
-        
-        $agents = Agent::where(['token' =>  Auth::user()->token])->get();
-        return response()->json($agents);
-
-        // try {
-        //     // $userId = Auth::user()->id;
-        //     // // $agents = Agent::select('service_id','departement_id','Matricule','grade','date_e','supervieur','etat_civil','date_n','numero','adresse','niveau_etude','nombre_e','direction_id')->get();
-        //     // $agent = Agent::find($userId);
-
-        //     $agent = Agent::where(['id' => $agent])->get();
-        //     return response()->json($agent);
-        // } catch (\Exception $e) {
-        //     return response()->json(['error' => $e->getMessage()]);
-        // }
-    }
-
-
-
-      
-
-
-
-    
-
-   
-
-
-
-    
-    
-
-
-    
-
-
-
-
-    
-    public function informationAgent(){
         
         
         $agents = Agent::where(['token' =>  Auth::user()->token])->first();
