@@ -12,6 +12,7 @@ use App\Models\JoursFerie;
 use App\Models\DemandeConge;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\PostController;
 
 class DemandeCongeController extends Controller
 {
@@ -121,18 +122,17 @@ class DemandeCongeController extends Controller
             $validatedData = $request->validate([
                 'status' => 'required|in:validée,rejetée',
             ]);
+            if ($demande->status == 'validée' || $demande->status == 'rejetée') {
+                return response()->json(['message' => "Demande déjà traitée"], 400);
+            }
     
             // Vérifier que la demande n'est pas déjà traitée
             DemandeConge::where(['id' => $req->id])->update([
                 'status'   => $validatedData['status'],
             ]);
     
-            $message = $validatedData['status'] == 'validée' ? "Demande de congé validée" : "Demande de congé rejetée";
-
-            if ($demande->status == 'validée' || $demande->status == 'rejetée') {
-                return response()->json(['message' => "Demande déjà traitée"], 400);
-            }
-    
+            $message = $validatedData['status'] == 'validée' ? "Demande de congé validée" : "Demande de congé rejetée"; 
+                PostController::index($demande->id);    
             return response()->json(['message' => $message], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => "Erreur"], 500);
