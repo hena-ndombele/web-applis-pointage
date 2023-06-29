@@ -27,7 +27,7 @@ require 'api_login.php';
 require('api_absence.php'); 
 require 'api_logout.php';
 require 'api_profil.php';
-require 'api_change-password.php';
+
 
 
 

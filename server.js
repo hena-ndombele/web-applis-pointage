@@ -5,12 +5,23 @@ const http=require('http')
 const port=process.env.PORT||5000
 var app=express();
 var identifiant;
+let notifications=[];
 let server = http.createServer(app);
 var io=socketIO(server);
+let donnee;
+let verificationNbr=0;
+let data={};
+let cle=0;
+let cleTab=[];
+   
+if(typeof notifications.id=="undefined"){
+    console.log("pas defini====================")
+    notifications.id=[];
+    }
 
 // make connection with user from server side
 io.on('connection', (socket)=>{
-    
+
     console.log('New user connected', socket.id);
 
 //emit message from server to user
@@ -19,56 +30,103 @@ io.on('connection', (socket)=>{
         socket.join("room-"+id);
         socket.join("room-all");
         identifiant=id;
+        console.log(cleTab);
+        console.log(notifications.id);
+        let key=3;
+        while(cleTab.length>0){
+            let key=cleTab.pop();
+            donnee=notifications.id.cle;
+            
+            donnee=JSON.stringify(donnee);
+            setTimeout(function() {
+                io.sockets.in("room-"+identifiant).emit('receive', donnee)
+              }, 500);
+            key--;
+        }
         console.log(`Id ${id} vient de rejoindre le Room`)
     })
+     //_____________________________________________________________
+
+     app.use(express.json());
+     app.use(express.urlencoded({ extended: false }));
+    /* 'form_params' => [
+        'user_id' => "demande->user_id",
+        'debut' => $demande->debut,
+        'fin' =>$demande->fin,
+        'status'=>$demande->status,
+    ]*/
+     
+     app.post('/reception', (req, res) => {
+
+   
+       let id = req.body.user_id;
+       cle=req.body.id;
+       
+       let debut=req.body.debut;
+       let fin=req.body.fin;
+       let status=req.body.status;
+       data.id=id;  
+       data.debut=debut;
+       data.fin=fin;
+       data.status=status;
+       let jsonData=JSON.stringify(data);
+/*
+       if(verificationNbr==501 ){
+        console.log("^^^^^^"+verificationNbr);
+        notifications.id['$cle']=data;
+        console.log(notifications.id);
+       }*/
+      
+       io.sockets.in("room-"+req.body.user_id).emit('receive', jsonData);
+     
+
+        cleTab.push("cle");
+        notifications.id.cle=data;
+    
+        console.log('####'+cleTab)
+       
+       res.send('Données reçues avec succès !');
+     });
+     
+
+ 
+     //_________________________________________________________
 
 // listen for message from user
+socket.on("confirmation", (code)=>{
+          
+    let jsonCode=JSON.parse(code);
+    verificationNbr=jsonCode.id;
+  
+
+        cleTab.pop();
+
+   });
+
+
+  
     socket.on('createMessage', (data)=>{
        // list.push(ID);
         //socket.emit('users',list);
         console.log('createMessage', data);
         io.sockets.in("room-"+data.id).emit('sendMessage', data.message);
     });
-    socket.on('sound', (data)=>{
-        // list.push(ID);
-         //socket.emit('users',list);
-         console.log('createMessageSound', data);
-         io.sockets.in("room-"+data.id).emit('receive', data.message);
-     });
 
-
-
-    // when server disconnects from user
     socket.on('disconnect', ()=>{
         console.log('disconnected from user', socket.id);
     });
-    //_____________________________________________________________
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
-app.post('/reception', (req, res) => {
-  const nom = req.body.nom;
-  const email = req.body.email;
-  const message = req.body.message;
-  console.log(nom);
-
-  // Traitez les données ici
-  
-  res.send('Données reçues avec succès !');
-});
-
-app.listen(8000, () => {
-  console.log('Le serveur est en cours d\'exécution sur le port 5000');
-});
-//_________________________________________________________
 
 
 });
+
 
 app.get("/", (req, res) => {
 res.sendFile(__dirname + "/client-side.html");
 });
+app.listen(3000, () => {
+    console.log('Le serveur est en cours d\'exécution sur le port 5000');
+  });
 
 server.listen(port, ()=>{
     console.log("Server started!!", port)

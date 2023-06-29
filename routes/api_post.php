@@ -5,7 +5,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\AbsenceController;
 
 
-Route::get('/envoye', [PostController::class, 'envoyerDonneesAuServeur']);
+Route::resource('/envoye', PostController::class);
 
 
 
