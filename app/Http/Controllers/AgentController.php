@@ -211,16 +211,6 @@ class AgentController extends Controller
         $agents = Agent::where(['token' =>  Auth::user()->token])->first();
         return response()->json($agents);
 
-        // try {
-        //     // $userId = Auth::user()->id;
-        //     // // $agents = Agent::select('service_id','departement_id','Matricule','grade','date_e','supervieur','etat_civil','date_n','numero','adresse','niveau_etude','nombre_e','direction_id')->get();
-        //     // $agent = Agent::find($userId);
-
-        //     $agent = Agent::where(['id' => $agent])->get();
-        //     return response()->json($agent);
-        // } catch (\Exception $e) {
-        //     return response()->json(['error' => $e->getMessage()]);
-        // }
     }
 
 

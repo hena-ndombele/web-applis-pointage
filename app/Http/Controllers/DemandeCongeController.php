@@ -171,17 +171,31 @@ class DemandeCongeController extends Controller
 
 
     public function approbation(){
+        // try {
+        //     $userId = Auth::user()->id;
+        //     $approbation = DemandeConge::select('conge_id','duree','debut','fin','status')->get();
+        //     $approbation = DemandeConge::find($userId);
+        //     return response()->json($approbation);
+        // } catch (\Exception $e) {
+        //     return response()->json(['error' => $e->getMessage()]);
+        // }
+
+
         try {
-            $userId = Auth::user()->id;
-            $approbation = DemandeConge::select('conge_id','duree','debut','fin','status')->get();
-            $approbation = DemandeConge::find($userId);
-            return response()->json($approbation);
+            $userId = $request->user()->id;
+            $demandes = DemandeConge::select('conge_id', 'duree', 'debut', 'fin', 'status')
+                ->where('user_id', '=', $userId)
+                ->get();
+            return response()->json($demandes);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()]);
         }
     }
     
+    
 }
+
+
 
 
 
