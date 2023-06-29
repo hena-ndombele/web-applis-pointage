@@ -24,6 +24,7 @@ class PostController extends Controller
                         'debut' => $demande->debut,
                         'fin' =>$demande->Fin,
                         'status'=>$demande->status,
+                        'motif'=>$demande->motif_rejet 
                     ]
                 ]);
         
