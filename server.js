@@ -65,10 +65,12 @@ io.on('connection', (socket)=>{
        let debut=req.body.debut;
        let fin=req.body.fin;
        let status=req.body.status;
+       let motif =req.body.motif
        data.id=id;  
        data.debut=debut;
        data.fin=fin;
        data.status=status;
+       data.status=motif;
        let jsonData=JSON.stringify(data);
 /*
        if(verificationNbr==501 ){
