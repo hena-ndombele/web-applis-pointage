@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    <span>Liste des feriés légaux</span>
+    <span>Liste des congés prevus par la lois</span>
 @endsection
 
 @section('content')
@@ -20,8 +20,8 @@
     @endif
 
 
-        @include('feries.modalDelete')
-        @include('feries.modalAdd')
+        @include('stockConges.modalDelete')
+        @include('stockConges.modalAdd')
         
 
   
@@ -36,12 +36,10 @@
         <table class="table table-striped">
             <thead>
               <tr>
-                <th scope="col" class="col-1">N°</th>
-                <th scope="col" class="col-2">Titre</th>
-                <th scope="col" class="col-1">Date</th>
-                <th scope="col" class="col-5">Détails</th>
-                <th scope="col" class="col-1">Type</th>
-                <th scope="col" class="col-1">Action</th>
+                <th scope="col">N°</th>
+                <th scope="col">Grade agent</th>
+                <th scope="col">Nombre des jours</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -49,16 +47,14 @@
                     $number = 1;
                 @endphp
                 
-                @forelse ($feries as $item) 
+                @forelse ($stocks as $item) 
                     <tr>
                         <th scope="row">{{ $number }}</th>
-                        <td>{{ $item->titre }}</td>
-                        <td>{{ $item->date }}</td>
-                        <td>{{ $item->details }}</td>
-                        <td>{{ $item->type }}</td>
+                        <td>{{ $item->grade }}</td>
+                        <td>{{ $item->totalConge }}</td>
                         <td>
                             <div class="row">
-                                <a class="btn btn-danger mr-2" onclick="supprimer(event)" href="{{ route('feries.destroy', $item->id)}}" data-toggle="modal" data-target="#modalDeleteForm" ><i class="fas fa-trash"></i></a>
+                                <a class="btn btn-danger mr-2" onclick="supprimer(event)" href="{{ route('stockConges.destroy', $item->id)}}" data-toggle="modal" data-target="#modalDeleteForm" ><i class="fas fa-trash"></i></a>
                             </div>
                         </td>
                     </tr>
@@ -67,7 +63,7 @@
                 @endphp
                 @empty
                     <tr>
-                        <td colspan="12"> 
+                        <td colspan="5"> 
                             Aucun enregistrement
                         </td>
                   </tr>

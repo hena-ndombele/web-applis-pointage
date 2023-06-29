@@ -7,8 +7,11 @@ use DatePeriod;
 use DateInterval;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Agent;
 use App\Models\Conge;
 use App\Models\JoursFerie;
+use App\Models\JoursFerie;
+use App\Models\StockConge;
 use App\Models\DemandeConge;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -111,18 +114,29 @@ class DemandeCongeController extends Controller
     }
 }
 
-    public function update(Request $request, DemandeConge $demande) {
-        try {
+public function update(Request $request, DemandeConge $demande, Agent $agent) {
+    try {
             
-            // Vérifier que la demande de congé existe
-            $req = DemandeConge::findOrFail($demande->id);
-    
-            // Valider les données de la requête
-            $validatedData = $request->validate([
-                'status' => 'required|in:validée,rejetée',
-            ]);
-    
-            // Vérifier que la demande n'est pas déjà traitée
+        // Vérifier que la demande de congé existe
+        $req = DemandeConge::findOrFail($demande->id);
+        $conge = Conge::findOrFail($req->conge_id);
+        $user=User::join('agents', 'users.token', '=', 'agents.token')
+            ->where('users.id', $req->user_id)
+            ->select('users.*', 'agents.conge_utilises')
+            ->firstOrFail();
+        
+
+        // Valider les données de la requête
+        $validatedData = $request->validate([
+            'status' => 'required|in:validée,rejetée|in:validée,rejetée',
+            'motif_rejet' => 'nullable|required_if:status,rejetée'
+        ]);
+
+         if ($req->status == 'validée') {
+            return response()->json(['message' => "Cette demande a déjà été validée"], 400);
+        } elseif ($req->status == 'rejetée') {
+            // Vérifier que la demande n'est pas déjà traitéereturn response()->json(['message' => "Cette demande a déjà été rejetée"], 400);
+        } else {
             DemandeConge::where(['id' => $req->id])->update([
                 'status'   => $validatedData['status'],
             ]);

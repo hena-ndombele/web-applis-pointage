@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Conge;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CongeController extends Controller
 {
@@ -21,18 +22,30 @@ class CongeController extends Controller
     }
 
 
-    public function store(Request $request){
+    public function store(Request $request){  
         $request->validate([
-            'type_conge'=>'required|string|unique:conges',
-            'duree'=>'required|integer',
+            'type_conge' => 'required|string|unique:conges',
+            'duree' => 'required_unless:type_conge,Congé annuel,congé annuel|integer', 
         ]);
-        $conge=Conge::create([
-            'type_conge'=>$request->type_conge,
-            'duree'=>$request->duree,
+
+        $typeConge = strtolower($request->type_conge);
+        if ($typeConge === 'congé annuel' || $typeConge === 'conge annuel') {
+            $typeConge = 'Congé annuel'; 
+        } 
+
+        if ($typeConge === 'Congé annuel') {
+            $totalConge = DB::table('stock_conges')->pluck('totalConge')->first();
+            $duree = $totalConge;
+        } else {
+            $duree = $request->duree;
+        }
+
+        $conge = Conge::create([
+            'type_conge' => $typeConge,
+            'duree' => $duree,
         ]);
         
         return redirect()->route('conge.index');
-
     }
 
     public function edit(Conge $conge){

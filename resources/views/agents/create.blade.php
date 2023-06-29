@@ -194,6 +194,9 @@
                                                 Féminin
                                             </label>
                                         </div>
+                                        
+                                            <input type="hidden" name="conge_utilises" value="0">
+                                        
                                     </div>
                                 </div>
                                 

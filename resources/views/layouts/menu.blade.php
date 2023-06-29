@@ -13,19 +13,8 @@
 </li>
 @endpermission
 
-<li class="nav-item">
-    <a href="{{ route('presences.index') }}" class="nav-link {{ Request::is('presences') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-th"></i>
-        <p>Présences</p>
-    </a>
-</li>
 
-<li class="nav-item">
-    <a href="{{ route('bssid.index') }}"  class="nav-link {{ Request::is('bssid') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-wifi"></i>
-        <p>Bssid</p>
-    </a>
-</li>
+
 
 @permission('read','User')
 <li class="nav-item">
@@ -35,15 +24,6 @@
     </a>
 </li> 
 
-<li class="nav-item">
-    <a href="{{ route('presences.index') }}" class="nav-link {{ Request::is('presences') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-th"></i>
-        <p>Présences</p>
-    </a>
-</li>
-
-
-@include('layouts.bssidMenu');
 
 
 </li>
@@ -72,35 +52,14 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{ route('conge.index') }}" class="nav-link {{ Request::is('conge') ? 'active' : '' }}">
-        <i class="nav-icon fa fa-calendar"></i>
-        <p>congés légaux</p>
-    </a>
-</li>
-
-<li class="nav-item">
     <a href="{{ route('demandes.index') }}" class="nav-link {{ Request::is('demande') ? 'active' : '' }}">
-        <i class="nav-icon fa fa-bell-o"></i>
+        <i class="nav-icon fas fa-plane-departure"></i>
         <p>Démandes de congé</p>
+        <span id="demandesEnAttente" class="badge badge-danger navbar-badge">{{ session('enAttenteCount') }}</span>
     </a>
 </li>
 
-<li class="nav-item">
-    <a href="{{ route('bssid.index') }}"  class="nav-link {{ Request::is('bssid') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-wifi"></i>
-        <p>Bssid</p>
-    </a>
-</li>
 @endpermission
-@permission('read','Bssid')
-<li class="nav-item">
-    <a href="{{ route('bssid.index') }}"  class="nav-link {{ Request::is('bssid') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-wifi"></i>
-        <p>Bssid</p>
-    </a>
-</li>
-@endpermission
-
 
 @permission('read','Service')
 <li class="nav-item has-treeview {{ Request::is('conge*') ? 'menu-open active' : '' }}">
@@ -138,12 +97,6 @@
 </li>
 @endpermission
 <li class="nav-item">
-    <a href="{{ route('qrcode') }}"  class="nav-link {{ Request::is('qrcode') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-expand"></i>
-        <p>qrcode</p>
-    </a>
-</li>
-<li class="nav-item">
     <a href="{{ route('paie.index') }}"  class="nav-link {{ Request::is('paie') ? 'active' : '' }}">
         <i class="nav-icon fas fa-file"></i>
         <p>Paie</p>
@@ -168,14 +121,45 @@
             </a>
         </li>
         <li class="nav-item">
+            <a href="{{ route('stockConges.index') }}" class="nav-link {{ Request::is('stockConges') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>Stock Congés</p>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="{{ route('fonctions.index') }}"  class="nav-link {{ Request::is('fonctions') ? 'active' : '' }}">
                 <i class="nav-icon fa fa-file-contract"></i>
                 <p>Fonctions</p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('conge.index') }}" class="nav-link {{ Request::is('conge') ? 'active' : '' }}">
+                <i class="nav-icon fa fa-calendar"></i> 
+                <p>Congés légaux</p> 
+           </a>
+           </li> 
+       <li class="nav-item"> 
+           <a href="{{ route('feries.index') }}" class="nav-link {{ Request::is('feries') ? 'active' : '' }}">
+               <i class="nav-icon far fa-calendar-alt"></i>
+               <p>Feriés légaux</p>
+           </a>
+       </li> 
+       <li class="nav-item">
+            <a href="{{ route('qrcode') }}"  class="nav-link {{ Request::is('qrcode') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-expand"></i>
+                <p>qrcode</p>
+            </a>
+        </li>
+        @permission('read','Bssid')
+        <li class="nav-item">
+            <a href="{{ route('bssid.index') }}"  class="nav-link {{ Request::is('bssid') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-wifi"></i>
+                <p>Bssid</p>
+            </a>
+        </li>
+        @endpermission
     </ul>
 </li>
-
 
 
 
