@@ -11,6 +11,9 @@ use App\Models\Service;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+
 
 class AgentController extends Controller
 {
@@ -66,21 +69,48 @@ class AgentController extends Controller
                 'grade'=>'required',
                 'fonction'=>'required',
                 'sexe'=>'required',
+                'conges_utilises'=>'string',
+               
+               
 
             ]);
         
-            $agent = Agent::create($validatedData);
+            // $agent = Agent::create(
+            //     $request->all(),
+            //     ['token' => Str::random(12)]
+            // );
+
+           
         
+            // if ($agent) {
+               
+            //     $password = $agent->date_e . $agent->matricule;
+                
+            //     $passwordSend  = '2023-06-1012345';
+            //     User::create([
+            //         'token' => $tokenFourni,
+            //         'name' => $agent->prenom,
+            //         'email' => $agent->email,
+            //         'password' => Hash::make($password)
+            //     ]);
+            // }
+            $agent = new Agent();
+            $agent->fill($request->all());
+            $agent->token = Str::random(12);
+
             if ($agent) {
-                $email = substr($agent->nom, 0, 2) . substr($agent->postnom, -2) . $agent->prenom . '@timekeeper.com';
-                $password = Hash::make($agent->date_e . $agent->matricule);
-                User::create([
+                $password = $agent->date_e . $agent->matricule;
+                $passwordSend  = '2023-06-1012345';
+                $user = User::create([
                     'name' => $agent->prenom,
-                    'email' => $email,
-                    'password' => $password
+                    'email' => $agent->email,
+                    'password' => Hash::make($passwordSend)
                 ]);
+                $user->token = $agent->token; // Lier le token du nouvel utilisateur à celui de l'agent
+                $user->save(); // Enregistrer les changements dans la base de données
             }
         
+
             if ($request->hasFile('image') && $agent) {
                 $file = $request->file('image');
                 $ext = $file->getClientOriginalExtension();
@@ -149,6 +179,7 @@ class AgentController extends Controller
             ]);
     
             $agent->update($validatedData);
+            
     
             
     
@@ -171,4 +202,74 @@ class AgentController extends Controller
 
         return response()->json($departements);
     }
+
+
+
+
+    
+    public function informationAgent(){
+
+        
+        
+        $agents = Agent::where(['token' =>  Auth::user()->token])->get();
+        return response()->json($agents);
+
+        // try {
+        //     // $userId = Auth::user()->id;
+        //     // // $agents = Agent::select('service_id','departement_id','Matricule','grade','date_e','supervieur','etat_civil','date_n','numero','adresse','niveau_etude','nombre_e','direction_id')->get();
+        //     // $agent = Agent::find($userId);
+
+        //     $agent = Agent::where(['id' => $agent])->get();
+        //     return response()->json($agent);
+        // } catch (\Exception $e) {
+        //     return response()->json(['error' => $e->getMessage()]);
+        // }
+    }
+
+
+
+      
+
+
+
+    
+
+   
+
+
+
+    
+    
+
+
+    
+
+
+
+
+    
+    public function informationAgent(){
+        
+        $agents = Agent::where(['token' =>  auth()->user()->token])->first();
+        return response()->json($agents);
+
+    }
+
+
+
+      
+
+
+
+    
+
+   
+
+
+
+    
+    
+
+
+    
 }

@@ -15,28 +15,27 @@ class BssidController extends Controller
         return view('bssid.bssidList',compact('bssid'));
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
+        $qrCode1 = QrCode::size(200)->generate("/api/scanArrive");
+        $qrCode2 = QrCode::size(200)->generate("/api/scanDepart");
 
-        
-        $qrcode = QrCode::size(200)->generate(
-            "api/scan",
-            // "../public/storage/codes_qr/$request->name.svg"
-        );
+        $qrCodePath1 = "codes_qr/code1.svg";
+        $qrCodePath2 = "codes_qr/code2.svg";
 
-        $qr_codePath = "codes_qr/$request->name.svg";
-
- 
-    Storage::disk('local')->put("public/codes_qr/$request->name.svg",  $qrcode);
+        Storage::disk('local')->put("public/$qrCodePath1", $qrCode1);
+        Storage::disk('local')->put("public/$qrCodePath2", $qrCode2);
 
         Bssid::create([
             'name'      => $request->name,
             'bssid'     => $request->bssid,
-            'qr_code'   => $qr_codePath,
+            'qr_code_1' => $qrCodePath1,
+            'qr_code_2' => $qrCodePath2,
         ]);
-
 
         return redirect()->route('bssid.index');
     }
+    
     public function destroy(Bssid $bssid)
     {
         $bssid->delete();
@@ -44,10 +43,21 @@ class BssidController extends Controller
         return redirect()->route('bssid.index');
     }
 
-
-    public function print(Bssid $bssid)
+    public function printQrCode1(Bssid $bssid)
     {
+        return view('qrcode.printQrCode1', compact('bssid'));
+    }
 
-        return view('bssid.print', compact('bssid'));
+    public function printQrCode2(Bssid $bssid)
+    {
+        return view('qrcode.printQrCode2', compact('bssid'));
+    }
+
+
+    public function listeQrCode()
+    {
+        $bssid = Bssid::firstOrFail();
+
+        return view('qrcode.index', compact('bssid'));
     }
 }

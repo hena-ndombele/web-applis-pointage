@@ -87,7 +87,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Email <span class="text-danger">*</span></label>
                                     <input type="email" class="form-control" id="exampleInputEmail1"
-                                        placeholder="nom du projet" name="email" @required(true)  readonly value="{{$agents->email}}">
+                                        placeholder="nom du projet" name="email" @required(true)   value="{{$agents->email}}">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Adresse <span class="text-danger">*</span></label>

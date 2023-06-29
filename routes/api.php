@@ -28,6 +28,8 @@ require('api_absence.php');
 require 'api_logout.php';
 require 'api_profil.php';
 
+require 'api_informationAgent.php';
+
 
 
 

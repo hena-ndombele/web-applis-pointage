@@ -1,5 +1,4 @@
 
-
 <div class="modal fade" id="modalAddForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -22,6 +21,17 @@
                         <label>Date</label>
                         <input type="date" name="date" class="form-control">
                     </div>
+                    <div class="md-form mb-3">
+                        <i class="fas fa-pencil-alt"></i>
+                        <label>Details</label> 
+                        <textarea name="details" class="form-control md-textarea" rows="3"></textarea> 
+                    </div>
+                    <select class="form-control" name="type">
+                        
+                        <option value="chomé">Chomé</option>
+                        <option value="payé">Payé</option>
+                        <option value="chomé et payé">Chomé et payé</option>
+                    </select> 
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
                     <input type="submit" class="btn btn-primary" value="Enregistrer">

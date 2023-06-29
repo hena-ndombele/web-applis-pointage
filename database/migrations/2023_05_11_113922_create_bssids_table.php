@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('bssid');
-            $table->string('qr_code');
+            $table->string('qr_code_1');
+            $table->string('qr_code_2');
             $table->timestamps();
         });
     }

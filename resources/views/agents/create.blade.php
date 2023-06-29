@@ -102,26 +102,29 @@
                             <div id="information-part" class="content" role="tabpanel"
                                 aria-labelledby="information-part-trigger">
                                 <div class="form-group">
+                                    <label for="exampleInputEmail1">Direction<span class="text-danger">*</span></label>
+                                    <select class="select2" id="select1" onchange="chargeDepartement()" name="direction_id"  data-placeholder="Direction" style="width: 100%;">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Departement <span class="text-danger">*</span></label>
+                                    <select class="select2" id="select2" onchange="chargeService()" name="departement_id" data-placeholder="Departement" style="width: 100%;">
+                                        
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Service<span class="text-danger">*</span></label>
-                                        <select change class="select3" multiple name="service_id" data-placeholder="Service" style="width: 100%;">
-                                
-                                            
-                                        </select>
+                                        <label for="exampleInputFile">Service <span class="text-danger">*</span></label>
+                                            <div class="form-group">
+                                                <select class="select2" id="select3"  data-placeholder="Any" style="width: 100%;" name="service_id">
+                                                     
+                                                </select>
+                                            </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Departement <span class="text-danger">*</span></label>
-                                        <select class="select2" multiple="multiple" name="departement_id" data-placeholder="Departement" style="width: 100%;">
-                                            
-                                        </select>
-                                    </div>
+                                   
 
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Direction<span class="text-danger">*</span></label>
-                                        <select class="select1" multiple="multiple" name="direction_id"  data-placeholder="Direction" style="width: 100%;">
-                                            
-                                        </select>
-                                    </div>
+                                   
                                     
                                     
                                     <div class="form-group">
@@ -130,9 +133,13 @@
                                             placeholder="Matricule" name="matricule" @required(false)>
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Superviseur <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="exampleInputEmail1"
-                                            placeholder="Nom" name="superviseur" @required(true)>
+                                        <label for="exampleInputEmail1">Superviseur<span class="text-danger">*</span></label>
+                                        <select class="select4" id="select4"  name="superviseur"  data-placeholder="Superviseur" style="width: 100%;">
+                                            <option value=""></option>
+                                            @foreach ($agents as $agent)
+                                            <option> {{$agent->nom.' '.$agent->prenom}} </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Date d'embauche <span class="text-danger">*</span></label>
@@ -194,6 +201,9 @@
                                                 Féminin
                                             </label>
                                         </div>
+                                        
+                                            <input type="hidden" name="conge_utilises" value="0">
+                                        
                                     </div>
                                 </div>
                                 
@@ -216,6 +226,9 @@
             <!-- /.card -->
         </div>
     </form>
+    <input type="hidden" name="" id="byDirection" value="{{route('byDirection')}}">
+    <input type="hidden" name="" id="byDepartement" value="{{route('byDepartement')}}">
+
 @endsection
 @section('scripts')
     @vite('node_modules/bs-stepper/dist/js/bs-stepper.min.js');
@@ -224,54 +237,64 @@
 @vite('node_modules/admin-lte/plugins/select2/css/select2.min.css')
 <script src="{{ Vite::asset('node_modules/admin-lte/plugins/select2/js/select2.full.min.js') }}"></script>
 
-<script>
-   var departements = @json($departements->map(function ($departement) {
-        return ['id' => $departement->id, 'text' => $departement->name];
-    })->toArray());
-    $(function () {
-        $('.select2').select2({
-            data: departements
-        });
-    });
-</script>
+
 <script>
     var directions = @json($directions->map(function ($direction) {
         return ['id' => $direction->id, 'text' => $direction->name];
     })->toArray());
     $(function () {
-        $('.select1').select2({
+        $('#select1').select2({
             data: directions
         });
     });
 </script>
 <script>
-     var services = @json($services->map(function ($service) {
-        return ['id' => $service->id, 'text' => $service->name];
+    
+    var agents = @json($agents->map(function ($agent) {
+        return [$agent->nom.' '.$agent->prenom];
     })->toArray());
-    $(function () {
-        $('.select3').select2({
-            data: services
-        });
+
+$(function () {
+    $('.select4').select2({
+        data: agents
     });
-</script>
-<script>
-    $(document).ready(function() {
-  $('.select2').on('change', function() {
-    if ($(this).val() != null && $(this).val().length > 1) {
-      $(this).val([$(this).val().pop()]).trigger('change');
-    }
-  });
 });
 </script>
 <script>
- $(document).ready(function() {
-  $('.select3').on('change', function() {
-    if ($(this).val() != null && $(this).val().length > 1) {
-      $(this).val([$(this).val().pop()]).trigger('change');
+    function chargeDepartement (){
+        let i = $('#select1').val()
+        let url = $('#byDirection').val();
+        url += '/'+i
+      
+
+        $.get(url, function(data){
+            $('#select2').append('<option value=""></option>')
+
+            data.map(rep=>{
+                $('#select2').append('<option value="'+rep.id+'">'+rep.name+'</option>')
+            })
+        })
     }
-  });
-});
 </script>
+<script>
+    function chargeService (){
+        let i = $('#select2').val()
+        let url = $('#byDepartement').val();
+        
+        url += '/'+i
+        
+
+        $.get(url, function(data){
+            $('#select3').append('<option value=""></option>')
+
+            data.map(rep=>{
+                $('#select3').append('<option value="'+rep.id+'">'+rep.name+'</option>')
+            })
+        })
+    }
+</script>
+
+
 
     <script>
         // BS-Stepper Init
@@ -282,23 +305,7 @@
         
     </script>
   
-  <script>
-   $('.select3').on('change', function() {
-  var serviceId = $(this).val();
-  $.ajax({
-    url: '/get-departement-by-service',
-    type: 'GET',
-    data: {service_id: serviceId},
-    success: function(response) {
-      // Code pour mettre à jour la liste déroulante de département avec la réponse
-      $('.select2').val(response.departement.id).trigger('change');
-    },
-    error: function(xhr) {
-      // Code pour gérer les erreurs AJAX
-    }
-  });
-});
-  </script>
+  
     
 @endsection
 

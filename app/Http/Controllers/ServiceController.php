@@ -80,8 +80,6 @@ class ServiceController extends Controller
 
         ]
         );
-        return redirect()->route('services.index')->with('success','Le service a été modifié avec succès');
-
     }
 
     /**
@@ -92,11 +90,4 @@ class ServiceController extends Controller
         $service->delete();
         return redirect()->route('services.index')->with('success','Le service a été supprimée avec succès');
     }
-    public function getDepartementByService(StoreServiceRequest $request)
-{
-  $serviceId = $request->input('service_id');
-  $service = Service::find($serviceId);
-  $departement = $service->departement_id;
-    return response()->json(['departement' => $departement]);
-}
 }

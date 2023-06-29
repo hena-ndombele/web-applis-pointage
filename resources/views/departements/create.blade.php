@@ -11,10 +11,9 @@
 
                 <form action="{{Route("departements.store")}}" class="vstack grap" method="POST">
                     @csrf
-                    
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                          <label class="input-group-text" for="direction">Direction</label>
+                          <label class="input-group-text" for="classe_therapeutique">Direction</label>
                         </div>
                         <select  name="direction_id" class="custom-select" id="">
                             <option value=""></option>

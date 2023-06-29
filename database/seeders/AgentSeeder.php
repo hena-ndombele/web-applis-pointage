@@ -12,6 +12,6 @@ class AgentSeeder extends Seeder
      */
     public function run(): void
     {
-        
+        //
     }
 }
