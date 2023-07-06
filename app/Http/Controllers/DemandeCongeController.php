@@ -30,7 +30,7 @@ class DemandeCongeController extends Controller
             session(['enAttenteCount' => $enAttenteCount]);
 
             foreach ($demandes as $item) {
-                $agent =Agent::where('token', $item->user->token)->first();
+                $agent =Agent::where('key', $item->user->key)->first();
                 $item->agent = $agent;  // On ajoute l'agent à la demande de congé
             }
             return view('conge.demandeCongeList', compact('demandes', 'conge','enAttenteCount'));
@@ -66,7 +66,7 @@ class DemandeCongeController extends Controller
 
 
         $requestIdUser = Auth::user()->id;
-        $userAgent=Agent::where(['token'=> Auth::user()->token])->first();
+        $userAgent=Agent::where(['key'=> Auth::user()->key])->first();
         $userGrade =  $userAgent->grade; 
         $dateEmbauchement =  $userAgent->date_e;
        
@@ -205,7 +205,7 @@ public function update(Request $request, DemandeConge $demande, Agent $agent) {
         // Vérifier que la demande de congé existe
         $req = DemandeConge::findOrFail($demande->id);
         $conge = Conge::findOrFail($req->conge_id);
-        $user=User::join('agents', 'users.token', '=', 'agents.token')
+        $user=User::join('agents', 'users.key', '=', 'agents.key')
             ->where('users.id', $req->user_id)
             ->select('users.*', 'agents.conge_utilises')
             ->firstOrFail();
@@ -228,7 +228,7 @@ public function update(Request $request, DemandeConge $demande, Agent $agent) {
             ]);
 
             $message = $validatedData['status'] == 'validée' ? "Demande de congé validée" :  "Demande de congé rejetée"; 
-            $agent = Agent::where('token', $user->token)->firstOrFail();
+            $agent = Agent::where('key', $user->key)->firstOrFail();
             $conge_utilises=$agent->conge_utilises;
             $conge_utilises+=$req->duree;
             
