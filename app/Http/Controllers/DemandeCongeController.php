@@ -28,6 +28,11 @@ class DemandeCongeController extends Controller
             $conge=new Conge();
             $enAttenteCount = $this->countEnAttente();
             session(['enAttenteCount' => $enAttenteCount]);
+
+            foreach ($demandes as $item) {
+                $agent =Agent::where('token', $item->user->token)->first();
+                $item->agent = $agent;  // On ajoute l'agent à la demande de congé
+            }
             return view('conge.demandeCongeList', compact('demandes', 'conge','enAttenteCount'));
         }
         else{
@@ -37,7 +42,17 @@ class DemandeCongeController extends Controller
             session(['enAttenteCount' => $enAttenteCount]);
             return view('conge.demandeCongeList', compact('demandes', 'conge','enAttenteCount'));
         } 
-    }   
+    } 
+    
+    public function getDemandeConge(){
+        try {
+            $requestIdUser = Auth::user()->id;
+            $demande = DemandeConge::where('user_id', $requestIdUser)->where('status','validée')->get();
+            return response()->json($demande);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
 
      public function store(Request $request)
     {
@@ -240,7 +255,17 @@ public function update(Request $request, DemandeConge $demande, Agent $agent) {
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }
-    }   
+    }  
+    
+    public function approbation(){
+        try {
+            $userId = Auth::id();
+            $approbations = DemandeConge::where('user_id', $userId)->get();
+            return response()->json($approbations);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
 }
 
 

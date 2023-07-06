@@ -42,7 +42,7 @@
                 @forelse ($demandes as $item)
                     <tr>
                         <th scope="row">{{ $number }}</th>
-                        <td>{{$item->user->name}}</td>
+                        <td>{{$item->agent->prenom}} {{ $item->agent->nom }}</td>
                         <td>{{$conge::where('id',$item->conge_id)->first()->type_conge}}</td>
                         <td>{{$item->debut}}</td>
                         <td>{{$item->duree}}</td>
