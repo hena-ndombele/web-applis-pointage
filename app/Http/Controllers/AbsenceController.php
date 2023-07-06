@@ -71,7 +71,7 @@ class AbsenceController extends Controller
                 if($userAbsence){
                     $lastDate = Carbon::parse($userAbsence->created_at);
                     if($lastDate->isToday()){
-                        return response()->json(['message'=>"Nombre d'absence journalier deja atteint", ], 200);
+                        return response()->json(['message'=>"atteint", ], 200);
                     }
                 }
                 
@@ -80,7 +80,7 @@ class AbsenceController extends Controller
                     'motif'=> $validateData['motif'],
                     'date_absence'=> $validateData['date_absence'],
                 ]);
-                return response()->json(['message'=>"Enregistrement effectué"], 201);
+                return response()->json(['message'=>"effectué"], 201);
             }else{
                 return response()->json(['Echec'=>"User not found", ], 400);
             }
