@@ -13,7 +13,7 @@ class Agent extends Model
         'postnom',
         'prenom',
         'date_n',
-        'token',
+        'key',
         'numero',
         'email',
         'adresse',
