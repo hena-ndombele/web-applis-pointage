@@ -1,11 +1,12 @@
 <?php
-use App\Http\Controllers\AbsenceController;
-
 use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AgentController;
 use App\Http\Controllers\BssidController;
 use App\Http\Controllers\CongeController;
+use App\Http\Controllers\AbsenceController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\JoursFerieController;
 use App\Http\Controllers\StockCongeController;
@@ -38,6 +39,7 @@ Route::get('/show-presences/{date}', [PresenceController::class, 'show'])->name(
 Route::get('/qrcode', [BssidController::class, 'listeQrCode'])->name('qrcode');
 Route::get('printQrCode1/{bssid}', [BssidController::class, 'printQrCode1'])->name('printQrCode1');
 Route::get('printQrCode2/{bssid}', [BssidController::class, 'printQrCode2'])->name('printQrCode2');
+Route::resource('agents', AgentController::class);
 require('web_taux.php');
 require('web_horaires.php');
 

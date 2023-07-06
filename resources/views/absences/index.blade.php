@@ -31,7 +31,7 @@
                                         <th scope="row">{{ $cpt++ }}</th>
                                         <td>{{ $absence->motif }}</td>
                                     <td>{{ $absence->date_absence, 'D/M/Y' }}</td>
-                                    <td>{{ strtoupper($absence->user->name) }}</td>
+                                    <td>{{$absence->agent->prenom}} {{ $absence->agent->nom }}</td>
                                     </tr>
                                     @empty
                                         <tr>
