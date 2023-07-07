@@ -11,6 +11,7 @@ use App\Models\StockConge;
 use App\Models\DemandeConge;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\PostController;
 
 class DemandeCongeController extends Controller
 {
@@ -53,6 +54,7 @@ class DemandeCongeController extends Controller
             return response()->json(['error' => $e->getMessage()]);
         }
     }
+
 
      public function store(Request $request)
     {
@@ -199,7 +201,6 @@ class DemandeCongeController extends Controller
         
     }
 
-
 public function update(Request $request, DemandeConge $demande, Agent $agent) {
     try {
         // Vérifier que la demande de congé existe
@@ -226,7 +227,7 @@ public function update(Request $request, DemandeConge $demande, Agent $agent) {
                 'status' => $validatedData['status'],
                 'motif_rejet' => $validatedData['motif_rejet']
             ]);
-
+    
             $message = $validatedData['status'] == 'validée' ? "Demande de congé validée" :  "Demande de congé rejetée"; 
             $agent = Agent::where('key', $user->key)->firstOrFail();
             $conge_utilises=$agent->conge_utilises;
@@ -236,7 +237,8 @@ public function update(Request $request, DemandeConge $demande, Agent $agent) {
             if ($validatedData['status'] == 'validée' && $conge->type_conge == 'Congé annuel') {
    
                 $agent->update(['conge_utilises' => $conge_utilises]);  
-            }       
+            }     
+            PostController::index($demande->id);      
             return response()->json([
                 'message' => $message, 
                 'motif_rejet' => $validatedData['motif_rejet']  
@@ -270,3 +272,4 @@ public function update(Request $request, DemandeConge $demande, Agent $agent) {
 }
 
 
+ 

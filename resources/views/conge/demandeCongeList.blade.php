@@ -90,6 +90,9 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+
+        var err;
+        
         function validerDemande(id) {
             Swal.fire({
                 title: 'Êtes-vous sûr de vouloir valider cette demande?',
