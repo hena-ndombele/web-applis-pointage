@@ -6,16 +6,20 @@
 </li>
 @permission('read','Role')
 <li class="nav-item">
-    <a href="{{ route('roles.index') }}" class="nav-link {{ Request::is('roles.index') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-user"></i>
+    <a href="{{ route('roles.index') }}" class="nav-link {{ Request::is('roles') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-user-tag"></i>
         <p>Roles</p>
     </a>
 </li>
 @endpermission
-
-
-
-
+@permission('read','Role')
+<li class="nav-item">
+    <a href="{{ route('agents.index') }}" class="nav-link {{ Request::is('agents') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-user-plus"></i>
+        <p>Agents</p>
+    </a>
+</li>
+@endpermission
 @permission('read','User')
 <li class="nav-item">
     <a href="{{ route('users.index') }}" class="nav-link {{ Request::is('users.index') ? 'active' : '' }}">

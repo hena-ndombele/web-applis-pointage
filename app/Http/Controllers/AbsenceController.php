@@ -2,16 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Absence;
-use App\Models\User;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Agent;
+use App\Models\Absence;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Expr\Cast\String_;
 
 class AbsenceController extends Controller
 {
     public function index(){
         $absences = Absence::where('status', '=', 'active')->paginate(4);
+
+        foreach ($absences as $absence) {
+            $agent =Agent::where('token', $absence->user->token)->first();
+            $absence->agent = $agent; 
+        }
+
+
         return view('absences.index', compact('absences'));
     }
     /**
@@ -48,26 +57,30 @@ class AbsenceController extends Controller
      * )
      */
     public function store(Request $request){
+        $requestIdUser = Auth::user()->id;
         $validateData = $request->validate(
             [
                 'motif'=>'required|string',
                 'date_absence'=>'required|date',
-                'user_id'=>'required|integer'
             ]
         );
         if($validateData){
-            $user = User::where(['id'=>$request->user_id])->first();
+            $user = User::where(['id' => $requestIdUser])->first();
             if($user){
-                $userAbsence = Absence::where(['user_id'=>$user->id])->latest()->first();
+                $userAbsence = Absence::where('user_id', $requestIdUser)->latest()->first();
                 if($userAbsence){
                     $lastDate = Carbon::parse($userAbsence->created_at);
                     if($lastDate->isToday()){
-                        return response()->json(['message'=>"Nombre d'absence journalier deja atteint", ], 200);
+                        return response()->json(['message'=>"atteint", ], 200);
                     }
                 }
                 
-                Absence::create($request->all());
-                return response()->json(['message'=>"Enregistrement effectué"], 201);
+                Absence::create([
+                    'user_id'=> $requestIdUser,
+                    'motif'=> $validateData['motif'],
+                    'date_absence'=> $validateData['date_absence'],
+                ]);
+                return response()->json(['message'=>"effectué"], 201);
             }else{
                 return response()->json(['Echec'=>"User not found", ], 400);
             }

@@ -20,6 +20,11 @@ class DemandeCongeController extends Controller
             $conge=new Conge();
             $enAttenteCount = $this->countEnAttente();
             session(['enAttenteCount' => $enAttenteCount]);
+
+            foreach ($demandes as $item) {
+                $agent =Agent::where('key', $item->user->key)->first();
+                $item->agent = $agent;  // On ajoute l'agent à la demande de congé
+            }
             return view('conge.demandeCongeList', compact('demandes', 'conge','enAttenteCount'));
         }
         else{
@@ -39,7 +44,7 @@ class DemandeCongeController extends Controller
                 'debut' => 'required|date',
             ]);
         $requestIdUser = Auth::user()->id;
-        $userAgent=Agent::where(['token'=> Auth::user()->token])->first();
+        $userAgent=Agent::where(['key'=> Auth::user()->key])->first();
         $userGrade =  $userAgent->grade;
         $dateEmbauchement =  $userAgent->date_e;
         // Récupère les informations du type de congé
@@ -158,7 +163,7 @@ public function update(Request $request, DemandeConge $demande, Agent $agent) {
         // Vérifier que la demande de congé existe
         $req = DemandeConge::findOrFail($demande->id);
         $conge = Conge::findOrFail($req->conge_id);
-        $user=User::join('agents', 'users.token', '=', 'agents.token')
+        $user=User::join('agents', 'users.key', '=', 'agents.key')
             ->where('users.id', $req->user_id)
             ->select('users.*', 'agents.conge_utilises')
             ->firstOrFail();
@@ -177,7 +182,7 @@ public function update(Request $request, DemandeConge $demande, Agent $agent) {
                 'motif_rejet' => $validatedData['motif_rejet']
             ]);
             $message = $validatedData['status'] == 'validée' ? "Demande de congé validée" :  "Demande de congé rejetée";
-            $agent = Agent::where('token', $user->token)->firstOrFail();
+            $agent = Agent::where('key', $user->key)->firstOrFail();
             $conge_utilises=$agent->conge_utilises;
             $conge_utilises+=$req->duree;
             if ($validatedData['status'] == 'validée' && $conge->type_conge == 'Congé annuel') {
@@ -200,21 +205,10 @@ public function update(Request $request, DemandeConge $demande, Agent $agent) {
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }
-    }
+    }   
+}
 
 
-
-    public function approbation(){
-        try {
-            $userId = Auth::id();
-            $approbations = DemandeConge::where('user_id', $userId)->get();
-            return response()->json($approbations);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
-        }
-    }
- 
-   
 
 
 }

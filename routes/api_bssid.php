@@ -28,7 +28,8 @@ Route::group(['middleware' => ['auth:sanctum']], function (){
     Route::post('/absences', [AbsenceController::class, 'store']);
     Route::get('/conges', [CongeController::class, 'indexApi']);
     Route::get('/feries', [JoursFerieController::class, 'indexApi']);
-    Route::get('/presences2', [PresenceController::class, 'indexApi']);
-
+    Route::get('/presences', [PresenceController::class, 'indexApi']);
+    Route::get('/demandesValide', [DemandeCongeController::class, 'getDemandeConge']);
+    Route::get('/approbation', [DemandeCongeController::class, 'approbation']);
 });
 Route::get('/conges', [CongeController::class, 'indexApi']);
