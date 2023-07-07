@@ -92,24 +92,26 @@
 @endforelse
                     </div>
                 </div>
-            </div>
-            
-            
-            
+            </div> 
         </div>
     </section>
+    <div class="d-flex justify-content-center pagination-lg">
+      {!! $agents->links('pagination::bootstrap-4') !!}
+  </div>
 @endsection
-@section('scripts')
-    <script  src="{{Vite::asset('node_modules/admin-lte/plugins/jquery/jquery.min.js')}}"></script>
-    <script src="{{Vite::asset('node_modules/admin-lte/plugins/datatables/jquery.dataTables.min.js')}}"></script>
-    <script src="{{Vite::asset('node_modules/admin-lte/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
-    <script src="{{ Vite::asset('resources/js/scripts.js') }}"></script>
-    <script src="{{Vite::asset('node_modules/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
-    <script src="{{vite::asset('node_modules/admin-lte/dist/js/demo.js')}}"></script>
+
+@push('page_css')
     @vite('node_modules/admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')
     @vite('node_modules/admin-lte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')
     @vite('node_modules/admin-lte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')
-  
+@endpush
+
+@push('page_scripts')
+    <script  src="{{Vite::asset('node_modules/admin-lte/plugins/jquery/jquery.min.js')}}"></script>
+    <script src="{{Vite::asset('node_modules/admin-lte/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{Vite::asset('node_modules/admin-lte/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
+    <script src="{{Vite::asset('node_modules/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+    <script src="{{ Vite::asset('resources/js/scripts.js') }}"></script>
     <script>
         $(function () {
         $("#example1").DataTable({
@@ -118,10 +120,4 @@
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         });
   </script>
-  {{-- <div class="card-footer">
-    {{ $agents->links() }}
-</div> --}}
-<div class="d-flex justify-content-center pagination-lg">
-    {!! $agents->links('pagination::bootstrap-4') !!}
-</div>
-@endsection
+@endpush
