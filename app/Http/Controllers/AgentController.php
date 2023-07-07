@@ -77,7 +77,7 @@ class AgentController extends Controller
         
             // $agent = Agent::create(
             //     $request->all(),
-            //     ['token' => Str::random(12)]
+            //     ['key' => Str::random(12)]
             // );
 
            
@@ -88,7 +88,7 @@ class AgentController extends Controller
                 
             //     $passwordSend  = '2023-06-1012345';
             //     User::create([
-            //         'token' => $tokenFourni,
+            //         'key' => $keyFourni,
             //         'name' => $agent->prenom,
             //         'email' => $agent->email,
             //         'password' => Hash::make($password)
@@ -96,7 +96,7 @@ class AgentController extends Controller
             // }
             $agent = new Agent();
             $agent->fill($request->all());
-            $agent->token = Str::random(12);
+            $agent->key = Str::random(12);
 
             if ($agent) {
                 $password = $agent->date_e . $agent->matricule;
@@ -106,7 +106,7 @@ class AgentController extends Controller
                     'email' => $agent->email,
                     'password' => Hash::make($passwordSend)
                 ]);
-                $user->token = $agent->token; // Lier le token du nouvel utilisateur à celui de l'agent
+                $user->key = $agent->key; // Lier le key du nouvel utilisateur à celui de l'agent
                 $user->save(); // Enregistrer les changements dans la base de données
             }
         
@@ -211,7 +211,7 @@ class AgentController extends Controller
 
         
         
-        $agents = Agent::where(['token' =>  Auth::user()->token])->get();
+        $agents = Agent::where(['key' =>  Auth::user()->key])->get();
         return response()->json($agents);
 
         // try {
