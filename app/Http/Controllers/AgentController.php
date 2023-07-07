@@ -206,24 +206,26 @@ class AgentController extends Controller
 
 
     
+    // public function informationAgent(){
+
+        
+        
+    //     $agents = Agent::where(['token' =>  Auth::user()->token])->first();
+    //     return response()->json($agents);
+
+     
+    // }
     public function informationAgent(){
 
-        
-        
-        $agents = Agent::where(['token' =>  Auth::user()->token])->get();
+        $agents = Agent::join('directions', 'agents.direction_id', '=', 'directions.id')
+                        ->join('departements', 'agents.departement_id', '=', 'departements.id')
+                        ->join('services', 'agents.service_id', '=', 'services.id')
+                        ->where(['agents.token' =>  Auth::user()->token])
+                        ->select('agents.*', 'directions.name as direction', 'departements.name as departement', 'services.name as service')
+                        ->first();
         return response()->json($agents);
-
-        // try {
-        //     // $userId = Auth::user()->id;
-        //     // // $agents = Agent::select('service_id','departement_id','Matricule','grade','date_e','supervieur','etat_civil','date_n','numero','adresse','niveau_etude','nombre_e','direction_id')->get();
-        //     // $agent = Agent::find($userId);
-
-        //     $agent = Agent::where(['id' => $agent])->get();
-        //     return response()->json($agent);
-        // } catch (\Exception $e) {
-        //     return response()->json(['error' => $e->getMessage()]);
-        // }
     }
+
 
     
 
