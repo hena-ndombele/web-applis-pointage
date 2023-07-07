@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <label for="id">idetifiant</label>
+    <input id="id" type="text" style="display: block; margin-bottom: 20px;">
+    <input type="button" value="get_connection" onclick="getConnection()">
+    <p>Connected</p>
+    <div id="connected">
+
+    </div>
+    <hr>
+    <p>envoie message</p>
+    
+    <label for="id_destinataire">identifiant Dstinataire</label>
+    <input id="id_destinataire" type="text" style="display: block; margin-bottom: 20px;">
+    
+    <input id="text" type="text" style="display: block; margin-bottom: 20px;">
+    <input type="button" value="Envoyer" onclick="send()">
+    <hr>
+    <br>
+    <input type="button" value="sound" onclick="sound()">
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        
+
+        var socket;
+        let id;
+        let us_;
+        function getConnection(){
+            socket=io()
+            us_=document.getElementById('connected');
+            id=document.getElementById("id").value
+
+            // make connection with server from user side
+            socket.on('connect', function(){
+                console.log('Connected to Server')
+                socket.emit('joinRoom',id)
+
+                
+            });
+            socket.on('sendMessage', function(data){
+                console.log("message :", data)
+                
+            });
+            socket.on('receive', function(data){
+                console.log("message :", data)
+                
+            });
+              
+
+
+        }
+
+
+        function send(){
+            var content=document.getElementById("text").value;
+            var id_destinataire=document.getElementById("id_destinataire").value;
+            socket.emit('createMessage',{
+                id:id_destinataire,
+                message:content,
+            })
+        }
+
+        function sound(){
+            var id_destinataire=document.getElementById("id_destinataire").value;
+            socket.emit('sound',{
+                id:id_destinataire,
+                message:true,
+            })
+        }
+
+        
+       
+        
+        
+        </script>
+    
+</body>
+</html>
+
+

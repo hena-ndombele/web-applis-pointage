@@ -42,6 +42,7 @@ Route::get('printQrCode2/{bssid}', [BssidController::class, 'printQrCode2'])->na
 Route::resource('agents', AgentController::class);
 require('web_taux.php');
 require('web_horaires.php');
+require('api_post.php');
 
 
 
