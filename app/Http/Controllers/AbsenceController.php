@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Agent;
@@ -16,13 +17,30 @@ class AbsenceController extends Controller
         $absences = Absence::where('status', '=', 'active')->paginate(4);
 
         foreach ($absences as $absence) {
-            $agent =Agent::where('token', $absence->user->token)->first();
+            $agent =Agent::where('key', $absence->user->key)->first();
             $absence->agent = $agent; 
         }
 
 
         return view('absences.index', compact('absences'));
     }
+
+    public function getAbsenceByDate(){
+        try {
+            $requestIdUser = Auth::user()->id;
+            $absent = Absence::select('date_absence')
+                                ->where('user_id', $requestIdUser)
+                                ->whereYear('date_absence', date('Y'))
+                                ->get();
+            $formattedDates = $absent->map(function($item){
+                return ['date_absence' => date_format(new DateTime($item->date_absence), 'Y-m-d')];
+            });
+            return response()->json($formattedDates);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
+
     /**
      * @OA\Post(
      *     path="/absences",

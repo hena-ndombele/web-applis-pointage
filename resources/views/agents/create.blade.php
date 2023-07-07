@@ -221,11 +221,12 @@
     </form>
 @endsection
 @section('scripts')
+    <script src="{{ Vite::asset('node_modules/admin-lte/plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ Vite::asset('node_modules/admin-lte/plugins/select2/js/select2.full.min.js') }}"></script>
     @vite('node_modules/bs-stepper/dist/js/bs-stepper.min.js');
     @vite('node_modules/bs-stepper/dist/css/bs-stepper.min.css');
-    <script src="{{ Vite::asset('node_modules/admin-lte/plugins/jquery/jquery.min.js') }}"></script>
-@vite('node_modules/admin-lte/plugins/select2/css/select2.min.css')
-<script src="{{ Vite::asset('node_modules/admin-lte/plugins/select2/js/select2.full.min.js') }}"></script>
+    @vite('node_modules/admin-lte/plugins/select2/css/select2.min.css')
+
 
 <script>
    var departements = @json($departements->map(function ($departement) {
