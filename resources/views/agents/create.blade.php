@@ -20,7 +20,7 @@
             </div>
         @endif
                 <div class="card-header">
-                    <h3 class="card-title">Enregistrement d'un agent</h3>
+                    <h3 class="card-title">Enregistrement agent</h3>
                 </div>
                 <div class="card-body p-0">
                     <div class="bs-stepper">
@@ -220,13 +220,16 @@
         </div>
     </form>
 @endsection
-@section('scripts')
-    @vite('node_modules/bs-stepper/dist/js/bs-stepper.min.js');
-    @vite('node_modules/bs-stepper/dist/css/bs-stepper.min.css');
-    <script src="{{ Vite::asset('node_modules/admin-lte/plugins/jquery/jquery.min.js') }}"></script>
-@vite('node_modules/admin-lte/plugins/select2/css/select2.min.css')
-<script src="{{ Vite::asset('node_modules/admin-lte/plugins/select2/js/select2.full.min.js') }}"></script>
 
+@push('page_css')
+    @vite('node_modules/bs-stepper/dist/css/bs-stepper.min.css');
+    @vite('node_modules/admin-lte/plugins/select2/css/select2.min.css')    
+@endpush
+
+@push('page_scripts')
+    <script src="{{ Vite::asset('node_modules/bs-stepper/dist/js/bs-stepper.min.js') }}"></script>
+    <script src="{{ Vite::asset('node_modules/admin-lte/plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ Vite::asset('node_modules/admin-lte/plugins/select2/js/select2.full.min.js') }}"></script>
 <script>
    var departements = @json($departements->map(function ($departement) {
         return ['id' => $departement->id, 'text' => $departement->name];
@@ -303,7 +306,7 @@
 });
   </script>
     
-@endsection
+@endpush
 
 
 
