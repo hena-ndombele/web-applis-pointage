@@ -9,6 +9,7 @@ use App\Models\StockConge;
 use App\Models\DemandeConge;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\PostController;
 class DemandeCongeController extends Controller
 {
     public function countEnAttente() {
@@ -181,7 +182,7 @@ public function update(Request $request, DemandeConge $demande, Agent $agent) {
                 'status' => $validatedData['status'],
                 'motif_rejet' => $validatedData['motif_rejet']
             ]);
-            $message = $validatedData['status'] == 'validée' ? "Demande de congé validée" :  "Demande de congé rejetée";
+                $message = $validatedData['status'] == 'validée' ? "Demande de congé validée" :  "Demande de congé rejetée";
             $agent = Agent::where('key', $user->key)->firstOrFail();
             $conge_utilises=$agent->conge_utilises;
             $conge_utilises+=$req->duree;
