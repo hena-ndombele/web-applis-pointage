@@ -29,6 +29,8 @@ require 'api_logout.php';
 require 'api_profil.php';
 
 require 'api_informationAgent.php';
+require 'api_approbation.php';
+
 
 
 

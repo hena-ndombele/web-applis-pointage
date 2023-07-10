@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Agent;
@@ -12,18 +10,12 @@ use App\Models\DemandeConge;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PostController;
-
 class DemandeCongeController extends Controller
 {
-
-
     public function countEnAttente() {
         return DemandeConge::where('status', 'en attente')->count();
     }
-
-
-    public function index(){ 
-
+    public function index(){
         if (Auth::user()->hasRole('admin')) {
             $demandes = DemandeConge::paginate(10);
             $conge=new Conge();
@@ -42,44 +34,26 @@ class DemandeCongeController extends Controller
             $enAttenteCount = $this->countEnAttente();
             session(['enAttenteCount' => $enAttenteCount]);
             return view('conge.demandeCongeList', compact('demandes', 'conge','enAttenteCount'));
-        } 
-    } 
-    
-    public function getDemandeConge(){
-        try {
-            $requestIdUser = Auth::user()->id;
-            $demande = DemandeConge::where('user_id', $requestIdUser)->where('status','validée')->get();
-            return response()->json($demande);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
         }
     }
-
-
      public function store(Request $request)
     {
         try {
-
             $validatedData = $request->validate([
                 'conge_id' => 'required',
                 'duree' => 'required|integer',
                 'debut' => 'required|date',
             ]);
-
-
         $requestIdUser = Auth::user()->id;
         $userAgent=Agent::where(['key'=> Auth::user()->key])->first();
-        $userGrade =  $userAgent->grade; 
+        $userGrade =  $userAgent->grade;
         $dateEmbauchement =  $userAgent->date_e;
-       
-        
         // Récupère les informations du type de congé
         $conge = Conge::findOrFail($validatedData['conge_id']);
         $typeConge = $conge->type_conge;
         $dateActuelle = Carbon::now();
         $dateEmbauche = Carbon::parse($dateEmbauchement);
         $anciennete= $dateActuelle->diffInMonths($dateEmbauche);
-      
         // Vérifie que l'utilisateur est authentifié
         if (User::where(['id' => $requestIdUser])->exists()) {
             // Vérifie si l'utilisateur a déjà une demande de congé pour la journée en cours
@@ -89,56 +63,45 @@ class DemandeCongeController extends Controller
             } else {
                 // Vérifie si la durée saisie correspond à la durée définie pour le type de congé
                 $dureeSaisie = intval($validatedData['duree']);
-                    
                 if ($typeConge !== 'Congé annuel') {
                     if ($dureeSaisie !== $conge->duree) {
                         return response()->json(['message' => 'Duree inconnue'], 400);
                     }
                 }
-
                     $dateDebut = Carbon::parse($validatedData['debut']);
                     $dateActuelle = Carbon::now();
                         if ($dateDebut->isBefore($dateActuelle)) {
                             return response()->json(['message' => 'date anterieure'], 400);
                         }
-
                        // Prendre en compte les jours fériés
                     $joursFeries = JoursFerie::all();
                     $joursFeries = $joursFeries->pluck('date')->toArray();
-
                     if (in_array($dateDebut->toDateString(), $joursFeries)) {
                         return response()->json(['message' => 'jourFerie'], 400);
                     }
-
                     if ($typeConge === 'Congé annuel') {
                         if ($anciennete < 6) {
                             $totalLeaveDays = StockConge::where('grade', $userGrade)->first()->totalConge / 12;
                                 if ($dureeSaisie > $totalLeaveDays) {
                                     return response()->json(['message' => "pas droit"], 403);
                                 }
-                        } 
-                        
+                        }
                         $stockConge = StockConge::where('grade', $userGrade)->first();
                         $totalLeaveDays = $stockConge->totalConge;
                         $usedLeaveDays =  $userAgent->conge_utilises;
                         $congeRestant = $totalLeaveDays - $usedLeaveDays;
-            
                         if ($dureeSaisie > $congeRestant) {
                             return response()->json([
                                 'difference'=>$congeRestant,
-                                'message' => "insuffisant"], 403); 
-                        } 
-                    } 
-                    
-
-
+                                'message' => "insuffisant"], 403);
+                        }
+                    }
                     if ($typeConge === 'Congé annuel') {
-                        $dureeADemander = $dureeSaisie; 
+                        $dureeADemander = $dureeSaisie;
                     } else {
                         $dureeADemander = $conge->duree;
                     }
-
-                    // Calculer la date de fin en ajoutant la durée du congé en comptant à partir de la date de début 
+                    // Calculer la date de fin en ajoutant la durée du congé en comptant à partir de la date de début
                     // et en sautant les jours fériés
                     $dateFin = $dateDebut;
                     $i = 0;
@@ -148,7 +111,6 @@ class DemandeCongeController extends Controller
                             $i++;
                         }
                     }
-
                 // Enregistre la nouvelle demande de congé pour l'utilisateur
                 DemandeConge::create([
                     'user_id'       => $requestIdUser,
@@ -159,17 +121,15 @@ class DemandeCongeController extends Controller
                     'status'        => 'en attente',
                     'created_at'    => date('Y-m-d H:i:s'),
                 ]);
-            
                 $demande = DemandeConge::latest()->first();
                 return response()->json([
-                    'id' => $demande->id, 
-                    'message' => 'Envoye' 
+                    'id' => $demande->id,
+                    'message' => 'Envoye'
                 ], 200);
             };
         } else {
             return response()->json(['message' => 'Utilisateur non autorisé'], 403);
             $requestIdUser = Auth::user()->id;
-        
             // Vérifie que le type de congé demandé existe et que l'utilisateur est authentifié
             if ((Conge::where('id', $validatedData['conge_id'])->exists()) && (User::where(['id' => $requestIdUser])->exists())) {
                 // Vérifie si l'utilisateur a déjà une demande de congé pour la journée en cours
@@ -188,7 +148,7 @@ class DemandeCongeController extends Controller
                         ]);
                         $demande = DemandeConge::latest()->first();
                         return response()->json([
-                            'id' => $demande->id, 
+                            'id' => $demande->id,
                             'message' => 'Demande de congé envoyé.' ], 200);
                     };
             } else {
@@ -198,9 +158,7 @@ class DemandeCongeController extends Controller
      } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }
-        
     }
-
 public function update(Request $request, DemandeConge $demande, Agent $agent) {
     try {
         // Vérifier que la demande de congé existe
@@ -210,14 +168,11 @@ public function update(Request $request, DemandeConge $demande, Agent $agent) {
             ->where('users.id', $req->user_id)
             ->select('users.*', 'agents.conge_utilises')
             ->firstOrFail();
-        
-
         // Valider les données de la requête
         $validatedData = $request->validate([
             'status' => 'required|in:validée,rejetée',
             'motif_rejet' => 'nullable|required_if:status,rejetée'
         ]);
-
         if ($req->status == 'validée') {
             return response()->json(['message' => "Cette demande a déjà été validée"], 400);
         } elseif ($req->status == 'rejetée') {
@@ -227,49 +182,34 @@ public function update(Request $request, DemandeConge $demande, Agent $agent) {
                 'status' => $validatedData['status'],
                 'motif_rejet' => $validatedData['motif_rejet']
             ]);
-    
-            $message = $validatedData['status'] == 'validée' ? "Demande de congé validée" :  "Demande de congé rejetée"; 
+                $message = $validatedData['status'] == 'validée' ? "Demande de congé validée" :  "Demande de congé rejetée";
             $agent = Agent::where('key', $user->key)->firstOrFail();
             $conge_utilises=$agent->conge_utilises;
             $conge_utilises+=$req->duree;
-            
-           
             if ($validatedData['status'] == 'validée' && $conge->type_conge == 'Congé annuel') {
-   
-                $agent->update(['conge_utilises' => $conge_utilises]);  
-            }     
-            PostController::index($demande->id);      
+                $agent->update(['conge_utilises' => $conge_utilises]);
+            }
             return response()->json([
-                'message' => $message, 
-                'motif_rejet' => $validatedData['motif_rejet']  
+                'message' => $message,
+                'motif_rejet' => $validatedData['motif_rejet']
             ], 200);
-        } 
+        }
     } catch (\Exception $e) {
         return response()->json(['message' => "erreur"], 500);
     }
 }
-
     public function destroy(Request $request, $demande) {
         try {
             $demande = DemandeConge::findOrFail($demande);
             $demande->delete();
-    
             return response()->json(['message' => 'Demande de congé supprimée'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }
-    }  
-    
-    public function approbation(){
-        try {
-            $userId = Auth::id();
-            $approbations = DemandeConge::where('user_id', $userId)->get();
-            return response()->json($approbations);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
-        }
-    }
+    }   
 }
 
 
- 
+
+
+}
