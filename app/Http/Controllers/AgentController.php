@@ -208,18 +208,22 @@ class AgentController extends Controller
     
     public function informationAgent(){
 
-
         $agents = Agent::join('directions', 'agents.direction_id', '=', 'directions.id')
                         ->join('departements', 'agents.departement_id', '=', 'departements.id')
                         ->join('services', 'agents.service_id', '=', 'services.id')
-                        ->where(['agents.token' =>  Auth::user()->token])
+                        ->where(['agents.key' =>  Auth::user()->key])
                         ->select('agents.*', 'directions.name as direction', 'departements.name as departement', 'services.name as service')
                         ->first();
-        
-        
-        $agents = Agent::where(['token' =>  Auth::user()->token])->get();
+    
         return response()->json($agents);
     }
+
+
+
+    
+
+
+    
 
 
     
