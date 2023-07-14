@@ -206,10 +206,18 @@ public function update(Request $request, DemandeConge $demande, Agent $agent) {
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }
-    }   
-}
-
-
-
-
+    }  
+    
+    public function approbation(){
+        try {
+            $userId = Auth::id();
+            $approbations = DemandeConge::join('conges', 'demande_conges.conge_id', '=', 'conges.id')
+                                        ->where('demande_conges.user_id', $userId)
+                                        ->select('demande_conges.*', 'conges.type_conge')
+                                        ->get();
+            return response()->json($approbations);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
 }
