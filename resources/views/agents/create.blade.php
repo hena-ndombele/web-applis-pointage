@@ -227,10 +227,13 @@
 @endpush
 
 @push('page_scripts')
-    <script src="{{ Vite::asset('node_modules/bs-stepper/dist/js/bs-stepper.min.js') }}"></script>
-    <script src="{{ Vite::asset('node_modules/admin-lte/plugins/jquery/jquery.min.js') }}"></script>
-    <script src="{{ Vite::asset('node_modules/admin-lte/plugins/select2/js/select2.full.min.js') }}"></script>
-<script>
+    <script type="module" src="{{ Vite::asset('node_modules/admin-lte/plugins/jquery/jquery.min.js') }}"></script>
+    <script type="module" src="{{ Vite::asset('node_modules/bs-stepper/dist/js/bs-stepper.min.js') }}"></script>
+    <script type="module" src="{{ Vite::asset('node_modules/admin-lte/plugins/select2/js/select2.full.min.js') }}"></script>
+
+
+<script type="module">
+
    var departements = @json($departements->map(function ($departement) {
         return ['id' => $departement->id, 'text' => $departement->name];
     })->toArray());
@@ -240,7 +243,8 @@
         });
     });
 </script>
-<script>
+<script type="module">
+
     var directions = @json($directions->map(function ($direction) {
         return ['id' => $direction->id, 'text' => $direction->name];
     })->toArray());
@@ -250,7 +254,8 @@
         });
     });
 </script>
-<script>
+<script type="module">
+   
      var services = @json($services->map(function ($service) {
         return ['id' => $service->id, 'text' => $service->name];
     })->toArray());
@@ -260,7 +265,8 @@
         });
     });
 </script>
-<script>
+<script type="module">
+ 
     $(document).ready(function() {
   $('.select2').on('change', function() {
     if ($(this).val() != null && $(this).val().length > 1) {
@@ -269,7 +275,8 @@
   });
 });
 </script>
-<script>
+<script type="module">
+
  $(document).ready(function() {
   $('.select3').on('change', function() {
     if ($(this).val() != null && $(this).val().length > 1) {
@@ -279,7 +286,8 @@
 });
 </script>
 
-    <script>
+    <script type="module">
+       
         // BS-Stepper Init
         document.addEventListener('DOMContentLoaded', function(e) {
             e.preventDefault();
@@ -288,7 +296,8 @@
         
     </script>
   
-  <script>
+  <script type="module">
+   
    $('.select3').on('change', function() {
   var serviceId = $(this).val();
   $.ajax({
