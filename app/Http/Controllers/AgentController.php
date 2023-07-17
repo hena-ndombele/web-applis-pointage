@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Agent;
+use App\Models\Grade;
+use App\Models\Service;
+use App\Models\Fonction;
+use App\Models\Direction;
+use App\Models\Departement;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreAgentRequest;
 use App\Http\Requests\UpdateAgentRequest;
-use App\Models\Departement;
-use App\Models\Direction;
-use App\Models\Service;
-use App\Models\User;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 
 
 class AgentController extends Controller
@@ -38,7 +40,9 @@ class AgentController extends Controller
         $departements=Departement::all();
         $services=Service::all();
         $agents=Agent::all();
-        return view('agents.create',compact('directions', 'departements', 'services','agents'));
+        $grades=Grade::all();
+        $fonctions=Fonction::all();
+        return view('agents.create',compact('directions', 'departements', 'services','agents','grades','fonctions'));
     }
 
     /**
@@ -66,8 +70,8 @@ class AgentController extends Controller
                 'nombre_e' => 'required|integer',
                 'niveau_etude' => 'required|string|max:255',
                 'image' => 'required',
-                'grade'=>'required',
-                'fonction'=>'required',
+                "grade_id"=>'required|integer',
+                'fonction_id'=>'required',
                 'sexe'=>'required',
                 'conges_utilises'=>'string',
                

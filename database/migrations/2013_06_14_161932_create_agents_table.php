@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::create('agents', function (Blueprint $table) {
             $table->id();
             $table->string('key')->unique();
@@ -31,12 +32,13 @@ return new class extends Migration
             $table->integer('nombre_e');
             $table->string('niveau_etude');
             $table->string('image');
-            $table->string('grade');
-            $table->string('fonction');
+            $table->foreignId('grade_id')->constrained()->onDelete('cascade');
+            $table->foreignId('fonction_id')->constrained()->onDelete('cascade');
             $table->string('sexe');
             $table->string('conge_utilises')->default(0);
             $table->timestamps();
         });
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**

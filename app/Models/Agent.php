@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Grade;
+use App\Models\Fonction;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Agent extends Model
 {
@@ -28,8 +30,8 @@ class Agent extends Model
         'niveau_etude',
         'image',
         'sexe',
-        'grade',
-        'fonction',
+        'grade_id',
+        'fonction_id',
         'conge_utilises'
     ];
     public function departement()
@@ -44,4 +46,10 @@ class Agent extends Model
     {
        return $this->belongsTo(Service::class);
     }
+    public function grade(){
+      return $this->BelongsTo(Grade::class);
+   }
+   public function fonction(){
+      return $this->BelongsTo(Fonction::class);
+   }
 }
