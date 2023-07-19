@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::create('taux_configurations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('role_id')->constrained()->onDelete('cascade');
+            $table->foreignId('grade_id')->constrained()->onDelete('cascade');
             $table->enum('devise', ['USD', 'CDF'])->default('USD');
             $table->integer('montant');
             $table->timestamps();
         });
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**

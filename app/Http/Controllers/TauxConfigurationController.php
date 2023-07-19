@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
+use App\Models\Grade;
 use Illuminate\Http\Request;
 use App\Models\TauxConfiguration;
 
@@ -13,7 +14,7 @@ class TauxConfigurationController extends Controller
      */
     public function index()
     {
-        return view('taux.index', ['taux'=>TauxConfiguration::where('status', 'active')->paginate(2), 'roles'=>Role::all(), 'exist'=>new TauxConfiguration()]);
+        return view('taux.index', ['taux'=>TauxConfiguration::where('status', 'active')->paginate(2), 'grades'=>Grade::all(), 'exist'=>new TauxConfiguration()]);
     }
 
     /**
@@ -31,7 +32,7 @@ class TauxConfigurationController extends Controller
     {
         $validateData = $request->validate(
             [
-                "role_id"=>'required|integer',
+                "grade_id"=>'required|integer',
                 'montant'=>'required|integer',
                 'devise'=>'required|string',
             ]

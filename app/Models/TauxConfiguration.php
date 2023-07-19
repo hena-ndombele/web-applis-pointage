@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Grade;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Role;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class TauxConfiguration extends Model
 {
     use HasFactory;
-    protected $fillable = ['role_id', 'montant', 'devise'];
-    public function role(){
-        return $this->BelongsTo(Role::class);
+    protected $fillable = ['grade_id', 'montant', 'devise'];
+    public function grade(){
+        return $this->BelongsTo(Grade::class);
     }
     public function paies(){
         return $this->hasMany(Paie::class);

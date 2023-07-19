@@ -41,7 +41,8 @@
                                     <tr>
                                         <th>N°</th>
                                         <th>Agent</th>
-                                        <th>Fonction</th>
+                                        <th>Grade</th>
+                                        <th>Direction</th>
                                         <th>Montant de base</th>
                                         <th>Dévise</th>
                                         <th>Action</th>
@@ -50,9 +51,11 @@
                                 <tbody class="text">
                                     @forelse ($paies as $paie) 
                                     <tr>
+                                       
                                         <td scope="row">{{ $cpt++ }}</td>
-                                        <td>{{ strtoupper($paie->name) }}</td>
-                                        <td>{{ strtoupper($paie->role_name)}}</td>
+                                        <td>{{ ($paie->name) }} {{$paie->agent_name }}</td>
+                                        <td>{{ ($paie->agent_grade_name)}}</td>
+                                        <td>{{ ($paie->agent_direction_name) }}</td>
                                         <td>{{ $paie->montant }}</td>
                                         <td>{{ ($paie->devise) }}</td>
                                         <td class="d-flex">
@@ -62,14 +65,15 @@
                                                 <input type="hidden" name="taux_id" value="{{$paie->id}}">
                                                 <button type="submit" class=" btn btn-outline-success mx-1" title="Ajouter à la liste de paie"><i class="fas fa-plus-circle"></i></button>
                                             </form>
-                                        </td>
+                                        </td>   
                                     </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="5"> 
-                                                Aucune paie dispo
+                                            <td colspan="8" class="text-center py-4">
+                                                <i class="fas fa-exclamation-circle fa-3x text-gray-400"></i>
+                                                <p class="text-lg font-bold mt-4">Aucune paie</p>
                                             </td>
-                                    </tr>
+                                        </tr>
                                     @endforelse
                                 </tbody>
                                 
