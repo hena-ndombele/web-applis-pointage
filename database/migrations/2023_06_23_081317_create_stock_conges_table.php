@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::create('stock_conges', function (Blueprint $table) {
             $table->id();
-            $table->string('grade');
+            $table->foreignId('grade_id')->constrained()->onDelete('cascade');
             $table->integer('totalConge');
             $table->timestamps();
         });
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**
