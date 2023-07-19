@@ -9,7 +9,7 @@ class Paie extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'taux_id', 'jours_presents'];
+    protected $fillable = ['user_id','heures_travails' ,'taux_id', 'jours_presents'];
 
     public function taux_configuration(){
         return $this->belongsTo(TauxConfiguration::class, 'taux_id');

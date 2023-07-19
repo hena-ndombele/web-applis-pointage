@@ -30,7 +30,7 @@
                                 <thead>
                                     <tr>
                                         <th>N°</th>
-                                        <th>Role</th>
+                                        <th>Grade</th>
                                         <th>Montant</th>
                                         <th>Dévise</th>
                                         <th>Action</th>
@@ -41,7 +41,7 @@
                                     <tr>
                                         <td hidden>{{$tx->id}}</td>
                                         <td scope="row">{{ $cpt++ }}</td>
-                                        <td>{{ $tx->role->name }}</td>
+                                        <td>{{ $tx->grade->name }}</td>
                                         <td>{{ $tx->montant }}</td>
                                         <td>{{ strtoupper($tx->devise) }}</td>
                                         <td class="d-flex">
@@ -54,11 +54,12 @@
                                         </td>
                                     </tr>
                                     @empty
-                                        <tr>
-                                            <td colspan="5"> 
-                                                Aucun taux configuré
+                                        <<tr>
+                                            <td colspan="8" class="text-center py-4">
+                                                <i class="fas fa-exclamation-circle fa-3x text-gray-400"></i>
+                                                <p class="text-lg font-bold mt-4">Aucun taux defini</p>
                                             </td>
-                                    </tr>
+                                        </tr>
                                     @endforelse
                                 </tbody>
                                 

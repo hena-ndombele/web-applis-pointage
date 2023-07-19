@@ -15,11 +15,13 @@
                     <div class="md-form mb-2">
                         <i class="fa fa-font"></i>
                         <label>Grade Agent</label>
-                        <select name="grade" class="form-control">
-                            @foreach ($grades as $grade)
-                                <option value="{{ $grade }}">{{ $grade }}</option>
-                            @endforeach
-                        </select>
+                        <select class="custom-select form-control" id="exampleSelectBorder" name="grade_id">
+                            <option>
+                                @foreach ($grades as $grade)
+                                    <option value="{{ $grade->id }}">{{ $grade->name }}</option>
+                                @endforeach
+                            </option>
+                        </select> 
                     </div>
                     <div class="md-form mb-3">
                         <i class="fa fa-table"></i>

@@ -81,12 +81,14 @@ class DemandeCongeController extends Controller
                     }
                     if ($typeConge === 'Congé annuel') {
                         if ($anciennete < 6) {
-                            $totalLeaveDays = StockConge::where('grade', $userGrade)->first()->totalConge / 12;
+                            $totalLeaveDays = StockConge::where('grade_id',$userGrade->id)->first()->totalConge / 12;
+                            
                                 if ($dureeSaisie > $totalLeaveDays) {
                                     return response()->json(['message' => "pas droit"], 403);
                                 }
                         }
-                        $stockConge = StockConge::where('grade', $userGrade)->first();
+                        $stockConge = StockConge::where('grade_id', $userGrade->id)->first();
+                    
                         $totalLeaveDays = $stockConge->totalConge;
                         $usedLeaveDays =  $userAgent->conge_utilises;
                         $congeRestant = $totalLeaveDays - $usedLeaveDays;
