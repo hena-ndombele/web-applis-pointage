@@ -30,6 +30,12 @@ require 'api_profil.php';
 
 require 'api_informationAgent.php';
 require 'api_approbation.php';
+require 'api_change-password.php';
+require 'api_passwordReset.php';
+require 'api_recuAbsence.php';
+
+
+
 
 
 
