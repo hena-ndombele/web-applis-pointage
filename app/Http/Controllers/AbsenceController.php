@@ -171,4 +171,13 @@ class AbsenceController extends Controller
         }
         return response()->json([], 400);
     }
+
+
+
+    public function absence(){
+        $userId = Auth::id();
+        $absences = Absence::where('user_id', $userId)->get(); // Récupère les absences de l'utilisateur connecté
+        return response()->json($absences);
+    }
+
 }
