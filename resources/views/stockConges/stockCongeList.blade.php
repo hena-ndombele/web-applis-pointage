@@ -50,7 +50,7 @@
                 @forelse ($stocks as $item) 
                     <tr>
                         <th scope="row">{{ $number }}</th>
-                        <td>{{ $item->grade }}</td>
+                        <td>{{ $item->grade->name }}</td>
                         <td>{{ $item->totalConge }}</td>
                         <td>
                             <div class="row">
@@ -63,10 +63,11 @@
                 @endphp
                 @empty
                     <tr>
-                        <td colspan="5"> 
-                            Aucun enregistrement
+                        <td colspan="8" class="text-center py-4">
+                            <i class="fas fa-exclamation-circle fa-3x text-gray-400"></i>
+                            <p class="text-lg font-bold mt-4">Aucune demande trouvée</p>
                         </td>
-                  </tr>
+                    </tr>
                 @endforelse
             </tbody>
           </table> 

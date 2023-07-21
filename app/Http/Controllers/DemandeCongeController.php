@@ -81,12 +81,14 @@ class DemandeCongeController extends Controller
                     }
                     if ($typeConge === 'Congé annuel') {
                         if ($anciennete < 6) {
-                            $totalLeaveDays = StockConge::where('grade', $userGrade)->first()->totalConge / 12;
+                            $totalLeaveDays = StockConge::where('grade_id',$userGrade->id)->first()->totalConge / 12;
+                            
                                 if ($dureeSaisie > $totalLeaveDays) {
                                     return response()->json(['message' => "pas droit"], 403);
                                 }
                         }
-                        $stockConge = StockConge::where('grade', $userGrade)->first();
+                        $stockConge = StockConge::where('grade_id', $userGrade->id)->first();
+                    
                         $totalLeaveDays = $stockConge->totalConge;
                         $usedLeaveDays =  $userAgent->conge_utilises;
                         $congeRestant = $totalLeaveDays - $usedLeaveDays;
@@ -206,10 +208,18 @@ public function update(Request $request, DemandeConge $demande, Agent $agent) {
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }
-    }   
-}
-
-
-
-
+    }  
+    
+    public function approbation(){
+        try {
+            $userId = Auth::id();
+            $approbations = DemandeConge::join('conges', 'demande_conges.conge_id', '=', 'conges.id')
+                                        ->where('demande_conges.user_id', $userId)
+                                        ->select('demande_conges.*', 'conges.type_conge')
+                                        ->get();
+            return response()->json($approbations);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
 }

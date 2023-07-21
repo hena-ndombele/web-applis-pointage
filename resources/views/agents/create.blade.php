@@ -140,14 +140,26 @@
                                             placeholder="Date d'embauche" name="date_e" @required(true)>
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Grade <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="exampleInputEmail1"
-                                            placeholder="Email" name="grade" @required(true)>
+                                        <label for="exampleInputEmail1">Grade<span class="text-danger">*</span></label>
+                                        <select class="custom-select form-control" id="exampleSelectBorder" name="grade_id">
+                                            <option value="" disabled selected>Grade</option>
+                                            <option>
+                                                @foreach ($grades as $grade)
+                                                    <option value="{{ $grade->id }}">{{ $grade->name }}</option>
+                                                @endforeach
+                                            </option>
+                                        </select>       
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Fonction <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="exampleInputEmail1"
-                                            placeholder="Fonction" name="fonction" @required(true)>
+                                        <select class="custom-select form-control" id="exampleSelectBorder" name="fonction_id" >
+                                            <option value="" disabled selected>Fonction</option>
+                                            <option>
+                                                @foreach ($fonctions as $fonction)
+                                                    <option value="{{ $fonction->id }}">{{ $fonction->name }}</option>
+                                                @endforeach
+                                            </option>
+                                        </select> 
                                     </div>
                                    
 
@@ -227,10 +239,13 @@
 @endpush
 
 @push('page_scripts')
-    <script src="{{ Vite::asset('node_modules/bs-stepper/dist/js/bs-stepper.min.js') }}"></script>
-    <script src="{{ Vite::asset('node_modules/admin-lte/plugins/jquery/jquery.min.js') }}"></script>
-    <script src="{{ Vite::asset('node_modules/admin-lte/plugins/select2/js/select2.full.min.js') }}"></script>
-<script>
+    <script type="module" src="{{ Vite::asset('node_modules/admin-lte/plugins/jquery/jquery.min.js') }}"></script>
+    <script type="module" src="{{ Vite::asset('node_modules/bs-stepper/dist/js/bs-stepper.min.js') }}"></script>
+    <script type="module" src="{{ Vite::asset('node_modules/admin-lte/plugins/select2/js/select2.full.min.js') }}"></script>
+
+
+<script type="module">
+
    var departements = @json($departements->map(function ($departement) {
         return ['id' => $departement->id, 'text' => $departement->name];
     })->toArray());
@@ -240,7 +255,8 @@
         });
     });
 </script>
-<script>
+<script type="module">
+
     var directions = @json($directions->map(function ($direction) {
         return ['id' => $direction->id, 'text' => $direction->name];
     })->toArray());
@@ -250,7 +266,8 @@
         });
     });
 </script>
-<script>
+<script type="module">
+   
      var services = @json($services->map(function ($service) {
         return ['id' => $service->id, 'text' => $service->name];
     })->toArray());
@@ -260,7 +277,8 @@
         });
     });
 </script>
-<script>
+<script type="module">
+ 
     $(document).ready(function() {
   $('.select2').on('change', function() {
     if ($(this).val() != null && $(this).val().length > 1) {
@@ -269,7 +287,8 @@
   });
 });
 </script>
-<script>
+<script type="module">
+
  $(document).ready(function() {
   $('.select3').on('change', function() {
     if ($(this).val() != null && $(this).val().length > 1) {
@@ -279,7 +298,8 @@
 });
 </script>
 
-    <script>
+    <script type="module">
+       
         // BS-Stepper Init
         document.addEventListener('DOMContentLoaded', function(e) {
             e.preventDefault();
@@ -288,7 +308,8 @@
         
     </script>
   
-  <script>
+  <script type="module">
+   
    $('.select3').on('change', function() {
   var serviceId = $(this).val();
   $.ajax({

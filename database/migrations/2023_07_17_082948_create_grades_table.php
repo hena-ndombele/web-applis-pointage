@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        Schema::create('stock_conges', function (Blueprint $table) {
+        Schema::create('grades', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('grade_id')->constrained()->onDelete('cascade');
-            $table->integer('totalConge');
+            $table->string('name');
             $table->timestamps();
         });
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stock_conges');
+        Schema::dropIfExists('grades');
     }
 };

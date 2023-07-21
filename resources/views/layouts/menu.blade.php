@@ -4,15 +4,7 @@
         <p>Home</p>
     </a>
 </li>
-@permission('read','Role')
-<li class="nav-item">
-    <a href="{{ route('roles.index') }}" class="nav-link {{ Request::is('roles') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-user-tag"></i>
-        <p>Roles</p>
-    </a>
-</li>
-@endpermission
-@permission('read','Role')
+@permission('read','Agent')
 <li class="nav-item">
     <a href="{{ route('agents.index') }}" class="nav-link {{ Request::is('agents') ? 'active' : '' }}">
         <i class="nav-icon fas fa-user-plus"></i>
@@ -28,9 +20,6 @@
     </a>
 </li> 
 
-
-
-</li>
 @endpermission
 </li>
 @permission('read','Absence')
@@ -137,6 +126,12 @@
             </a>
         </li>
         <li class="nav-item">
+            <a href="{{ route('grades.index') }}"  class="nav-link {{ Request::is('grades') ? 'active' : '' }}">
+                <i class="nav-icon fa fa-file-contract"></i>
+                <p>Grades</p>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="{{ route('conge.index') }}" class="nav-link {{ Request::is('conge') ? 'active' : '' }}">
                 <i class="nav-icon fa fa-calendar"></i> 
                 <p>Congés légaux</p> 
@@ -147,7 +142,15 @@
                <i class="nav-icon far fa-calendar-alt"></i>
                <p>Feriés légaux</p>
            </a>
-       </li> 
+       </li>
+       @permission('read','Role')
+        <li class="nav-item">
+            <a href="{{ route('roles.index') }}" class="nav-link {{ Request::is('roles') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-user-tag"></i>
+                <p>Roles</p>
+            </a>
+        </li>
+        @endpermission 
        <li class="nav-item">
             <a href="{{ route('qrcode') }}"  class="nav-link {{ Request::is('qrcode') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-expand"></i>

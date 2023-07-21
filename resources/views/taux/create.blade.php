@@ -11,11 +11,11 @@
                 @csrf
                 <div class="modal-body mx-3">
                     <div class="form-group">
-                        <label for="exampleSelectBorder">Role</label>
-                        <select class="custom-select form-control-border" id="exampleSelectBorder" name="role_id">
+                        <label for="exampleSelectBorder">Grade Agent</label>
+                        <select class="custom-select form-control-border" id="exampleSelectBorder" name="grade_id">
                             <option>
-                                @foreach($roles as $role)
-                                    <option value="{{$role->id}}" @selected(old('role_id', $exist->role_id)==$role->id)>{{$role->name}}</option>
+                                @foreach($grades as $grade)
+                                    <option value="{{$grade->id}}" @selected(old('grade_id', $exist->grade_id)==$grade->id)>{{$grade->name}}</option>
                                 @endforeach
                             </option>
                         </select>

@@ -46,9 +46,10 @@
                                     <tr>
                                         <th>N°</th>
                                         <th>Agent</th>
-                                        <th>Nombre des jours</th>
-                                        <th>Montant de base</th>
-                                        <th>Salaire Mensuel</th>
+                                        <th>Jours prestés</th>
+                                        <th>Heures de travails accumulés</th>
+                                        <th>Montant de base horaire</th>
+                                        <th>Salaire brut sans retenues</th>
                                         <th>Dévise</th>
                                         <th>Action</th>
                                     </tr>
@@ -57,10 +58,11 @@
                                     @forelse ($paies as $paie) 
                                     <tr>
                                         <td scope="row">{{ $cpt++ }}</td>
-                                        <td>{{ strtoupper($paie->user->name) }}</td>
+                                        <td>{{ ($paie->user->name) }} {{ ($paie->agent->nom) }}</td>
                                         <td>{{ $paie->jours_presents }}</td>
+                                        <td>{{ $paie->heures_travails }}</td>
                                         <td>{{ $paie->taux_configuration->montant .' '. $paie->taux_configuration->devise }}</td>
-                                        <td>{{ $paie->taux_configuration->montant*$paie->jours_presents }}</td>
+                                        <td>{{ $paie->taux_configuration->montant*$paie->jours_presents*$paie->heures_travails }}</td>
                                         <td>{{ ($paie->taux_configuration->devise) }}</td>
                                         <td class="d-flex">
                                             
@@ -112,11 +114,9 @@
             //alert(route)
         }
     </script>
+
 @endsection
-@extends('layouts.app')
-@section('title')
-<span><a href="{{route('paie.index')}}">Paie</a> / Agent {{strtolower($status)}}</span>
-@endsection
+
 @section('content')
     @php
         $cpt =1;  
@@ -192,7 +192,7 @@
                                         @endphp
                                         <tr>
                                             <td scope="row">{{ $cpt++ }}</td>
-                                            <td>{{ strtoupper($paie->user->name) }}</td>
+                                            <td>{{ ($paie->user->name) }} {{ ($paie->agent->nom) }}</td>
                                             <td>{{ $paie->jours_presents }}</td>
                                             <td>{{ $paie->taux_configuration->montant .' '. $paie->taux_configuration->devise }}</td>        
                                             @forelse($fiches as $fiche)
@@ -245,7 +245,7 @@
                                         @empty
                                             <tr>
                                                 <td colspan="5"> 
-                                                    Aucune agent disponible pour cette partie
+                                                    Aucun agent disponible pour cette partie
                                                 </td>
                                         </tr>
                                         @endforelse

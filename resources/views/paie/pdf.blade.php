@@ -19,9 +19,10 @@
                 <tr>
                     <th style="border: 1px solid black;">N°</th>
                     <th style="border: 1px solid black;">Agent</th>
-                    <th style="border: 1px solid black;">Nombre des jours</th>
-                    <th style="border: 1px solid black;">Montant de base</th>
-                    <th style="border: 1px solid black;">Salaire Mensuel</th>
+                    <th style="border: 1px solid black;">Jours prestés</th>
+                    <th style="border: 1px solid black;">Heures de travails accumulées</th>
+                    <th style="border: 1px solid black;">Montant de base horaire</th>
+                    <th style="border: 1px solid black;">Salaire brut sans retenues</th>
                     <th style="border: 1px solid black;">Dévise</th>
                 </tr>
             </thead>
@@ -29,10 +30,11 @@
                 @forelse ($paies as $paie) 
                 <tr>
                     <td style="border: 1px solid black;">{{ $cpt++ }}</td>
-                    <td style="border: 1px solid black;">{{ strtoupper($paie->user->name) }}</td>
+                    <td style="border: 1px solid black;">{{($paie->user->name) }} {{($paie->agent->nom) }}</td>
                     <td style="border: 1px solid black;">{{ $paie->jours_presents }}</td>
+                    <td style="border: 1px solid black;">{{ $paie->heures_travails }}</td>
                     <td style="border: 1px solid black;">{{ $paie->taux_configuration->montant .' '. $paie->taux_configuration->devise }}</td>
-                    <td style="border: 1px solid black;">{{ $paie->taux_configuration->montant*$paie->jours_presents }}</td>
+                    <td style="border: 1px solid black;">{{ $paie->taux_configuration->montant*$paie->jours_presents*$paie->heures_travails }}</td>
                     <td style="border: 1px solid black;">{{ ($paie->taux_configuration->devise) }}</td>
                 </tr>
                 @empty
@@ -43,8 +45,8 @@
                     </tr>
                 @endforelse
             </tbody>
-            
         </table>
     </div>
 </body>
 </html>
+
