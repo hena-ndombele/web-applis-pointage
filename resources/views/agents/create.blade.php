@@ -20,7 +20,7 @@
             </div>
         @endif
                 <div class="card-header">
-                    <h3 class="card-title">Enregistrement agent</h3>
+                    <h3 class="card-title">Enregistrement employé</h3>
                 </div>
                 <div class="card-body p-0">
                     <div class="bs-stepper">
@@ -85,6 +85,11 @@
                                     <input type="email" class="form-control" id="exampleInputEmail1"
                                         placeholder="Email" name="email" @required(true)>
                                 </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">IMEI <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                        placeholder="IMEI" name="imei" @required(true)>
+                                </div>
                                 
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Adresse <span class="text-danger">*</span></label>
@@ -122,9 +127,7 @@
                                             
                                         </select>
                                     </div>
-                                    
-                                    
-                                    <div class="form-group">
+                                      <div class="form-group">
                                         <label for="exampleInputEmail1">Matricule <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="exampleInputEmail1"
                                             placeholder="Matricule" name="matricule" @required(false)>
@@ -223,9 +226,7 @@
                     </div>
                 </div>
                 <!-- /.card-body -->
-                <div class="card-footer text-black">
-                    Orange Digital Center
-                </div>
+               
 
 </div>
             <!-- /.card -->

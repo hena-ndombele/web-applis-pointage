@@ -1,14 +1,12 @@
 <x-laravel-ui-adminlte::adminlte-layout>
 
-    <body class="hold-transition register-page">
+    <body class="hold-transition register-page" style="background-color: #008B8B;">
         <div class="register-box">
-            <div class="register-logo">
-                <a href="{{ url('/home') }}"><b>{{ config('app.name') }}</b></a>
-            </div>
+            <img src="{{Vite::asset('resources/images/logo.png')}}" style="width: 130px;margin:20px;margin-left:100px;">
 
             <div class="card">
                 <div class="card-body register-card-body">
-                    <p class="login-box-msg">Register a new membership</p>
+                    <p class="login-box-msg">Créer mon compte</p>
 
                     <form method="post" action="{{ route('register') }}">
                         @csrf
@@ -16,7 +14,7 @@
                         <div class="input-group mb-3">
                             <input type="text" name="name"
                                 class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}"
-                                placeholder="Full name">
+                                placeholder="Nom d'utilisateur">
                             <div class="input-group-append">
                                 <div class="input-group-text"><span class="fas fa-user"></span></div>
                             </div>
@@ -42,7 +40,7 @@
 
                         <div class="input-group mb-3">
                             <input type="password" name="password"
-                                class="form-control @error('password') is-invalid @enderror" placeholder="Password">
+                                class="form-control @error('password') is-invalid @enderror" placeholder="Mot de passe">
                             <div class="input-group-append">
                                 <div class="input-group-text"><span class="fas fa-lock"></span></div>
                             </div>
@@ -55,30 +53,23 @@
 
                         <div class="input-group mb-3">
                             <input type="password" name="password_confirmation" class="form-control"
-                                placeholder="Retype password">
+                                placeholder="Confirmer mot de passe">
                             <div class="input-group-append">
                                 <div class="input-group-text"><span class="fas fa-lock"></span></div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-8">
-                                <div class="icheck-primary">
-                                    <input type="checkbox" id="agreeTerms" name="terms" value="agree">
-                                    <label for="agreeTerms">
-                                        I agree to the <a href="#">terms</a>
-                                    </label>
-                                </div>
-                            </div>
+                           
                             <!-- /.col -->
-                            <div class="col-4">
-                                <button type="submit" class="btn btn-primary btn-block">Register</button>
+                            <div class="col-4" style="background: black;">
+                                <button type="submit" class="btn btn-primary btn-block" style="background: black;border:none;">Créer </button>
                             </div>
                             <!-- /.col -->
                         </div>
                     </form>
 
-                    <a href="{{ route('login') }}" class="text-center">I already have a membership</a>
+                    <a href="{{ route('login') }}" class="text-center">J'ai déjà un compte</a>
                 </div>
                 <!-- /.form-box -->
             </div><!-- /.card -->

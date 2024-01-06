@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    <span>Agent/ {{$agents->nom}} {{$agents->postnom}}</span>
+    <span>Employé/ {{$agents->nom}} {{$agents->postnom}}</span>
 @endsection
 
 @section('content')
@@ -88,6 +88,12 @@
                                     <label for="exampleInputEmail1">Email <span class="text-danger">*</span></label>
                                     <input type="email" class="form-control" id="exampleInputEmail1"
                                         placeholder="nom du projet" name="email" @required(true)   value="{{$agents->email}}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">IMEI <span class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" id="exampleInputEmail1"
+                                        placeholder="nom du projet" name="imei" @required(true)   value="{{$agents->imei}}">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Adresse <span class="text-danger">*</span></label>
@@ -209,9 +215,7 @@
                     </div>
                 </div>
                 <!-- /.card-body -->
-                <div class="card-footer text-black">
-                    Orange Digital Center
-                </div>
+               
 
 </div>
             <!-- /.card -->

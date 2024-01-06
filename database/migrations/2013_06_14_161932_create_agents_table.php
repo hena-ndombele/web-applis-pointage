@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('numero');
             $table->string('email');
             $table->string('adresse');
+            $table->string('imei');
             $table->bigInteger('direction_id');
             $table->bigInteger('departement_id');
             $table->integer('service_id');

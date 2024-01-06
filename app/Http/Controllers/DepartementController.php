@@ -14,11 +14,11 @@ class DepartementController extends Controller
      */
     public function index()
     {
-        
+        $DepartementCount = Departement::count();
         $directions=Direction::all();
         $departements = Departement::latest()->paginate(10);
        
-        return view('departements.index', compact('directions','departements'))
+        return view('departements.index', compact('directions','departements','DepartementCount'))
             ->with('i', (request()->input('page', 1) - 1) * 4);
     }
 

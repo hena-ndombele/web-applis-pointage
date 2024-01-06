@@ -11,6 +11,7 @@ use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\JoursFerieController;
 use App\Http\Controllers\StockCongeController;
 use App\Http\Controllers\DemandeCongeController;
+use App\Http\Controllers\DocumentController;
 @include('webAcl.php');
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,13 @@ Route::get('/qrcode', [BssidController::class, 'listeQrCode'])->name('qrcode');
 Route::get('printQrCode1/{bssid}', [BssidController::class, 'printQrCode1'])->name('printQrCode1');
 Route::get('printQrCode2/{bssid}', [BssidController::class, 'printQrCode2'])->name('printQrCode2');
 Route::resource('agents', AgentController::class);
+Route::get('document', [DocumentController::class,'envoye'])->name('envoye');
+Route::post('valide', [DocumentController::class,'valide'])->name('valide');
+Route::get('documents', [DocumentController::class,'recu'])->name('recu');
+
+
+
+
 require('web_taux.php');
 require('web_horaires.php');
 require('api_post.php');

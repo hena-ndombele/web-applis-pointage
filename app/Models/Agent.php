@@ -19,6 +19,7 @@ class Agent extends Model
         'numero',
         'email',
         'adresse',
+        'imei',
         'direction_id',
         'departement_id',
         'service_id',
@@ -51,5 +52,9 @@ class Agent extends Model
    }
    public function fonction(){
       return $this->BelongsTo(Fonction::class);
+   }
+
+   public function document(){
+      return $this->hasMany(DocumentModel::class);
    }
 }

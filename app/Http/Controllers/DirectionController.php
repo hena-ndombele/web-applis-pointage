@@ -13,8 +13,9 @@ class DirectionController extends Controller
      */
     public function index()
     {
+        $DirectionCount = Direction::count();
         $directions = Direction::latest()->paginate(10);
-        return view('directions.index', compact('directions'))
+        return view('directions.index', compact('directions','DirectionCount'))
             ->with('i', (request()->input('page', 1) - 1) * 4);
     }
 

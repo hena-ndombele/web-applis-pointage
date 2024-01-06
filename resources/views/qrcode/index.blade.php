@@ -24,7 +24,7 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
-                            <h6 class="text-center mb-4">Code QR d'entré</h6>
+                            <h6 class="text-center mb-4">Code QR d'entrée</h6>
                             <img id="image" src="{{ asset('storage/' . $bssid->qr_code_1)  }}"  class="mx-auto d-block">
                            <p class="text-center mt-3"> <a class="btn btn-success btn-sm mr-2 "  href="{{ route('printQrCode1', $bssid->id) }} }}" target="_blank"   ><i class="fas fa-print"></i></a></p>
                         </div>

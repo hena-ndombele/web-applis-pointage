@@ -34,8 +34,8 @@
 
           ?>
         <h4>Mois de : {{ $month}}</h4>
-        <p> Total  présences : <button class="btn btn-success">{{  $countPresence; }}</button> </p>
-        <p> Total absences  : <button class="btn btn-danger">{{  $countAbsence; }}</button></p>
+        <p> Total  présences : <button class="btn btn-success">{{  $countPresence }}</button> </p>
+        <p> Total absences  : <button class="btn btn-danger">{{  $countAbsence }}</button></p>
 
       </div>
       <div class="modal-footer justify-content-between">

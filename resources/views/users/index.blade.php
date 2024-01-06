@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    <span>Liste des Utilisateurs</span>
+    <span>Liste des employés</span>
 @endsection
 @section('content')
 <div class="container-fluid">
@@ -13,13 +13,7 @@
                             <th>Nom</th>
                             <th>Email</th>
                             <th>Rôles</th>
-                            
                             <th>Action</th>
-
-                            
-                            
-                           
-                            
                         </tr>
                     </thead>
                     <tbody>

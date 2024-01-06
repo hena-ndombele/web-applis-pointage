@@ -1,8 +1,8 @@
 <?php
+
+use App\Http\Controllers\AbsenceController;  
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\AuthController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -15,11 +15,11 @@ use App\Http\Controllers\Api\AuthController;
 |
 */
 
+
+
 Route::group(['middleware' => ['auth:sanctum']], function(){
-    Route::post('auth/changerpassword',[AuthController::class,'updatePassword']);
+    Route::get('/absence',[AbsenceController::class,'absence']);
 });
-
-
 
   
 ?>

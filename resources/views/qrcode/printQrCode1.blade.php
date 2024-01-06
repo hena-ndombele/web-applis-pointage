@@ -22,6 +22,6 @@
     <div class="container">
        <h2> Code qr d'entré</h2> <br>
         <img id="image" src="{{ asset('storage/' . $bssid->qr_code_1)  }}" alt="{{$bssid->name}}">
-    </div>
+    </div> 
     
 </body>

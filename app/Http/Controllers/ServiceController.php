@@ -16,11 +16,12 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $directions=Direction::all();
-        $departements=Departement::all();
+        $serviceCount = Service::count();
+        $directions = Direction::all();
+        $departements = Departement::all();
         $services = Service::latest()->paginate(10);
-       
-        return view('services.index', compact('directions','departements','services'))
+    
+        return view('services.index', compact('directions', 'departements', 'services', 'serviceCount'))
             ->with('i', (request()->input('page', 1) - 1) * 4);
     }
     

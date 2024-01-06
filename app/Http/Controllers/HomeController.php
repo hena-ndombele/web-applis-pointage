@@ -23,6 +23,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $serviceCount = \App\Models\Service::count();
+        $DepartementCount = \App\Models\Departement::count();
+        $DirectionCount = \App\Models\Direction::count();
+        $AgentCount = \App\Models\Agent::count();
+
+        return view('home',compact('serviceCount','DepartementCount','DirectionCount','AgentCount'));
     }
 }

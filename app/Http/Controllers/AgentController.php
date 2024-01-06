@@ -24,6 +24,7 @@ class AgentController extends Controller
      */
     public function index()
     {
+        $agentsCount=Agent::count();
         $directions=Direction::all();
         $departements=Departement::all();
         $services=Service::all();
@@ -34,6 +35,14 @@ class AgentController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+
+
+
+     public function getUsers()
+{
+    $users = User::all();
+    return view('document/create', compact('users'));
+}
     public function create()
     {
         $directions=Direction::all();

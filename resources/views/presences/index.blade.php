@@ -79,7 +79,7 @@
                                               <?php foreach ($dates as $date) { ?>
                                                   <div class="col-2 text-center">
                                                   <div class="date <?php echo $date['day'] ? 'day' : ''; ?>">
-                                                      <a href="{{ route('show_presences', ['date' => $date['date']]); }}" class="text-secondary"><?php echo $date['day']; ?></a>
+                                                      <a href="{{ route('show_presences', ['date' => $date['date']]) }}" class="text-secondary"><?php echo $date['day']; ?></a>
                                                   
                                                   </div>
                                                   </div>

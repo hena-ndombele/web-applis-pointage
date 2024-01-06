@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,11 +16,16 @@ use App\Http\Controllers\Api\AuthController;
 |
 */
 
-Route::group(['middleware' => ['auth:sanctum']], function(){
-    Route::post('auth/changerpassword',[AuthController::class,'updatePassword']);
-});
+
+    Route::post('password/reset',[AuthController::class,'ForgotPassword']);
+
 
 
 
   
 ?>
+
+
+
+
+

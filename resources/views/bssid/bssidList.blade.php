@@ -7,11 +7,11 @@
        @include('bssid.modalDelete')
        @include('bssid.modalAdd')
   
-        <div><h1 class="text-black-50">Liste des BSSID autorisés</h1></div>
+        <div><h1 class="text-black-50">Liste des adresse autorisées</h1></div>
 
-        <div class="d-flex flex-row-reverse bd-highlight">
-            <div class="p-2 bd-highlight">
-                <input type="submit" class="btn btn-primary btn-rounded mb-4" data-toggle="modal" data-target="#modalAddForm" value="+Ajouter">
+        <div class="d-flex flex-row-reverse bd-highlight" >
+            <div class="p-2 bd-highlight" style="background-color:black;"  >
+                <input type="submit" class="btn btn-primary btn-rounded" data-toggle="modal" data-target="#modalAddForm" value="+Ajouter" style="background-color:black;border:none;">
             </div>
         </div>
 

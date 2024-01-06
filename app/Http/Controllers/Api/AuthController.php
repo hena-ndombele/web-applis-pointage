@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Api\AuthController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
@@ -66,9 +66,7 @@ class AuthController extends Controller
 
 
     public function register(Request $request){
-
-
-        try {
+ try {
             //code...
             $input=$request->all();
             $validator=Validator::make($input,[
@@ -122,10 +120,6 @@ class AuthController extends Controller
     }
 
 
-
-
-
-
     public function updatePassword(Request $request){
         try {
             $input = $request->all();
@@ -136,7 +130,7 @@ class AuthController extends Controller
             if ($validator->fails()) {
                 return response()->json([
                     "status" => false,
-                    "message" => "Erreur de validation",
+                    "message" => "les mots de passe ne correspondent pas",
                     "errors" => $validator->errors(),
                 ], 422);
             }
@@ -154,7 +148,7 @@ class AuthController extends Controller
     
             return response()->json([
                 "status" => true,
-                "message" => "Mot de passe modifié avec succès",
+                "message" => "Le mot de passe a été modifié avec success",
                 "data" => $request->user(),
             ]);
         } catch (\Throwable $th) {
@@ -194,5 +188,8 @@ class AuthController extends Controller
             'message' => "Deconnexion avec success"
         ], 200);
     }
+
+
+
     
 }
