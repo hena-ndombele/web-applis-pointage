@@ -4,14 +4,9 @@
     <div class="container-fluid">
         
 
-        <div class="d-sm-flex align-items-center justify-content-between mb-4" style="margin-top:50px;">
-        
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm  shadow-sm", style="background-color:#008B8B;color:#ffffff;"><i
-        class="fas fa-download fa-sm text-white-50" ></i> Généré la liste de vos employés</a>         
-        </div>
                    
     </div>
-
+<br><br>
 
   <div class="row">
  <div class="col-xl-3 col-md-6 mb-4">

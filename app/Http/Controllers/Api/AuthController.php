@@ -14,53 +14,44 @@ use Illuminate\Auth\AuthManager;
 
 class AuthController extends Controller
 {
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         try {
-            //code...
-            $input=$request->all();
-            $validator=Validator::make($input,[
-                "email"=>"required|email",
-                "password"=>"required",
+            $validator = Validator::make($request->all(), [
+                "email" => "required|email",
+                "password" => "required",
             ]);
-            if($validator->fails()){
-                return response()->json(
-                    [
-                        "status" => false,
-                        "message" => "Erreur de validation",
-                        "errors"=>$validator->errors(),
-                    ],422
-                );
-            }
-//verifier si les informations sont correct dans la base de donnee
-            if(!Auth::attempt($request->only(['email','password']))){
-                return response()->json(
-                    [
-                        "status" => false,
-                        "message" => "email ou mot de passe incorrect*",
-                        "errors"=>$validator->errors(),
-                    ],421
-                );
-            }
-            $user=User::where('email',$request->email)->first();
-            return response()->json(
-                [
-                    "status"=>200,
-                     "data"=>[
-                        "user"=>$user,
-                        "token"=>$user->createToken('auth_user')->plainTextToken,
-                        "token_type"=>"Bearer",
-                    ]
-                    ],
-                );
-
-        } catch (\Throwable $th) {
-            //throw $th;
-            return response()->json(
-                [
+    
+            if ($validator->fails()) {
+                return response()->json([
                     "status" => false,
-                    "message" =>$th->getMessage(),
-                ],500,
-            );
+                    "message" => "Erreur de validation",
+                    "errors" => $validator->errors(),
+                ], 422);
+            }
+    
+            if (!Auth::attempt($request->only(['email', 'password']))) {
+                return response()->json([
+                    "status" => false,
+                    "message" => "email ou mot de passe incorrect",
+                ], 421);
+            }
+    
+            $user = User::where('email', $request->input('email'))->first();
+    
+            return response()->json([
+                "status" => 200,
+                "data" => [
+                    "user" => $user,
+                    "token" => $user->createToken('auth_user')->plainTextToken,
+                    "token_type" => "Bearer",
+                ],
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                "status" => false,
+                "message" => $th->getMessage(),
+            ], 500);
         }
     }
 

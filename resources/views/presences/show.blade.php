@@ -16,7 +16,12 @@
                 <thead>
                     <tr>
                         <th>N°</th>
-                        <th>Noms</th>
+                        <th>Prénom</th>
+                        <th>Nom</th>
+                        <th>Service</th>
+                        <th>Département</th>
+                        <th>Direction</th>
+                        <th>Email</th>
                         <th>Rôle</th>
                         <th>HE</th>
                         <th>HS</th>
@@ -29,6 +34,12 @@
                         <tr>
                             <td>{{$presence->id}}</td>
                             <td>{{$presence->user->name}}</td>
+                            {{-- @forelse($departements as $departement)
+                            <td>{{$dept->departement->name}}</td>
+                        @empty
+                            <td>Aucun département</td>
+                        @endforelse --}}
+                            
                             <td>Rôle</td>
                             <td>{{$presence->heureArrive}}</td>
                             <td>{{ date("H:i:s", strtotime($presence->heureDepart) )}}</td>
@@ -36,8 +47,11 @@
                                 <button class="btn btn-sm btn-<?php echo ($presence->status == 1) ? 'primary' : 'danger' ?>"><?php echo ($presence->status == 1) ? 'présent' : 'absent' ?></button> 
                             </td>
                             <td>
-                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalPresence-{{$presence->id}}">
+                                <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#modalPresence-{{$presence->id}}" style="background: red; color:white;">
                                     <i class="fas fa-eye"></i>
+                                </button>
+                                <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#modalPresence-{{$presence->id}}" style="background: green;color:white;">
+                                    <i class="fas fa-print"></i>
                                 </button>
                                 @include('partials.modalPresence')
                             </td>

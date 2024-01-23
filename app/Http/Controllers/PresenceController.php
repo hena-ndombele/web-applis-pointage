@@ -6,6 +6,8 @@ use DateTime;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Bssid;
+use App\Models\Departement;
+
 use App\Models\Presence;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +24,7 @@ class PresenceController extends Controller
      */
     public function index(Request $request)
     {
+        $departement=Departement::all();
         $month = $request->input('month');
         $date = strtotime($month); // Convertir la chaîne de caractères en objet de date PHP
         $monthNum = date('m', $date); // Extraire le numéro du mois (ex: "06")
@@ -54,7 +57,8 @@ class PresenceController extends Controller
             'year',
             'monthNum',
             'dates',
-            'date'
+            'date',
+            'departement'
         ));
     }
 

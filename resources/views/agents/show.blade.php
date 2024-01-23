@@ -9,54 +9,7 @@
 @section('content')
     <div class="card card-primary card-outline">
         <div class="card-header">
-            <div class="row">
-                <div class="col-6">
-                   <div class="row">
-                    <h3 class="card-title my-2">
-                        <i class="fas fa-edit"></i>
-                        
-                        {{ $agents->nom }} 
-                        {{ $agents->postnom }} 
-                        {{ $agents->prenom }} 
-        
-                    </h3>
-                   </div>
-                   <div class="row">
-                    <h3 class="card-title my-2">
-                        
-                        
-                        <p>{{ $agents->grade}} </p>
-                        <p>{{ $agents->fonction }}</p> 
-                        {{ $agents->prenom }} 
-        
-                    </h3>
-                   </div>
-                   
-                    <div class="row">
-                        <div class="col-8">
-                            <p>Numero de téléphone : {{$agents->numero}}</p>
-                            <p>Adreesse mail : {{$agents->email}}</p>
-                            <p>Compagnie : {{$agents->email}}</p>
-
-    
-                        </div>
-                        <div class="col-4">
-                            <p>Service: {{$agents->service->name}}</p>
-                            <p>Fonction : {{$agents->grade}}</p>
-                            <p>Superviseur : {{$agents->superviseur}}</p>
-    
-    
-                        </div>
-
-                    
-                    
-
-                   </div>
-                </div>
-                <div class="col-6">
-                    <img src="{{ asset('assets/uploads/agents/1686739456.jpg' ) }}" class="img-fluid" alt="Photo de l'agent">
-                </div>
-            </div>
+           
 
         </div>
         <div class="card-body">
@@ -64,18 +17,18 @@
                 <li class="nav-item">
                     <a class="nav-link active" id="custom-content-below-home-tab" data-toggle="pill"
                         href="#custom-content-below-home" role="tab" aria-controls="custom-content-below-home"
-                        aria-selected="true">Information professionnelle</a>
+                        aria-selected="true" style="color:#008B8B; font-weight:bolder;">Information professionnelle</a>
                 </li>
                 
                 <li class="nav-item">
                     <a class="nav-link " id="custom-content-below-task-tab" data-toggle="pill"
                         href="#custom-content-below-task" role="tab" aria-controls="custom-content-below-task"
-                        aria-selected="false">Information personnelle</a>
+                        aria-selected="false" style="color:#008B8B; font-weight:bolder;">Information personnelle</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="custom-content-below-profile-tab" data-toggle="pill"
                         href="#custom-content-below-profile" role="tab" aria-controls="custom-content-below-profile"
-                        aria-selected="false">Information supplémentaire</a>
+                        aria-selected="false" style="color:#008B8B; font-weight:bolder;">Information supplémentaire</a>
                 </li>
                 <li class="nav-item">
                 </li>
@@ -89,43 +42,30 @@
                             <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
                                 <div class="col">
                                     <div class="col-6">
-                                        <p>Service: {{$agents->service->name}}</p>
-                                        <p>Fonction : {{$agents->grade}}</p>
-                                        <p>Superviseur : {{$agents->superviseur}}</p>
+                                        <p style="font-weight: bolder">SERVICE: {{$agents->service->name}}</p>
+                                        <p style="font-weight: bolder">FONCTION : {{$agents->fonction->name}}</p>
+                                        <p style="font-weight: bolder">SUPERVISEUR : {{$agents->superviseur}}</p>
+                                        <p style="font-weight: bolder">DEPARTEMENT : {{$agents->departement->name}}</p>
+                                        <p style="font-weight: bolder">DIRECTION : {{$agents->direction->name}}</p>
+                                        <p style="font-weight: bolder">MATRICULE : {{$agents->matricule}}</p>
+                                        <p style="font-weight: bolder">SUPERVISEUR : {{$agents->superviseur}}</p>
+                                        <p style="font-weight: bolder">GRADE : {{$agents->grade->name}}</p>
+                                        <p style="font-weight: bolder">DATE EMBAUCHE : {{$agents->date_e}}</p>
+
+
+
+
+
+
                 
                 
                                     </div>
                                     <hr>
-                                    <div class="col-6">
-                                        <p>Service: {{$agents->service->name}}</p>
-                                        <p>Fonction : {{$agents->grade}}</p>
-                                        <p>Superviseur : {{$agents->superviseur}}</p>
-                
-                
-                                    </div>
+                             
                                 </div>
                                 
                             </div>
-                            <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
-                                <h3 class="text-primary"><i class="fas fa-paint-brush"></i> </h3>
-                                <p class="text-muted"></p><br>
-                                <div class="text-muted">
-                                    <p class="text-sm">Type de projet<b class="d-block"></b></p>
-                                    <p class="text-sm">ProjectOwner<b class="d-block"></b></p>
-                                    <p class="text-sm">Option-TTM<b class="d-block"></b></p>
-                                </div>
-                                <h5 class="mt-5 text-muted">Project files</h5>
-                                <ul class="list-unstyled">
-                                    
-
-                                </ul>
-                                <div class="text-center mt-5 mb-3 row">
-                                    <div class=" col-lg-5 nav-item dropdown">
-                                        <a class=" btn btn-sm btn-primary nav-link"
-                                            href="#">Membres</a>
-                                    </div>
-                                </div>
-                            </div>
+                        
                         </div>
 
                     </div>
@@ -134,24 +74,20 @@
                     <div class="row">
                         <div class="col">
                             <div class="col-6">
-                                <p>Matricule : {{$agents->matricule}}</p>
+                                <p style="font-weight: bolder">NOM : {{$agents->nom}}</p>
+                                 <p style="font-weight: bolder">POSTNOM : {{$agents->postnom}}</p>
+                                <p style="font-weight: bolder">PRENOM : {{$agents->prenom}}</p>
+                                <p style="font-weight: bolder">TELEPHONE : {{$agents->numero}}</p>
+                                <p style="font-weight: bolder">ADRESSE : {{$agents->adresse}}</p>
+                                <p style="font-weight: bolder">EMAIL : {{$agents->email}}</p>
+                                <p style="font-weight: bolder">DATE DE NAISSANCE : {{$agents->date_n}}</p>
 
-                                <p>Service: {{$agents->service->name}}</p>
-                                <p>Departement : {{$agents->departement->name}}</p>
-                                <p>Direction : {{$agents->direction->name}}</p>
+
+
         
         
                             </div>
-                            <hr>
-                            <div class="col-6">
-                                <p>Grade: {{$agents->grade}}</p>
-                                <p>Fonction : {{$agents->fonction}}</p>
-                                <p>Superviseur : {{$agents->superviseur}}</p>
-                                <p>Date d'embauche : {{$agents->date_n}}</p>
-                                
-        
-        
-                            </div>
+                           
                         </div>
                     </div>
                 </div>
@@ -161,10 +97,10 @@
                 <div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel"aria-labelledby="custom-content-below-profile-tab">
                     <div class="col">
                         <div class="col-6">
-                            <p>Etat civil : {{$agents->etat_civil}}</p>
-                            <p>Nombre d'enfants : {{$agents->nombre_e}}</p>
-                            <p>Niveau d'étude : {{$agents->niveau_etude}}</p>
-                            <p>Sexe : {{$agents->sexe}}</p>
+                            <p style="font-weight: bolder">ETAT CIVIL : {{$agents->etat_civil}}</p>
+                            <p style="font-weight: bolder">NOMBRE ENFANTS : {{$agents->nombre_e}}</p>
+                            <p style="font-weight: bolder">NIVEAU ETUDE : {{$agents->niveau_etude}}</p>
+                            <p style="font-weight: bolder">SEXE : {{$agents->sexe}}</p>
                             
 
     

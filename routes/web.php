@@ -44,7 +44,7 @@ Route::resource('agents', AgentController::class);
 Route::get('document', [DocumentController::class,'envoye'])->name('envoye');
 Route::post('valide', [DocumentController::class,'valide'])->name('valide');
 Route::get('documents', [DocumentController::class,'recu'])->name('recu');
-
+Route::get('/agent-delete/{id}', [AgentController::class,'destroy'])->name('agents.destroy');
 
 
 

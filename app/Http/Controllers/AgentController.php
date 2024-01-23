@@ -113,7 +113,7 @@ class AgentController extends Controller
 
             if ($agent) {
                 $password = $agent->date_e . $agent->matricule;
-                $passwordSend  = '2023-06-1012345';
+                $passwordSend  = '2024-06-1012345';
                 $user = User::create([
                     'name' => $agent->prenom,
                     'email' => $agent->email,
@@ -204,9 +204,10 @@ class AgentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Agent $agent)
-    {
-        //
+    public function destroy($id){
+        $agent = Agent::find($id);
+        $agent->delete();
+        return redirect()->route('agents.index')->with('success', 'suppression de l\'employé  avec success');
     }
     public function byDirection(StoreAgentRequest $request, $directionId)
     {
@@ -224,8 +225,9 @@ class AgentController extends Controller
         $agents = Agent::join('directions', 'agents.direction_id', '=', 'directions.id')
                         ->join('departements', 'agents.departement_id', '=', 'departements.id')
                         ->join('services', 'agents.service_id', '=', 'services.id')
+                        ->join('grades', 'agents.grade_id', '=', 'grades.id')
                         ->where(['agents.key' =>  Auth::user()->key])
-                        ->select('agents.*', 'directions.name as direction', 'departements.name as departement', 'services.name as service')
+                        ->select('agents.*', 'directions.name as direction', 'departements.name as departement', 'services.name as service', 'grades.name as grade')
                         ->first();
     
         return response()->json($agents);

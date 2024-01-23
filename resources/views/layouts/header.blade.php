@@ -1,4 +1,5 @@
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+  
     <!-- Left navbar links -->
     <ul class="navbar-nav">
         <li class="nav-item">
@@ -6,7 +7,7 @@
                     class="fas fa-bars"></i></a>
         </li>
     </ul>
-
+    <h3 style="color:#008B8B;font-weight:bolder;">Tableau de bord</h3>
     <ul class="navbar-nav ml-auto" >
         <li class="nav-item dropdown user-menu">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
@@ -40,4 +41,5 @@
             </ul>
         </li>
     </ul>
+    
 </nav>

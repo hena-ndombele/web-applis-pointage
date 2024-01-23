@@ -55,13 +55,8 @@
       <div class="card-body pt-0">
         <div class="row">
           <div class="col-7 mt-4">
-            <h2 class="lead"><b>{{$agent->nom}} {{$agent->postnom}} {{$agent->prenom}} </b></h2>
-            <p class="text-muted text-sm"><b>Email: </b> {{$agent->email}} </p>
-            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Imei : {{$agent->imei}}</li>
-            <ul class="ml-4 mb-0 fa-ul text-muted">
-              <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: {{$agent->adresse}}</li>
-              <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Telephone : {{$agent->numero}}</li>
-            </ul>
+            <h2 class="lead" ><b>{{$agent->nom}} {{$agent->postnom}} {{$agent->prenom}} </b></h2>
+           
           </div>
 
           <div class="col-5 text-center">

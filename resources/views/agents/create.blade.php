@@ -216,7 +216,7 @@
                                 </div>
                                 
                                 <a class="btn btn-primary" onclick="stepper.previous()">Précedent</a>
-                                <button class="btn btn-primary" id="test" type="submit">Submit</button>
+                                <button class="btn btn-primary" id="test" type="submit">Créer</button>
                             </div>
 
 
