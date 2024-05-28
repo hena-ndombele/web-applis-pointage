@@ -15,8 +15,7 @@ return new class extends Migration
         Schema::create('agents', function (Blueprint $table) {
             $table->id();
             $table->string('key')->unique();
-            $table->string('nom');
-            $table->string('postnom');
+            
             $table->string('prenom');
             $table->date('date_n');
             $table->string('numero');

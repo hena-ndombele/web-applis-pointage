@@ -55,20 +55,11 @@
                         <div class="bs-stepper-content">
                             <!-- your steps content here -->
                             <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
+                            
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Nom <span class="text-danger">*</span></label>
+                                    <label for="exampleInputEmail1">Nom complet<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="exampleInputEmail1"
-                                        placeholder="Nom" name="nom" @required(true)>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Postnom <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1"
-                                        placeholder="Postnom" name="postnom" @required(true)>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Prenom <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1"
-                                        placeholder="Prenom" name="prenom" @required(true)>
+                                        placeholder="Nom complet" name="prenom" @required(true)>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Date de naissance <span class="text-danger">*</span></label>
@@ -100,7 +91,7 @@
                                 
                                
                                
-                                <a class="btn btn-primary" onclick="stepper.next()">Suivant</a>
+                                <a class="btn " onclick="stepper.next()" style="background:black; color:white;">Suivant</a>
                             </div>
                             {{-- fin de la partie 1 --}}
 
@@ -167,8 +158,8 @@
                                    
 
                                 </div>
-                                <a class="btn btn-primary" onclick="stepper.previous()">Précedent</a>
-                                <a class="btn btn-primary" onclick="stepper.next()">Suivant</a>
+                                <a class="btn btn-primary" onclick="stepper.previous()" style="background: red; color:white;">Précedent</a>
+                                <a class="btn" onclick="stepper.next()" style="background: black;color:white;">Suivant</a>
 
                             </div>
                             {{-- fin de la partie 2 --}}
@@ -215,8 +206,8 @@
                                     </div>
                                 </div>
                                 
-                                <a class="btn btn-primary" onclick="stepper.previous()">Précedent</a>
-                                <button class="btn btn-primary" id="test" type="submit">Créer</button>
+                                <a class="btn btn-primary" onclick="stepper.previous()" style="background: red;color:white;">Précedent</a>
+                                <button class="btn " id="test" type="submit" style="background: black;color:white;">Créer</button>
                             </div>
 
 

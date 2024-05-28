@@ -6,7 +6,7 @@
     <section class="content">
             @permission('create', 'Agent')
             <div class="text-right mx-4">
-                <a class="btn btn-primary m-2 " href="{{route('agents.create')}}"><b>+</b></a>
+                <a class="btn  m-2 " href="{{route('agents.create')}}" style="background: #008B8B;"><b style="color:white;">+</b></a>
             </div>
             @endpermission('create', 'Agent')
             <div class="card">

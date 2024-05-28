@@ -10,8 +10,7 @@
     <div class="card card-primary card-outline">
         <div class="card-header">
            
-
-        </div>
+  </div>
         <div class="card-body">
             <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
                 <li class="nav-item">
@@ -52,13 +51,6 @@
                                         <p style="font-weight: bolder">GRADE : {{$agents->grade->name}}</p>
                                         <p style="font-weight: bolder">DATE EMBAUCHE : {{$agents->date_e}}</p>
 
-
-
-
-
-
-                
-                
                                     </div>
                                     <hr>
                              
@@ -74,19 +66,12 @@
                     <div class="row">
                         <div class="col">
                             <div class="col-6">
-                                <p style="font-weight: bolder">NOM : {{$agents->nom}}</p>
-                                 <p style="font-weight: bolder">POSTNOM : {{$agents->postnom}}</p>
-                                <p style="font-weight: bolder">PRENOM : {{$agents->prenom}}</p>
+                                
+                                <p style="font-weight: bolder">NOM COMPLET : {{$agents->prenom}}</p>
                                 <p style="font-weight: bolder">TELEPHONE : {{$agents->numero}}</p>
                                 <p style="font-weight: bolder">ADRESSE : {{$agents->adresse}}</p>
                                 <p style="font-weight: bolder">EMAIL : {{$agents->email}}</p>
-                                <p style="font-weight: bolder">DATE DE NAISSANCE : {{$agents->date_n}}</p>
-
-
-
-        
-        
-                            </div>
+                                <p style="font-weight: bolder">DATE DE NAISSANCE : {{$agents->date_n}}</p> </div>
                            
                         </div>
                     </div>
@@ -101,11 +86,7 @@
                             <p style="font-weight: bolder">NOMBRE ENFANTS : {{$agents->nombre_e}}</p>
                             <p style="font-weight: bolder">NIVEAU ETUDE : {{$agents->niveau_etude}}</p>
                             <p style="font-weight: bolder">SEXE : {{$agents->sexe}}</p>
-                            
-
-    
-    
-                        </div>
+                               </div>
                         
                     </div>
 

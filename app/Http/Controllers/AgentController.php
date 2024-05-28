@@ -62,8 +62,7 @@ class AgentController extends Controller
        
         DB::transaction(function () use ($request) {
             $validatedData = $request->validate([
-                'nom' => 'required|string|max:255',
-                'postnom' => 'required|string|max:255',
+                
                 'prenom' => 'required|string|max:255',
                 'date_n' => 'required|date',
                 'numero' => 'required|string|max:255',
@@ -172,8 +171,7 @@ class AgentController extends Controller
         
              
             $validatedData = $request->validate([
-                'nom' => 'required|string|max:255',
-                'postnom' => 'required|string|max:255',
+                
                 'prenom' => 'required|string|max:255',
                 'date_n' => 'required|date',
                 'numero' => 'required|string|max:255',
@@ -237,7 +235,25 @@ class AgentController extends Controller
 
     
 
+  
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|min:8|confirmed',
+        ]);
 
+        $user = Auth::user();
+
+        if (!password_verify($request->old_password, $user->password)) {
+            return response()->json(['message' => 'Le mot de passe actuel est incorrect.'], 401);
+        }
+
+        $user->password = bcrypt($request->new_password);
+        $user->save();
+
+        return response()->json(['message' => 'Mot de passe modifié avec succès.'], 200);
+    }
     
 
 

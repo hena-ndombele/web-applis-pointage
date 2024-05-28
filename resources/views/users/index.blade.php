@@ -10,8 +10,10 @@
                 <table id="example1" class="table table-striped">
                     <thead>
                         <tr>
-                            <th>Nom</th>
+                           
+                            <th>Nom Complet</th>
                             <th>Email</th>
+                          
                             <th>Rôles</th>
                             <th>Action</th>
                         </tr>
@@ -21,7 +23,9 @@
                         @if (!$user->hasRole('admin'))
                             <tr>
                                 <td> {{$user->name }} </td>
+                              
                                 <td> {{$user->email }} </td>
+                              
                                 <td> 
                                     @foreach($user->roles as $role)
                                         <a href="{{ route('roles.show', $role->id) }}">{{ $role->name }}</a>, 
@@ -38,6 +42,8 @@
                                         <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
                                     </form>
                                     @endpermission
+                                    <button type="submit" class="btn "style="background: #008B8B;" ><i class="fas fa-print" style="color:white;"></i></button>
+
                                 </td>
                             </tr>
                         @endif

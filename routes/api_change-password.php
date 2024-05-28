@@ -16,7 +16,7 @@ use App\Http\Controllers\Api\AuthController;
 */
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
-    Route::post('auth/changerpassword',[AuthController::class,'updatePassword']);
+    Route::post('auth/changePassword',[AgentController::class,'changePassword']);
 });
 
 

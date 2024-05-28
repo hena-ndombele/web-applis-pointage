@@ -16,12 +16,8 @@
                 <thead>
                     <tr>
                         <th>N°</th>
-                        <th>Prénom</th>
-                        <th>Nom</th>
-                        <th>Service</th>
-                        <th>Département</th>
-                        <th>Direction</th>
-                        <th>Email</th>
+                        <th>Nom Complet</th>
+                       <th>Email</th>
                         <th>Rôle</th>
                         <th>HE</th>
                         <th>HS</th>
@@ -34,6 +30,8 @@
                         <tr>
                             <td>{{$presence->id}}</td>
                             <td>{{$presence->user->name}}</td>
+                            <td>{{$presence->user->email}}</td>
+
                             {{-- @forelse($departements as $departement)
                             <td>{{$dept->departement->name}}</td>
                         @empty
@@ -50,7 +48,7 @@
                                 <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#modalPresence-{{$presence->id}}" style="background: red; color:white;">
                                     <i class="fas fa-eye"></i>
                                 </button>
-                                <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#modalPresence-{{$presence->id}}" style="background: green;color:white;">
+                                <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#modalPresence-{{$presence->id}}" style="background: #008B8B;color:white;">
                                     <i class="fas fa-print"></i>
                                 </button>
                                 @include('partials.modalPresence')

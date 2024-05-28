@@ -16,7 +16,7 @@
                             <label for="month">Mois et années :</label>
                             <input type="month" id="month" name="month" class="form-control" value="{{ $month }}">
                         </div>
-                        <button type="submit" class="btn btn-primary">Afficher</button>
+                        <button type="submit" class="btn " style="background: black;color:white;">Afficher</button>
                     </form>
                 </div>
             
@@ -26,7 +26,7 @@
                 <div class="row">
                     <div class="col-12">
                         <!-- Calendar show -->
-                        <div class="card bg-gradient-primary">
+                        <div class="card " style="background: #008B8B;color:white;">
                             <div class="card-header border-0">
                     
                                 <h3 class="card-title">
@@ -37,7 +37,7 @@
                                 <div class="card-tools">
                                     <!-- button with a dropdown -->
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                        <button type="button" class="btn  btn-sm dropdown-toggle" data-toggle="dropdown" style="background: black;color:white;">
                                         <i class="fas fa-bars"></i></button>
                                         <div class="dropdown-menu float-right" role="menu">
                                             <a href="#" class="dropdown-item">Add new event</a>
@@ -46,10 +46,10 @@
                                             <a href="#" class="dropdown-item">View calendar</a>
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse">
+                                    <button type="button" class="btn  btn-sm" data-card-widget="collapse" style="background: black;color:white;">
                                         <i class="fas fa-minus"></i>
                                     </button>
-                                    <button type="button" class="btn btn-primary btn-sm" data-card-widget="remove">
+                                    <button type="button" class="btn  btn-sm" data-card-widget="remove" style="background: black;color:white;">
                                         <i class="fas fa-times"></i>
                                     </button>
                                 </div>

@@ -11,8 +11,7 @@ class Agent extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'nom',
-        'postnom',
+        
         'prenom',
         'date_n',
         'key',

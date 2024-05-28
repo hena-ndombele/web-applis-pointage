@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
-                    <input type="submit" class="btn btn-primary" value="Enregistrer">
+                    <input type="submit" class="btn " value="Enregistrer" style="background: black;color:white;">
                 </div>
             </form>
         </div>
